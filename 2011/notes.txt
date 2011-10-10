@@ -1,0 +1,385 @@
+CUFP talks
+
+????? Keynote: Pragmatic Haskell, Lennart Augustsson
+
+	- Some Haskell implementations
+	- Mu vs. Haskell
+	- Demo
+	- Strict vs. Lazy
+
+hbc: first available haskell cmopiler
+
+pH: frontend written in haskell, used for the MIT
+pH project.  Not lazy: non-strict.
+
+bluespec: hardware description language.  Full
+Haskell at compile time.  Numbers & arithmetic in
+the types.
+
+Mu: a Haskell dialect.  strict.  strings aren't
+list of characters (big obstacle for haskell code
+reuse).  No integer, no rational.  no recursion.
+most of the programmers are traders.  All
+performance sensitive standard library stuff is
+written in C++ (from before Mu).  6% of modules
+turn on recursion.  Excel has a more expressive
+effect system than Haskell (no, read, write).
+"lists" are actually arrays.
+
+SafeIO - Like IO, but without the O -- you can't
+launch missiles.
+
+Mu code automatically works in Haskell.
+
+Compiler transformations are done as if
+terminating.
+
+"It's much easier to do compiler transformations
+if you don't have to preserve semantics" -"Some
+Shapiro"
+
+Unused computations may be thrown away.
+
+Lives in "Cortex" -- a library for quants.  All
+written in a combination of C++, Haskell and Mu.
+Used from C++, Haskell, Mu, C#, Java, Excel.
+"Everything can call everything"
+
+All data is serializable.
+
+"You get a runtime error, whether that causes you
+to lose $2M ??????? I hope not"
+
+[Excel demo]
+
+"We can read it, it's ok" ??????? "I can't!"
+
+[Writes Mu inside of Excel]
+
+Excel: there are numbers, strings, booleans and
+errors.
+
+"Excel is about the worst text editor ever"
+
+User can compile (Mu is normally interpreted)
+
+	compile :: a -> a
+
+Compilation also does partial evaluation (wires a
+lot of constants into the compiled code).
+
+Strict vs.  Lazy: It does not matter that much.
+
+Strictness is great: stack traces, resource
+compositionality, debugging, exceptions
+
+Strictness is terrible: bad semantic
+compositionality
+
+Mu has optional call-by-name.  Needed in ~20
+places.
+
+"If you want to design hardware, you need to have
+some clue about what you are doing".
+
+????? Theorem-based Derivation of an AES
+Implementation, John Launchbury
+
+Cryptol: declarative specification language,
+working on for a while.  Today: focusing on
+automated synthesis down to FPGA.
+
+First-order functional language.  Can have
+size-type declarations.  Recursion available in
+stream equations.
+
+FPGAs and cryptography are a natural match.
+
+Sequentialization comes only from data-dependency.
+
+"Henceforth space by itself, and time by itself,
+are doomed to fade away into mere shadows, and
+only a kind of union of the two will preserve an
+independent reality." ???????Hermann Minkowski
+
+Easier to experiment in Cryptol ~ experiment with
+several implementations.  But is it equivalent to
+the reference spec?  Use quickcheck-like testing.
+
+Test of encrypt/decrypt inverse by QuickCheck.
+(Cryptol has a "theorem" keyword that expresses
+these properties.)
+
+????? Discrete Event Simulation using Erlang, Olivier
+Boudeville
+
+Sim-Diasca: discrete-event synchronous simulation
+engine.
+
+No fixed topology- uses Erlang actors for RPCs.
+The main role of the engine is as a scheduler.
+
+The engine also enforces:
+	- Respect of causality
+	- Reproducibility
+	- Some for of ergodicity
+
+Wooper: "maps object-oriented programming to
+functional programming"
+
+	] what language/APIs do model authors use?
+
+Why FP, Erlang?  Background: this domain uses C++
+and CORBA.  Distributed computations, more
+suitable language constructs, complex algorithms
+are easier to express.
+
+Overall assesement: "massively positive".
+
+	] WOOPER - macro package?  source
+	transformation.
+
+Somewhat difficult to find developers, some
+resistance.
+
+????? Model based testing of AUTOSAR automotive
+components, Thomas Arts
+
+Cars have ~65 computers.  They talk to each other
+(eg.  the breaks might need to know how fast we're
+going).
+
+Different computers are typically from different
+vendors.  Do they talk well to each other?  Also,
+extremely important: know who to blame.
+
+Standard for communication between components:
+AUTOSAR.  But does the software comply?
+
+AUTOSAR outsourced testing, 30+ person years on
+writing tests.  The result: disaster.  Didn't end
+up using the test cases.
+
+AUTOSAR is completely configurable.  1000s of
+parameters that can be specified (which are also
+standardized).
+
+A lot of work to even run the manual tests.  Some
+tests can fail OK, because the real system doesn't
+use the particular configuration.
+
+QuickCheck!
+
+10 times less code.
+
+QuickCheck automatically generates all marshalling
+code to talk to C.
+
+	] do you test the models?
+
+Also find bugs in code that *isn't* expected to
+fail.  Eg. due to coding style.
+
+	] any idea of the state space you're
+	covering?
+
+????? HTML5 web application development in OCaml,
+Keigo Imai
+
+~45% of annual sales is from FP projects
+
+Typically, customers specify which programming
+language to use.
+
+[Awesome stick figure diagram]
+
+Insist on OCaml:
+	- We have existing codebase
+	- Can deliver earlier
+
+Continually educating customers.
+
+Forex chart: works on iPhone&Android, dynamically
+drawn w/ HTML5.
+
+Uses OCamlJS.  Static typing of DOM elements
+avoids many runtime errors.  Also uses inline
+javascript.
+
+Typically optimal ocaml code is also fast with
+ocamljs output.  Function calls are a bit
+inefficient.  No bugs yet reported on its output!
+
+	] estimate effort reduction?  any code
+	size issues? (esp. w/ mobile phones)
+
+"Thank you, it is written in our miraculous super
+OCaml technique"
+
+Web SQL database API wrapped in a CPS monad.
+
+????? Large scale internet services: Scala at Twitter,
+Steve Jenson, Wilhelm Bierbaum
+
+Some services @ O(10^6) QPS
+
+Why scala? Rich type system, good java integration, HOFs
+
+TFE: reverse proxy, uses finagle, filters
+
+pro: java compat
+
+con: immutability.  at odds with garbage
+collection.  too much request volume.
+
+message queue (kestrel)
+
+consise expression on collections.
+
+things we like: java tools are great; yourkit,
+jstat, visualvm, etc.
+
+don't like: lots of name mangling.  some tools
+work on lexical names & thus don't work well w/
+scala output.
+
+challenges (jvm): high throughput processes
+require much manual GC tuning.
+
+spend more time understanding how GC interacts
+with the program than writing the actual program.
+
+challenges (scala): concepts, people get, syntax
+is more subtle, implicits are difficult.
+
+????? Applying Functional Programing to Build
+Platform-Independent Mobile Applications, Adam
+Granicz
+
+The mobile market is huge. 3.7B mobile users.
+
+Very heterogenous programming models &
+languages on the various platforms.
+
+What do we need? Higher level abstractions (less
+code), multiple targets, scaling into desktop/cloud.
+The proprietary/specific APIs are a step back.
+
+Javascript is becoming the intermediate language.
+This is also becoming true for desktop (Windows 8).
+
+Javascript by itself is insufficient.
+
+WebSharper Mobile
+
+Write all of your server AND client code in F#.
+Compile to a cmoplete web app. Can also interface
+any client-side JS library via F#.
+
+Type-safe URLs!
+
+Sitelets, formlets.
+
+Sitelets: typesafe and composable abstractions for
+websites.
+
+	] FRP?
+
+????? Fourteen Days of Haskell: A real time
+programming project in real time ???????, Gregory Wright
+
+Large Scale Antenna Systems
+
+Antennas use a lot of energy. Want to improve
+efficiency.
+
+Software radio figures out how to point a beam at a
+user and how much data can be sent over the link. As
+a result of this, we adjust the power used to go to a
+target phone w/ a target rate.
+
+This was simulated: show to the user how much power
+was coming out of the handset.
+
+14 days!
+
+Very vanilla haskell (arrays aren't even unboxed!). Use
+STM. DSP library from Hackage. NO voodoo to improve
+memory behavior, strictness annotations, etc.
+
+Success? yes!
+
+Not always interested in the big win, but rather safety
+from crashing & burning.
+
+Why did it work?
+	- Always had a working system. Staged well.
+	- Work with haskell idioms rather than against
+	them (it's a dataflow problem)
+
+????? Disco: using Erlang to implement MapReduce,
+Prashant Mundkur
+
+Hadoop: "massive pile of java software"
+
+Erlang hacker: "how hard can it be?"
+
+Erlang: coordination, etc.; other half:
+processing.  Python is used for processing. Recently
+have introduced an OCaml version (ODisco) for
+the processing bit.
+
+Using core erlang control plane.
+
+erlang provides:
+	- remote shell
+	- dialyzer
+	- fprof
+
+[shows examples of what would be type errors]
+
+????? Functional mzScheme DSLs in Game Development,
+Dan Liebgold
+
+Games are a production. Artists, producers, etc. produce data,
+programmers produce code.
+
+Work with 5MB heaps.
+
+- Power, standard library (mzScheme) big wins
+- Performance (GC) is an issue
+- Syntax transformations is challenging
+
+????? OCaml and Acunu Experience Report, Andrew Byde,
+Tom Wilkie
+
+Management stack, storage stack.
+
+Adapters to a common RPC protocol. Automatically generate
+code.
+
+Uniform event mechanism.
+
+RPC router provides uniform namespace, etc.
+
+Functors: love them.  We use objects!  Wish we'd
+used LWT.
+
+Kernel developers are resistant to OCaml.
+
+Prototype filesystem: interesting algorithms and
+datastructures, OCaml is meant to be good at this.
+
+Doubling Array.  Prototype in OCaml.
+
+Every time we had a new idea, we had to do a lot of
+refactoring OCaml.  The datastructures were
+simple, but we spent most of our time in all the
+support infrastructure.
+
+Impl.  moved to Java.  >6x better performance.  It
+was easier to get better performance out of OCaml.
+
+(Production version - Castle - is implemented in
+C, in the kernel)
+
