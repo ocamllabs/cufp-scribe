@@ -103,32 +103,161 @@ composing {\tt Mu} modules. He demonstrated coding Mu within Excel live on stage
 via an interactive and interpreted version.
 
 The audience asked about integration between the Bluespec hardware description
-language and Mu, since both require code that statically terminates. However, Lennart
-replied that ``if you want to design hardware you need to have some clue about
-what you are doing''.
+language and Mu, since both require code that statically terminates. However,
+Lennart replied that ``if you want to design hardware you need to have some
+clue about what you are doing''.
 
-\subsection{Theorem-Based Derivation of an AES Implementation}
+\subsection{Simulation and Testing}
 
-John Launchbury from Galois continued with the theme of reliable hardware synthesis. Galois has developed the Cryptol declarative specification language for cryptographic protocols~\cite{xxx}, and are now working on automatically synthesising FPGAs from these specifications.
+\subsubsection{Large-Scale Discrete Event Simulation}
 
-They implement a first-order functional language with size-type declarations, and recursion is available via stream equations.  The only sequentialization comes from data dependencies, making it possible to efficiently evaluate this language on FPGAs. Cryptography is also a natural match for FPGAs, and Cryptol makes it easier to experiment with several implementations. They use a QuickCheck~\cite{x} testing tool to ensure that the Cryptol code is equivalent to the reference specification, and Cryptol has a {\tt theorem} keyword to express properties such as the equivalence between an encryption and decryption operation.
+Olivier Boudeville from EDF moved us onto simulations. Many industry areas such
+as the Smart Energy Grid~\cite{x} or Future Internet architectures require a
+large-scale discrete event simulation system. They designed Sim Diasca in
+Erlang to meet this need for scalability and reliability, with support for
+upwards of 50 million parallel instances of complex models.
 
-\subsection{Discrete Event Simulation and Testing}
+Sim Diasca has no fixed topology and uses Erlang actors for RPCs, with the main
+role of the engine as a scheduler that enforces causality, reproducibility of
+the model simulation, and some forms of ergodicity. They designed ``Wooper'' as
+a library that maps object-oriented programming styles onto a distributed
+functional style suitable for deployment on the Erlang base.
 
-Olivier Boudeville from EDF moved us onto simulations. Many industry areas such as the Smart Energy Grid~\cite{x} or Future Internet architectures require a large-scale discrete event simulation system. They designed Sim Diasca in Erlang to meet this need for scalability and reliability, with support for upwards of 50 million parallel instances of complex models.
+The use of Erlang and functional programming was ``massively positive'', as the
+domain normally uses C++ and CORBA.  Erlang's support for distributed
+computations and more suitable language constructs made complex algorithms
+significantly easier to express.  On the downside, they did meet with some
+resistance to using a relatively unknown language, and found developers harder
+to hire than with more conventional languages.
 
-Sim Diasca has no fixed topology and uses Erlang actors for RPCs, with the main role of the engine as a scheduler that enforces causality, reproducibility of the model simulation, and some forms of ergodicity. They designed ``Wooper'' as a library that maps object-oriented programming styles onto a distributed functional style suitable for deployment on the Erlang base.
+\subsubsection{Testing Safety Critical Automotive Components}
 
-The use of Erlang and functional programming was ``massively positive'', as the domain normally uses C++ and CORBA.  Erlang's support for distributed computations and more suitable language constructs made complex algorithms significantly easier to express.  On the downside, they did meet with some resistance to using a relatively unknown language, and found developers harder to hire than with more conventional languages.
+The next talk by Thomas Arts from TODO covered the huge area of testing
+automotive components. The average modern car has over 64 computers that are
+networked (``the brakes might need to know how fast the car is going!'').  The
+computers are sourced from a variety of vendors, and so interoperability
+testing is critical safety, as well as knowing who to blame in the event of a
+software failure.
 
+The industry standard for automotive components is AUTOSAR~\cite{x}. Initially,
+AUTOSAR outsourced the testing and over thirty per-years were spent on writing
+manual tests. The result was a disaster that was unsuitable for use. This is
+because AUTOSAR is highly configurable, with thousands of standardised
+parameters that are hard to express manually.
 
-The next talk by Thomas Arts from TODO covered the huge area of testing automotive components. The average modern car has over 64 computers that are networked (``the brakes might need to know how fast the car is going!'').  The computers are sourced from a variety of vendors, and so interoperability testing is critical safety, as well as knowing who to blame in the event of a software failure.
+The solution came in the form of Erlang and QuickCheck, which resulted in an
+order of magnitude less code and gave significantly more reliable coverage of
+AUTOSAR configurations.  QuickCheck generates marshalling code to talk to the C
+AUTOSAR libraries.
 
-The industry standard for automotive components is AUTOSAR~\cite{x}. Initially, AUTOSAR outsourced the testing and over thirty per-years were spent on writing manual tests. The result was a disaster that was unsuitable for use. This is because AUTOSAR is highly configurable, with thousands of standardised parameters that are hard to express manually.
+TODO Questions: do you test the models. Any idea of the state space you are
+covering? Not sure what the answers were.
 
-The solution came in the form of Erlang and QuickCheck, which resulted in an order of magnitude less code and gave significantly more reliable coverage of AUTOSAR configurations.  QuickCheck generates marshalling code to talk to the C AUTOSAR libraries.
+\subsection{Web and Mobile Development}
 
+\subsubsection{OCaml: Mobile HTML5 Development}
 
+We moved on from testing and simulation to the world of functional web
+development in Japan. Keigo Imai delivered an entertaining talk about the
+consultancy (IPTL) he works for, where 45\% of their annual sales are from
+functional programming projects.
+
+Their typical sales cycle begins with customers specifying their choice of
+programming language, and impossibly tight deadlines. IPTL then propose using
+their existing OCaml codebase to deliver the solution, but within the required
+deadline and with much less risk. IPTL continually educate their customers
+about the benefits of rapid development using functional languages.
+
+Keigo demonstrated a foreign exchange chart application that works on iPhone
+and Android, dynamically drawn using an HTML5 canvas. It was built using OCaml
+and and compiled into Javascript using OCamlJS~\cite{x}. The static typing of
+DOM elements avoided many runtime errors (particularly with the complex Canvas
+tag), and the web SQL database API is wrapped in a monad and bound using a
+continuation passing style. Inline Javascript is used where more low-level
+control is required.
+
+Performance has been fine with OCamlJS, and no bugs have been reported yet on
+its output (to quote Keigo, "it is written in our miraculous super OCaml
+technique!").
+
+\subsubsection{Scala: Large Scale Internet Services at Twitter}
+
+Twitter is a social network for sharing short text messages. It is growing in
+popularity extremely fast, and some components have to serve in excess of
+$10^6$ queries per second.
+
+Steve Jensen and Wilhelm Bierbaum described how the entire backend
+infrastructure is implemented using Scala.  The JVM is the preferred virtual
+machine due to its maturity and performance, and Scala provides a much better
+type system and functional programming features than code in Java directly.
+
+All client requests go through a Scala proxy called TFE, which routes requests
+via the Finagle distributed RPC system~\cite{f}. Request streams are passed
+through filters that transform and apply processing functions on them.  Filters
+can use existing Java libraries, which is very useful to interface with
+existing libraries. 
+
+The use of the JVM means that many existing debugging and profiling tools (e.g.
+Yourkit, JStat, VisualVM) can be used, but the name mangling and anonymous
+functions in Scala do introduce some incompatiblities.  The use of immutable
+values result in a lot of pressure on the garbage collector, and they often
+spend more time understanding and tuning the GC interactions with the program
+than actually writing the code.
+
+Twitter has also been hiring many programmers who never used Scala before.
+While most of them understand the concepts underlying functional programming,
+the syntax of Scala can often be suble, and the use of implicits are often
+difficult for beginners.
+
+\subsubsection{F\#: Mobile Applications using WebSharper}
+
+Adam Granicz from Intellifactory began by pointed out that the market for
+mobile applications is huge, growing to 3.7 billion users using smartphone in
+the next year (XXX or 5 years?).  However, it requires a very heterogenous
+programming style and choice of language, as every current platform differs
+significantly (e.g. Android, iPhone, Windows Mobile).
+
+Ideally, we need to program mobile applications using higher level
+abstractions, support compilations to multiple targets, and make use of desktop
+and cloud resources when available. The switch to proprietary and divergent 
+APIs on different devices is a step backwards.
+
+Javascript is becoming the intermediate language that connects these devices
+together, and Windows 8 is even promoting it for building native desktop
+applications. Intellifactory built the WebSharper programming framework in F\#
+that outputs Javascript that works with all of these devices.
+
+With WebSharper, all of the server and client code is written in F\#, and
+compiles to a complete standalone web application. The F\# interfaces provide
+type-safe URLs that helps prevent common errors, and ``sitelets'' and
+``formlets'' that are composable abstractions for fragments of websites.
+
+TODO Question: FRP?
+
+\subsection{Embedded Systems}
+
+\subsection{Cryptol: Theorem-Based Derivation of an AES Implementation}
+
+John Launchbury from Galois described their Cryptol declarative specification language
+for cryptographic protocols~\cite{xxx}. Galois are now working on automatically
+synthesising FPGAs from these specifications.
+
+They implement a first-order functional language with size-type declarations,
+and recursion is available via stream equations.  The only sequentialization
+comes from data dependencies, making it possible to efficiently evaluate this
+language on FPGAs. Cryptography is also a natural match for FPGAs, and Cryptol
+makes it easier to experiment with several implementations. They use a
+QuickCheck~\cite{x} testing tool to ensure that the Cryptol code is equivalent
+to the reference specification, and Cryptol has a {\tt theorem} keyword to
+express properties such as the equivalence between an encryption and decryption
+operation.
+
+\subsubsection{Haskell: A Real Time Programming Project in Real Time}
+
+Gregory Wright from XXX showed off their energy-efficient large scale antenna
+systems.  
+
+ 
 
 \end{document}
 
