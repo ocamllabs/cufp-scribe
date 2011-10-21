@@ -59,7 +59,7 @@ The scribe report from the Commercial Uses of Functional Programming 2011 worksh
 
 \section{Overview}
 
-location, num submissions, areas of interest.
+location, num submissions, areas of interest. 
 
 \subsection{Pragmatic Haskell}
 
@@ -109,7 +109,9 @@ clue about what you are doing''.
 
 \subsection{Simulation and Testing}
 
-\subsubsection{Large-Scale Discrete Event Simulation}
+intro: reproducible and scalable testing is essential for the complex systems we use today. the submitted talks covered an interesting range of real-world systems, such as smart grid, future internet and automotive and aeronautical systems.
+
+\subsubsection{Erlang: Large-Scale Discrete Event Simulation}
 
 Olivier Boudeville from EDF moved us onto simulations. Many industry areas such
 as the Smart Energy Grid~\cite{x} or Future Internet architectures require a
@@ -130,7 +132,7 @@ significantly easier to express.  On the downside, they did meet with some
 resistance to using a relatively unknown language, and found developers harder
 to hire than with more conventional languages.
 
-\subsubsection{Testing Safety Critical Automotive Components}
+\subsubsection{Erlang: Testing Safety Critical Automotive Components}
 
 The next talk by Thomas Arts from TODO covered the huge area of testing
 automotive components. The average modern car has over 64 computers that are
@@ -154,6 +156,8 @@ TODO Questions: do you test the models. Any idea of the state space you are
 covering? Not sure what the answers were.
 
 \subsection{Web and Mobile Development}
+
+intro: functional programming on the web is making inroads into both client-side development, and scalable server stacks. here are 3 talks on it..
 
 \subsubsection{OCaml: Mobile HTML5 Development}
 
@@ -236,6 +240,8 @@ TODO Question: FRP?
 
 \subsection{Embedded Systems}
 
+FP is being used more in embedded systems, as the safety properties and type system helps generate safer and more compact code...
+
 \subsection{Cryptol: Theorem-Based Derivation of an AES Implementation}
 
 John Launchbury from Galois described their Cryptol declarative specification language
@@ -254,10 +260,99 @@ operation.
 
 \subsubsection{Haskell: A Real Time Programming Project in Real Time}
 
-Gregory Wright from XXX showed off their energy-efficient large scale antenna
-systems.  
+Gregory Wright from Alcatel-Lucent Bell Labs describes a project that used Haskell 
+to build the core of a real-time communication system.  It was built by
+the GreenTouch consortium, an organization of equipment
+vendors, service providers, and research institutes to
+show a new antenna technology that reduces the energy used
+by wireless networks.  The goal of the project was to demonstrate
+an algorithm that reduces radio transmit power as the number
+of base station antenna elements is increased, and is capable of scaling
+to antennas with thousands of elements.
 
- 
+An antenna can focus on a user and calibrate the amount of data sent ove the
+link. As a result of this, the power used to go to an individual handset can be
+adjusted with respect to a target rate.  This was initially simulated, and then
+later run on real hardware as a soft realtime system.
+
+In total, the project lasted 14 real days. As a result of the timescale, it
+used very vanilla Haskell (e.g. arrays weren't unboxed), with no voodoo to
+improve memory behaviour, or strictness annotations. The STM library was used,
+as well as the DSP library from Hackage.
+
+Despite this simplicity, the project was a big success. An important factor was that 
+they always had a working system, with upgrades staged well. Haskell provided a high
+degree of safety from ``crashing and burning''.
+
+\subsection{Big Data}
+
+distributed big data and functional programming seems a natural fit, but Java is dominant so far. these two talks introduce FP into this realm...
+
+\subsubsection{Erlang/OCaml: Disco, a MapReduce Platform}
+
+Prashanth Mundkur from Nokia Research in Palo Alto talked about the Disco Project.  When Nokia started evaluating systems for distributed data processing, the most popular solution was Hadoop~\cite{x}. However, this was a ``massive pile of Java software'' that was very complex to configure and operate, and an Erlang hacker at Nokia wondered how hard it would be to implement a simpler alternative.
+
+The first Disco prototype took a few weeks, with Erlang being used to act as the coordination server, and Python to write the data processing scripts. OCaml has recently been added as a more strongly typed data processing alternative language.
+
+Erlang provides quite a few useful tools that made Disco easier to implement. In particular, a remote shell to invoke RPC on hosts in the cluster and fprof to collect profiling information in real-time. The dynamic typing did result in some hard to find bugs, and the dialyzer static analysis tool is now used extensively on the Disco codebase (but is not mandatory).
+
+\subsubsection{OCaml: The Acunu Storage Platform}
+
+Tom Wilkie from Acunu in London then presented their Castle storage system to
+optimise big data storage and processing.  It consists of a management stack
+written in OCaml to handle the control requests (for snapshots, backups or
+rollbacks), and a storage stack to implement a variety of algorithms for
+compact persistent storage to disk.  Since their filesystem is under
+development, the intention was to use OCaml to experiment with many different
+techniques and rapidly iterate through ideas.
+
+However, although OCaml was effective for implementing the core algorithm, they
+spent a lot of time on the support code to serialise data to and from disk, and
+deal with threading. When the filesystem codebase was moved to Java,
+performance increased by 6x times. The audience suggested a few techniques to
+speed up the OCaml code, such as the Lwt threading library and Bitstring syntax
+extension, and increasing the number of I/O threads used. Tom acknowledged
+these could help, but that their availability should be promoted and documented
+better. 
+
+\subsection{Gaming}
+
+first gaming talk in CUFP, also mention Sweeney POPL talk as background.
+
+\subsubsection{mzScheme: Functional DSLs for Game Development}
+
+Dan Liebgold from Naughty Dog Software in Santa Monica then came on stage with
+the first gaming related talk at CUFP. They produce the popular Uncharted game
+series for the Playstation, which is famous for its complex and interactive
+scripted scenes.  Dan described a modern game as a major production effort, where
+artists produce data and programmers produce code.
+
+Naughty Dog has a history of using various Lisp dialects to handle the code and
+data in a unified way. But when making the jump from the Playstation 2 to the
+Playstation 3, they decided that maintaining a custom Lisp-based game
+development system was too costly, and instead dedicated their efforts to
+rebuilding the tools, engine, and game in C++ and assembly language.
+
+This decision left no scripting system for gameplay and, more importantly, no
+system for creating DSLs and the oodles of “glue” data that is typically
+required to develop a major video game. There was no off-the-shelf scripting
+system that fit the stringent memory requirements in a Playstation 3, and no
+language that would allow rapid DSL creation that fit into the existing tool
+chain.
+
+With a bit of naivety, a penchant for the Scheme language, and a passion for
+functional programming techniques, the team dove in and put together a system
+to fill in the gaps!  Dan reported that the results have been very good, but
+not without many issues.  In particular, garbage collector performance sometime
+led to manual tuning being required, and build environment integration was
+tricky. Syntax transformations and error reporting led to confusion with new
+programmers too. 
+
+On the other hand, the functional nature of the system was a big win, as it
+allowed them to flexibly distill game data down to just the right form to embed
+into the resource-constrained run-time environment.  The final result is a
+system where programmers, artists, animators, and designers are productively
+``programming'' directly in an S-expression Scheme-like language.
 
 \end{document}
 
