@@ -6,6 +6,8 @@
 \NeedsTeXFormat{LaTeX2e}
 
 \documentclass{jfp1}
+\bibliographystyle{jfp}
+\usepackage{url}
 
 %%% Macros for the guide only %%%
 \providecommand\AMSLaTeX{AMS\,\LaTeX}
@@ -20,28 +22,21 @@
 \title[Commercial Users of Functional Programming 2011]
       {Commercial Users of Functional Programming Scribe Report}
 
-\author[Anil Madhavapeddy]
-       {Anil Madhavapeddy,\\
-        Computer Laboratory,\\
-        University of Cambridge,\\ 
+\author[Anil Madhavapeddy, Yaron Minsky and Marius Eriksen]
+       {ANIL MADHAVAPEDDY\\
+        Computer Laboratory, University of Cambridge\\ 
         15 JJ Thomson Avenue, Cambridge CB3 0FD, UK\\
-        \email{avsm2@cl.cam.ac.uk}}
+ YARON MINSKY,\\
+        Jane Street Capital\\
+        1 New York Plaza, New York NY, USA\\ 
+ MARIUS ERIKSEN,\\
+        Twitter, Inc.\\
+        795 Folsom St., Suite 600\\
+        San Francisco, CA 94107, USA.
+        }
 
-\author[Yaron Minsky]
-       {Yaron Minsky,\\
-        Jane Street Capital, \\
-        1 New York Plaza, New York NY, USA,\\ 
-        \email{yminsky@janestreet.com}}
-
-\author[Marius Eriksen]
-       {Marius Eriksen,\\
-        Twitter,\\
-        Somewhere in SF,\\ 
-        \email{marius@twitter.com}}
-
-
-\jdate{September 2001, update April 2007}
-\pubyear{2001}
+\jdate{November 2011}
+\pubyear{2011}
 \pagerange{\pageref{firstpage}--\pageref{lastpage}}
 \doi{S0956796801004857}
 
@@ -56,42 +51,41 @@ Commercial Users of Functional Programming (CUFP) is a yearly workshop
 that is aimed at the community of software developers who use functional
 programming in real-world settings.  This scribe report covers the talks
 that were delivered in the 2011 workshop, which was held in association
-with ICFP in Tokyo.  The goal of the scribe report is to give the reader
+with ICFP in Tokyo.  The goal of the report is to give the reader
 a rough sense of what went on, rather than to reproduce the full details
-of the talks.
+of the talks.  Videos and slides from all the talks are available online at \url{http://cufp.org}.
 
 \section{Keynote: Pragmatic Haskell}
 
-Lennart Augustsson from Standard Charter gave the keynote address. He
-related his longtime use of Haskell and Haskell-derived languages in
+Lennart Augustsson from Standard Charter gave the keynote address,
+relating his longtime use of Haskell and Haskell-derived languages in
 commercial settings.  Augustsson's experience with Haskell dates back to
-its inception: He authored the first Haskell compiler, {\tt hbc}, which
+its inception: he authored the first Haskell compiler, {\tt hbc}, which
 remains competitive with the Glasgow Haskell Compiler to this
 day. Lennart subsequently developed several Haskell variants that were
 tailored for his needs.
 
-The first of these was {\tt pH}, the parallel Haskell compiler (find out
-more).
+The first of these was {\tt pH}, the parallel Haskell compiler~\cite{Aditya95semanticsof}. {\tt pH} sought to exploit the implicit parallelism in a Haskell program by combining the Haskell syntax and type system with the evaluation strategy of the {\tt id} parallel programming language~\cite{arvindid}.  {\tt pH} introduced several concepts which are still used in modern systems, such as the MVar abstraction.
 
 Lennart then brought his Haskell experience over to the field of
 hardware design.  The Bluespec hardware description language is a full
 compile-time implementation of Haskell, outputting Verilog for hardware
 synthesis.  Bluespec significantly raised the level of abstraction for
 hardware design, and is still available commercially
-today~\cite{bluespec}.  An interesting aspect of Bluespec was the
+today~\cite{Nikhil:2008:BLU:1862867.1862868}.  An interesting aspect of Bluespec was the
 incorporation of numbers and arithmetic in its type system.
 
-Lennart is currently working in the banking industry providing in-house
+Lennart is currently working in the banking industry, providing in-house
 technology for traders and quants.  {\tt Mu} is Lennart's latest Haskell
 dialect designed specifically for this use.  Most traders and quants are
 chiefly interested in data transformation and processing, and do not
 necessarily care about effectful operations.  {\tt Mu} provides a
 simplified dialect of Haskell catering to these needs.  Interestingly,
-Mu eschews Haskell's lazyness: It is a strict langauge.  A number of
-pragmatic design decisions were made: Most performance sensitive code
+Mu eschews Haskell's lazyness by being a strict language.  A number of
+pragmatic design decisions were made: most performance sensitive code
 reuses C++ from in-house libraries, and strings in {\tt Mu} are not
 lists of characters.  Furthermore, recursion is provided only optionally
-(and only 6%% of their modules turn this on).  {\tt Mu} provides a
+(and only 6\% of their modules turn this on).  {\tt Mu} provides a
 fine-grained IO monad, allowing for both "IO" and "O" (output only).  In
 order to attain easy interprocess communication, all values in {\tt Mu}
 are serializable.
@@ -100,12 +94,12 @@ are serializable.
 may be compiled with a Haskell compiler.  As with its language and
 libraries, the {\tt Mu} compiler is a work of pragmatic design.  All
 compiler transformations are done assuming it is operating on
-terminating code.  The compiler uses {\tt LLVM}~\cite{llvm} for its
+terminating code, and the compiler uses {\tt LLVM}~\cite{Lattner:2004:LCF:977395.977673} for its
 backend.
 
-Standard Chartered's codebase is significant and lives within a library
-for quants written in a combination of C++, Haskell and Mu.  Language
-interoperability is key: All parts of the system is easily be invoked
+Standard Chartered's {\tt Mu} codebase is of significant size and lives within a library
+for quants written in a combination of C++, Haskell and {\tt Mu} itself.  Language
+interoperability is key; all parts of the system can easily be invoked
 from Excel, C\#, Java or any other component.
 
 Their experience with strict semantics has been positive.  Particularly
@@ -116,7 +110,7 @@ modular composition.
 
 Lennart noted that Excel has a more expressive effect system than
 Haskell and provides an effective front-end to composing {\tt Mu}
-modules.  He demonstrated coding Mu within Excel live on stage, via an
+modules.  He demonstrated coding {\tt Mu} within Excel live on stage, via an
 interactive and interpreted version.
 
 The audience asked about integration between the Bluespec hardware description
@@ -126,10 +120,10 @@ clue about what you are doing''.
 
 \section{Cryptol: Theorem-Based Derivation of an AES Implementation}
 
-John Launchbury from Galois described the use of Cryptol, their
+John Launchbury from Galois then described Cryptol, their
 declarative specification language for cryptographic
-protocols~\cite{xxx}, to derive a highly efficient FPGA implementation
-of AES.
+protocols~\cite{Erkok:2009:PES:1481848.1481860}.
+Galois is now using Cryptol to derive a highly efficient implementation of AES targeted at FPGAs.
 
 Cryptol is a first-order functional language with size-type
 declarations.  Recursion is available via stream equations.  The only
@@ -138,15 +132,14 @@ efficiently evaluate this language on FPGAs. Cryptography is also a
 natural match for FPGAs, and Cryptol makes it easier to experiment with
 several implementations. Cryptol has a {\tt theorem} keyword to express
 properties such as the inverse relationship between encryption and
-decryption operations. A QuickCheck~\cite{x}-like tool is used to
-generate test cases to ensure that these theorems hold.
+decryption operations. A tool similar to QuickCheck~\cite{Claessen:2000:QLT:351240.351266} is used to generate test cases to ensure that these theorems hold.
 
 The derivation of the design was done be a series of stepwise
 refinements to the original specification, all of which were written in
 Cryptol.  The theorem-based testing system was used as a way of gaining
 confidence that each stage in the refinement was solid.  The end result
 was a chip that was competitive with top-notch manually constructed
-implementations, but that one could have far more confidence in.
+implementations, but that the designer could have far more confidence in.
 
 \section{Erlang: Large-Scale Discrete Event Simulation}
 
@@ -154,9 +147,9 @@ Olivier Boudeville from EDF described the use of Erlang for building
 large-scale simulations.  Sim Diasca (Simulation of Discrete Systems of
 All Scales) is a system implemented in Erlang for building large scale
 discrete simulations of the kind that are used for simulating Smart
-Energy Grids~\cite{x} and other large-scale industry projects.
+Energy Grids and other large-scale industry projects.
 
-Sim Diasca was - as its name implies - designed to meet extraordinary
+Sim Diasca was---as its name implies---designed to meet extraordinary
 scalability requirements, supporting upwards of 50 million parallel
 instances of complex models.  It prescribes no fixed topology and uses
 Erlang's actor mechanism for communication between nodes.  The main role
@@ -177,8 +170,7 @@ In particular, hiring developers was harder.
 
 \section{Erlang: Testing Safety Critical Automotive Components}
 
-The next talk by Thomas Arts, who is CTO of Quviq, a company founded by
-Thomas and John Hughes, which is devoted to doing automated testing of
+The next talk by Thomas Arts, who is CTO of Quviq, a company he co-founded with John Hughes. Quviq is devoted to doing automated testing of
 software using QuickCheck and Erlang.  The talk covered the application
 of Erlang and QuickCheck to the testing of automotive components.  The
 average modern car has over 64 computers that are networked (``the
@@ -186,8 +178,8 @@ brakes might need to know how fast the car is going!'').  Manufacturers
 use components from a variety of vendors and so interoperability testing
 takes on critical importance.
 
-The industry standard for automotive components is AUTOSAR~\cite{x}.
-Initially, the AUTOSAR consortium outsourced its testing.  Over thirty
+The industry standard for automotive components is AUTOSAR.\footnote{\url{http://www.autosar.org/}}
+Initially, the AUTOSAR consortium outsourced its testing, and over thirty
 person-years were spent on writing manual tests for component
 interoperability.  The result was disastrous and unsuitable for use.
 The chief reason for this is that AUTOSAR is highly configurable, with
@@ -211,31 +203,28 @@ development in Japan. Keigo Imai delivered an entertaining talk about
 the consultancy (IPTL) he works for, where 45\% of their annual sales
 are from functional programming projects.
 
-Their typical sales story goes like this: A customers specifies their
+Their typical sales story goes like this: customers specify their
 choice of programming language and an impossibly tight deadline.  IPTL
 then propose using their existing OCaml codebase to deliver the
 solution, but within the required deadline and with much less risk.
 IPTL continually educate their customers about the benefits of rapid
 development using functional languages.
 
-Keigo demonstrated an example project: A foreign exchange chart
+Keigo demonstrated an example project: a foreign exchange chart
 application that works on iPhone and Android, dynamically drawn using
-an HTML5 canvas.  It was written in OCaml, using OCamlJS~\cite{x}, an
-OCaml compiler backend that targets Javascript.  In their experience,
-static was very helpful for web development.  In particular typing of
+an HTML5 canvas.  It was written in OCaml and translated to Javascript using the OCamlJS compiler.\footnote{\url{https://github.com/jaked/ocamljs}}  In their experience,
+static typing was very helpful for web development.  In particular typing of
 DOM elements avoided many runtime errors, especially in the complex
-Canvas tag.  Higher level language features also facilitate the
-asynchronous programming style prevalent in web apps.  Their SQL
+{\tt <canvas>} tag.  Higher level language features also facilitate the
+asynchronous programming style prevalent in web apps.  Their Web SQL
 database API is wrapped in a monad and bound using continuation
 passing style, allowing for ease of programming without having to
 create explicit callbacks chains.  OcamlJS allows for inlining
-Javascript, which was useful when more low-level control is required.
+Javascript, which was useful when more low-level control was required.
 
 Performance has been fine with OCamlJS, and no bugs have been reported
 yet on its output (to quote Keigo, "it is written in our miraculous
-super OCaml technique!").
-
-An audience member asked if codesize (from the generated javascript)
+super OCaml technique!"). An audience member asked if codesize (from the generated Javascript)
 is a problem, especially in view of this being a mobile project.
 Keigo replied that they haven't had any problems with this.
 
@@ -244,16 +233,15 @@ Keigo replied that they haven't had any problems with this.
 Twitter is a social network for sharing short text messages. It is
 growing in popularity extremely fast, and some backend components have
 to serve in excess of $10^6$ queries per second.
-
-Steve Jenson and Wilhelm Bierbaum described how many infrastructure
+Steve Jenson and Wilhelm Bierbaum described how many of Twitter's infrastructure
 components are implemented in Scala.  The JVM is the preferred virtual
 machine due to its maturity and performance, and Scala provides a much
 better type system and functional programming features than code in Java
 directly.
 
-All client HTTP requests are served by a reverse proxy called TFE. The
-TFE routes requests using the Finagle distributed RPC
-system~\cite{f}. Request streams are passed through filters that
+All Twitter client HTTP requests are answered by a reverse proxy called TFE, which
+routes requests using the Finagle distributed RPC
+system.\footnote{\url{http://twitter.github.com/finagle/}} Request streams are passed through filters that
 transform and apply processing functions on them.  The process is
 afforded the full facilities of the JVM, including the use of
 pre-existing libraries written in Java.
@@ -274,9 +262,7 @@ use of implicits are often difficult for beginners.
 \section{F\#: Mobile Applications using WebSharper}
 
 Adam Granicz from Intellifactory began by pointing out that the market
-for mobile applications is massive.  It is projected that within the
-year (XXX or 5 years?)  the smartphone marked will have grown to 3.7
-billion user.  However, smartphone platforms are a heterogenous bunch:
+for mobile applications is massive.  It is projected that in 2011, the phone market will have grown to 3.7 billion users, with 18\% of them owning smartphones capable of running applications.  However, smartphone platforms are a heterogenous bunch:
 The current major platforms (Android, iPhone, Windows Mobile) differ in
 both programming style and language choice.
 
@@ -289,7 +275,7 @@ Javascript is becoming the intermediate language that connects these
 devices together, and Windows 8 is even promoting it for building native
 desktop applications. Intellifactory built the WebSharper programming
 framework in F\# that outputs Javascript that works with all of these
-devices.
+diverse devices.
 
 With WebSharper, all of the server and client code is written in F\#,
 and compiles to a complete standalone web application. The F\#
@@ -335,7 +321,7 @@ the core ideas of Haskell. The core algorithms implemented were all
 
 Prashanth Mundkur from Nokia Research in Palo Alto talked about the
 Disco Project.  When Nokia started evaluating systems for distributed
-data processing, the most popular solution was Hadoop~\cite{x}. However,
+data processing, the most popular solution was Hadoop. However,
 this was a ``massive pile of Java software'' that was very complex to
 configure and operate. An Erlang hacker at Nokia wondered how hard it
 would be to implement a simpler alternative.
@@ -343,16 +329,16 @@ would be to implement a simpler alternative.
 The first Disco prototype took a few weeks to implement. The core
 coordination components are implemented in Erlang making use of its
 runtime facilities for distributed computation. Python is the primary
-language used to write the data processing scripts (ie. the "mappers"
+language used to write the data processing scripts (i.e. the "mappers"
 and "reducers"). OCaml has recently been added as a more strongly typed
 data processing alternative language.
 
 The Erlang environment provides quite a few useful tools that made Disco
-easier to implement. In particular, a remote shell to invoke RPC on
-hosts in the cluster and fprof to collect profiling information in
+easier to implement. In particular, a shell to invoke remote procedure calls on
+hosts in the cluster and {\tt fprof} to collect profiling information in
 real-time. The dynamic typing did result in some hard to find bugs, and
-the dialyzer static analysis tool is now used extensively on the Disco
-codebase (but is not mandatory).
+the {\tt dialyzer} static analysis tool is now used extensively on the Disco
+codebase (but is not mandatory)~\cite{Sagonas:2007:DDE:1273920.1273926}.
 
 \section{mzScheme: Functional DSLs for Game Development}
 
@@ -371,7 +357,7 @@ dedicated their efforts to rebuilding the tools, engine, and game in C++
 and assembly language.
 
 This decision left no scripting system for gameplay and, more
-importantly, no system for creating DSLs and the oodles of “glue” data
+importantly, no system for creating DSLs and the oodles of glue data
 that is typically required to develop a major video game. There was no
 off-the-shelf scripting system that fit the stringent memory
 requirements in a Playstation 3, and no language that would allow rapid
@@ -389,14 +375,15 @@ On the other hand, the functional nature of the system was a big win, as
 it allowed them to flexibly distill game data down to just the right
 form to embed into the resource-constrained run-time environment.  The
 final result is a system where programmers, artists, animators, and
-designers are productively ``programming'' directly in an S-expression
-Scheme-like language.
+designers are productively programming directly in an S-expression
+Scheme-like language.  Dan closed his talk by wowing the audience with the
+trailer for the game, which has now been released and is garnering extremely positive reviews.
 
 \section{OCaml: The Acunu Storage Platform}
 
 Tom Wilkie from Acunu in London presented their Castle storage system to
-optimise big data storage and retrieval. Castle has two halves: The
-management stack is written in OCaml and handles control requests
+optimise big data storage and retrieval. Castle has two halves: a management and storage stack.
+The management stack  is written in OCaml and handles control requests
 (eg. snapshots, backups, rollbacks, coordination). The storage stack
 implements an efficient disk-backed indexed key-value store. While
 developing their storage stack, Acunu needed very rapid prototyping in
@@ -414,6 +401,13 @@ the Lwt threading library and Bitstring syntax extension, and increasing
 the number of I/O threads used. Tom acknowledged these could help, but
 that their availability should be promoted and documented better.
 
+\section{Conclusion}
+
+This year's CUFP workshop covered a broad set of functional languages---Scala, Haskell, Scheme, OCaml, Erlang and F\# were all well represented, along with a nascent but growing interest in more formal tools such as Coq and Isabelle.  We also ran a successful 2-day tutorial series on using Scala, OCaml, Haskell and F\# for problem solving in scientific computing, web programming, parallel programming and cloud computing. 
+
+The diversity of industries where functional programming is represented is also encouraging.  Our speakers worked in the financial industry, big data processing, safety critical systems in automobiles and energy systems,  the real-time and mobile Internet, and for the first time, the huge gaming industry.
+
+\bibliography{biblio}
 \end{document}
 
 % end of JFP2egui.tex
