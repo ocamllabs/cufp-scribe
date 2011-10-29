@@ -1,9 +1,11 @@
 .PHONY: all clean
 
-%.pdf: %.tex
+%.pdf: %.tex biblio.bib
+	pdflatex $*
+	bibtex $*
 	pdflatex $*
 	pdflatex $*
-	pdflatex $*
+
 
 all: 2011.pdf
 	@ :
