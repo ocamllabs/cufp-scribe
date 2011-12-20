@@ -142,29 +142,29 @@ designer could have far more confidence in.
 \section{Erlang: Large-Scale Discrete Event Simulation}
 
 Olivier Boudeville from EDF described the use of Erlang for building
-large-scale simulations.  Sim Diasca (Simulation of Discrete Systems of All
+large-scale simulations.  Sim-Diasca (Simulation of Discrete Systems of All
 Scales) is a system implemented in Erlang for building large scale discrete
 simulations of the kind that are used for simulating Smart Energy Grids and
 other large-scale industry projects.
 
-Sim Diasca was---as its name implies---designed to meet extraordinary
-scalability requirements, supporting upwards of 50 million parallel instances
+Sim-Diasca was---as its name implies---designed to meet relatively uncommon
+scalability requirements, supporting upwards of millions of parallel instances
 of complex models.  It prescribes no fixed topology and uses Erlang's actor
 mechanism for communication between nodes.  The main role of the generic engine
 is scheduling.  Its scheduler enforces causality, reproducibility of the model
 simulation and some forms of ergodicity.
 
 As typical language choices for this domain are C++ and CORBA, the authors
-wrote a macro package---dubbed Wooper---to aid development and provide a
+wrote a macro package---dubbed WOOPER---to aid development and provide a
 more familiar environment by providing object-oriented primitives on top of
 Erlang.
 
-Boudeville characterized their choice of Erlang and functional programming as
-``massively positive''.  In particular, Erlang's support for distributing
-computation coupled with more suitable language constructs made complex
-algorithms significantly easier to express.  The team did encounter resistance
-with its esoteric language choice.  In particular, hiring developers was
-harder.
+The team did encounter resistance with its esoteric language choice.  In
+particular, hiring developers was harder.  However, Boudeville characterized their
+choice of Erlang and functional programming as ``massively positive''.  In
+particular, Erlang's support for distributing computation coupled with more
+suitable language constructs made complex algorithms significantly easier to
+express.
 
 \section{Erlang: Testing Safety Critical Automotive Components}
 
