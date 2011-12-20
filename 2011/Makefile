@@ -7,8 +7,8 @@
 	pdflatex $*
 
 
-all: 2011.pdf
+all: cufp-2011.pdf
 	@ :
 
 clean:
-	rm -f *.aux *.bbl *.log *.pdf *.ps *.toc
+	rm -f *.aux *.bbl *.log *.pdf *.ps *.toc *.blg
