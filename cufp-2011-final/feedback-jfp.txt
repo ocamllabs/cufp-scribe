@@ -1,0 +1,170 @@
+Hi Anil (/ Yaron / Marius),
+
+Many thanks for taking the trouble to write this up.  Mathhias, Xavier, and I have all looked over it and we think it's great.  (We made a few comments for your consideration while preparing the final copy, which you'll find in the "referee reports.")  
+
+Best,
+
+   - Benjamin
+
+------------
+Official form letter:
+
+Dear Dr. Madhavapeddy:
+
+It is a pleasure to accept your manuscript entitled "Commercial Uses of Functional Programming Scribe Report" in its current form for publication in the Journal of Functional Programming.  The comments of the referee(s) who reviewed your manuscript are included at the foot of this letter. Full reports, if available, can be accessed via the author centre in Manuscript Central.
+
+Please submit the PDF file and the source file(s) that were used to create it to jfp_prod@cambridge.org.
+
+Journal of Functional Programming offers authors the option to publish their article through an Open Access model (Cambridge Open Option, see http://journals.cambridge.org/action/stream?pageId=4088&level=2#4092 for details), on payment of a one-off fee of £1500/$2700. If you wish to do this, please send an e-mail stating this choice to jfp-ed@cambridge.org and complete and return the alternative copyright transfer and order form which can be accessed by clicking the link below:
+http://journals.cambridge.org/images/fileUpload/documents/JFP_ctf_oa.pdf
+
+If you do NOT wish to publish your paper Open Access, please complete and return the standard copyright transfer form:
+http://journals.cambridge.org/images/fileUpload/documents/JFP_ctf.pdf
+
+Thank you for your fine contribution.  On behalf  of the Journal of Functional Programming, we look forward to your continued contributions to the Journal.
+
+Sincerely,
+Dr. Benjamin Pierce
+Journal of Functional Programming
+bcpierce@cis.upenn.edu
+
+Referee(s)' Comments to Author:
+Referee: 1
+Comments to the Author
+Lovely write-up of what sounds like an excellent meeting.  Just a few tiny comments:
+
+;; -----------------------------------------------------------------------------
+
+page 1: 
+
+title: Instead of "Scribe report," what about "Workshop report"? The former
+sounds a bit less formal and polished, which doesn't do justice to the
+quality of the write-up!
+
+affiliations: the commas at the end of Yaron's and Marius's names look ugly 
+[I hope this isn't our style sheet]
+
+overview: 
+
+line 3: "delivered in" should probably be "delivered at" 
+
+line -2: I would cut "rough" 
+
+section 2: 
+
+line 4: please replace "Lennart" with "Augustsson" (reduce informality a bit)
+
+line -8: "concepts which" should be "concepts that" 
+
+line -6: change "Lennart brought ... over" to "Augustsson applied ... to" 
+
+line -5: Q: aren't pH's MVars just a reimplementation of id's M-structures? 
+
+line -3: "design, and is still" : delete ","
+
+line -2: How about rephrasing the last sentence as "Interestingly,
+Bluescript's type system incorporates numbers and arithmetic." 
+
+;; -----------------------------------------------------------------------------
+page 2: 
+
+line 1: "Lennart" => "Augustsson"
+line 2: "quants" => "quantitative analysts"
+   (let's write this in a professional manner)
+line 3: see "quants", change end of line to "transformation and do" (?)
+line 5: "lazyness" = "laziness", replace "by being" with "and is" 
+   plus "instead" at end of sentence 
+line 8: "(and only 6% of their modules turn this on)" => "and only 6% of their
+modules make use of it." 
+line 15: see "quants" 
+penultimate paragraph [2]: "Lennart" => "Augustsson" 
+last paragraph: even though Lennart may have made this statement about hardware
+designers with the bad implication about quants, I think we should drop the
+quote from your written report. Imagine the following line in a journal on
+financial analysis "We had to invent a safe programming language because the
+best PL techies could come up with is C++, and even an economist could do
+better." 
+
+line 5[3]: "sequentialization comes from" => "sequentiality constraints are due to"
+line -3: "was done by" => "proceeded via" 
+
+;; -----------------------------------------------------------------------------
+page 3: 
+
+line 8[4]: "This scheduler" => "Its scheduler" 
+line 11: I would remove the quotes around "Whooper"
+line -1: "making such an" => "with its" 
+
+line 1 [5]: "The next talk by Thomas Arts" -- missing verb 
+line 2: "devoted to doing" => "devoted to" 
+line 5: (“the brakes might need to know how fast the car is going!”)
+   => "For example, ``the brakes might need to know how fast the car is going.''"
+line -5: "parameterized on" => "parametrized on"
+line -3: "the the" 
+
+;; -----------------------------------------------------------------------------
+page 4: 
+
+line 4: "like this: customers" => "like this. Customers" 
+line 8: "educate their" => "educates its" 
+line 10: "Keigo" -> "Imai" 
+line -9[6]: delete "bound using" 
+line -3: "output (to quote Keigo, ”it is written in our miraculous super OCaml technique!”)
+   => "``output. To quote Keigo, ``it is written in our miraculous super OCaml technique.''"
+line -2: "from" => "of" and delete the parentheses 
+
+line 4[7]: "the preferred" => "their preferred"
+line 6: "code in Java directly" => "Java"
+
+;; -----------------------------------------------------------------------------
+page 5: 
+
+line 1: "when developing the high-volume..." -- delete "the"? 
+line 6: "use of implicits are..." => "is" 
+
+line -1[8]: replace ":" with "." 
+
+line 7: "increased, and is" => "increased and is"
+line -6: delete "of this"
+   replace "used to go to" with "for" (though I am not sure on this one)
+line -5: delete "," in "simulated, and"
+line -2: replace "vodoo" with "tricks"  and cut comma 
+
+;; -----------------------------------------------------------------------------
+page 6: 
+
+line 4: "core ideas" => "principles" 
+line 5: "lazyness" => "laziness"
+
+line 3[10]: "very complex" => "difficult" 
+line 8: "(i.e." => ", i.e."
+line 9: cut ")"
+line -2: cut "but is not mandatory"
+
+section 11: other than in the title, the section does not mention or cite
+mzScheme. It is my understand that Naughty Dog binds mzScheme version 3.5.
+(The C++ level of Mz helps you program as if you were in Scheme, using C++
+syntax.) If so, I suggest adding a sentence to that effect. MzScheme is now
+called Racket and the proper URL is racket-lang.org. 
+
+line -6: cut "oodles of" 
+last line: this is where you may wish to change the prose slightly so that it
+doesn't sound like they are the 73rd group to implement a Scheme interpreter 
+(yes there are about 72 actively maintained Scheme implementations, though 
+only a handful of large ones). 
+
+;; -----------------------------------------------------------------------------
+page 7: 
+
+line 2 [12]: "two halves: a management and storage stack" -- reads funny;
+maybe ""two halves: a management stack and a storage stack" 
+
+line 5[12]: delete "very" 
+line -6: ", and deal" -> "and deal"
+line -3: "such as the Lwt threading library and Bitstring syntax extension, and
+increasing the number of I/O threads used." should be "such as the Lwt
+threading library, the Bitstring syntax extension, and increasing the number of
+I/O threads used." but I'm not sure 
+line -2: "Tom" -> "Wilkie" 
+
+

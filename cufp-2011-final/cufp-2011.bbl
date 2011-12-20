@@ -1,0 +1,62 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citename{Aditya {\em et~al.}\relax,
+  }1995]{Aditya95semanticsof}
+Aditya, Shail, Arvind, Maessen, Jan-Willem, Augustsson, Lennart, \& Nikhil,
+  Rishiyur~S. (1995).
+\newblock Semantics of ph: A parallel dialect of {H}askell.
+\newblock {\em Pages  35--49 of:} {\em in proceedings of the {H}askell workshop
+  (at {F}{P}{C}{A} 1995)}.
+
+\bibitem[\protect\citename{Arvind {\em et~al.}\relax, }1978]{arvindid}
+Arvind, Gostelow, K.P, \& Plouffe, W.E. 1978 (Dec).
+\newblock {\em An asynchronous programming language for a large multiprocessor
+  machine}.
+\newblock Tech. rept. TR114a. UC Irvine.
+
+\bibitem[\protect\citename{Claessen \& Hughes,
+  }2000]{Claessen:2000:QLT:351240.351266}
+Claessen, Koen, \& Hughes, John. (2000).
+\newblock Quick{C}heck: a lightweight tool for random testing of {H}askell
+  programs.
+\newblock {\em Pages  268--279 of:} {\em Proceedings of the fifth {A}{C}{M}
+  {S}{I}{G}{P}{L}{A}{N} international conference on functional programming}.
+\newblock ICFP '00.
+\newblock New York, NY, USA: ACM.
+
+\bibitem[\protect\citename{Erk\"{o}k \& Matthews,
+  }2008]{Erkok:2009:PES:1481848.1481860}
+Erk\"{o}k, Levent, \& Matthews, John. (2008).
+\newblock Pragmatic equivalence and safety checking in {C}ryptol.
+\newblock {\em Pages  73--82 of:} {\em Proceedings of the 3rd workshop on
+  programming languages meets program verification}.
+\newblock PLPV '09.
+\newblock New York, NY, USA: ACM.
+
+\bibitem[\protect\citename{Lattner \& Adve,
+  }2004]{Lattner:2004:LCF:977395.977673}
+Lattner, Chris, \& Adve, Vikram. (2004).
+\newblock {L}{L}{V}{M}: A compilation framework for lifelong program analysis
+  \& transformation.
+\newblock {\em Pages  75-- of:} {\em Proceedings of the international symposium
+  on code generation and optimization: feedback-directed and runtime
+  optimization}.
+\newblock CGO '04.
+\newblock Washington, DC, USA: IEEE Computer Society.
+
+\bibitem[\protect\citename{Rishiyur \& Arvind,
+  }2008]{Nikhil:2008:BLU:1862867.1862868}
+Rishiyur, Nikhil~S., \& Arvind. (2008).
+\newblock What is {B}luespec?
+\newblock {\em Sigda newsletter}, {\bf 38}(December), 1--1.
+
+\bibitem[\protect\citename{Sagonas, }2007]{Sagonas:2007:DDE:1273920.1273926}
+Sagonas, Konstantinos. (2007).
+\newblock Detecting defects in {E}rlang programs using static analysis.
+\newblock {\em Pages  37--37 of:} {\em Proceedings of the 9th {A}{C}{M}
+  {S}{I}{G}{P}{L}{A}{N} international conference on principles and practice of
+  declarative programming}.
+\newblock PPDP '07.
+\newblock New York, NY, USA: ACM.
+
+\end{thebibliography}
