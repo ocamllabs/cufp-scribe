@@ -128,7 +128,7 @@ due to data dependencies, making it possible to efficiently evaluate this
 language on FPGAs. Cryptography is also a natural match for FPGAs, and Cryptol
 makes it easier to experiment with several implementations. Cryptol has a {\tt
 theorem} keyword to express properties such as the inverse relationship between
-encryption and decryption operations. A tool similar to
+encryption and decryption operations. A tool that is similar to
 QuickCheck~\cite{Claessen:2000:QLT:351240.351266} is used to generate test
 cases to ensure that these theorems hold.
 
@@ -198,16 +198,16 @@ consultancy (IT Planning, Inc.) he works for, where 45\% of their annual sales a
 functional programming projects.
 
 Their typical sales story goes like this. Customers specify their choice of
-programming language and an impossibly tight deadline.  IPTL then propose using
+programming language and an impossibly tight deadline.  ITPL then propose using
 their existing OCaml codebase to deliver the solution, but within the required
-deadline and with much less risk.  IPTL continually educates its customers
+deadline and with much less risk.  ITPL continually educates its customers
 about the benefits of rapid development using functional languages.
 
 Imai then demonstrated an example project: a foreign exchange chart application
 that works on iPhone and Android, dynamically drawn using an HTML5 canvas.  It
 was written in OCaml and translated to Javascript using the OCamlJS
 compiler.\footnote{\url{https://github.com/jaked/ocamljs}}  In their
-experience, static typing was very helpful for web development.  In particular
+experience, static typing was very helpful for web development.  In particular,
 typing of DOM elements avoided many runtime errors, especially in the complex
 {\tt <canvas>} tag.  Higher level language features also facilitate the
 asynchronous programming style prevalent in web apps.  Their Web SQL database
@@ -310,9 +310,9 @@ principles of Haskell. The core algorithms implemented were all
 Prashanth Mundkur from Nokia Research in Palo Alto talked about the Disco
 Project.  When Nokia started evaluating systems for distributed data
 processing, the most popular solution was Hadoop. However, this was a ``massive
-pile of Java software'' that was difficult to configure and operate. An
-Erlang hacker at Nokia wondered how hard it would be to implement a simpler
-alternative.
+pile of Java software'' that was difficult to configure and operate. An Erlang
+hacker at Nokia---Ville Tuulos---wondered how hard it would be to implement a
+simpler alternative.
 
 The first Disco prototype took a few weeks to implement. The core coordination
 components are implemented in Erlang making use of its runtime facilities for
