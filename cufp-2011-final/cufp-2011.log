@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.11.4)  20 DEC 2011 15:45
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.11.4)  20 DEC 2011 15:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -638,7 +638,7 @@ Here is how much of TeX's memory you used:
 .pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr
 /local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/tex
 live/2011/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on cufp-2011.pdf (8 pages, 99433 bytes).
+Output written on cufp-2011.pdf (8 pages, 99440 bytes).
 PDF statistics:
  52 PDF objects out of 1000 (max. 8388607)
  36 compressed objects within 1 object stream
