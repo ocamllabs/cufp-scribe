@@ -51,6 +51,62 @@ of the talks.  Videos and slides from all the talks are available online at \url
 
 \section{Keynote: Adopting Functional Programming}
 
+Kresten Krab Thorup, CTO of Trifork, Aarhus gave the keynote address,
+and took us on the voyage he had taken from being on ``object head''
+to ``Erlang land.''  Thorup's foundational training in software
+development was all in terms of object-oriented methodologies.  He
+went on to work on Objective C for NeXT, afterwards took his Ph.D.\
+and then founded Trifork, an IT services company with now about 250
+employees that develops software solutions, provides training, and
+organizes several well-respected conferences.
+
+While Trifork originally capitalized almost exclusively on its Java
+expertise, it now successfully applies Erlang in large-scale
+industrial projects.  Thorup described (taking cues from anthropology)
+how many organizations have not been able to make such transitions
+easily: Groups tend to gather around an idea that keeps them together,
+and try to keep new ideas at bay.  This makes it difficult for
+long-time OO developers to adopt functional programming.
+
+Trifork managed to stay flexible by making learning about new ideas
+and communicating them part of their regular operation: Everyone at
+Trifork should spend 10\% of their time in the structured exchange of
+knowledge, by giving presentations, organizing meetings, give training
+classes, or organizing conferences.
+
+Thorup reviewed object-oriented programming and the ecosystem around
+it to show how it had become successful: Through an intuitive idea~--
+``an object is an independent encapsulated entity that inteprets
+inputs on its own account''~-- but also because of the availability of
+thinking tools: graphical notation for design, tools for mapping those
+designs to programs, books on comon problems akin to ``Design
+Patterns''~\cite{GammaHelmJohnsonVlissides1995}, analysis methods for producing systems,
+and standardized qualification processes.
+
+However, Thorup sees a series problem with the object-oriented model,
+as objects have no coherent model of time, and no good way to compose
+behaviors over time.  With the rise of multicore and distributed
+computing, these become increasingly important.  Erlang, supporting
+functional programming and an actor model for concurrency, parallelism
+and distribution, addresses this issue.  Thorup stressed that Erlang
+is not primarily a functional programming language, but that
+functional programming helps Erlang meet its requirements: being a
+language for writing robust distributed applications.
+
+Thorup described large-scale projects done using Erlang: One for
+managing health-care records in Denmark, and one for sharing data
+among ``sometimes connected devices'' such as a cell phones at a music
+festival.
+
+Thorup concluded by noting that two fundamental classes of problems in
+software development require different classses of solutions:
+\textit{Interactive systems} with multiple parties are fundamentally
+stateful, and where developers should understand the handling of
+state~-- for those problems, actors are a good model.
+\textit{Transformational systems} map input to output, where
+developers want to abstract over the details of hardware utilization,
+the handling of mutable state and coordination.
+
 \section{Jane Street Status Report}
 
 % A Caml's Progress
