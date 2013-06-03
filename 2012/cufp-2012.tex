@@ -109,107 +109,57 @@ the handling of mutable state and coordination.
 
 \section{Jane Street Status Report}
 
-% A Caml's Progress
-% 
-% Jane Street is mired in FP, but not in transitional environment; not
-% academic, not theorem proving, etc.
-% 
-% This talk is an update on where they are on using OCaml after more
-% than a decade.
-% 
-% --
-% 
-% The Jane Street company interacts with lots of people, anonymously,
-% over the world's securities markets.  They have 320 employees in three
-% continents, with billions of dollars per day traded; much more than
-% the value of the company.  In this situation, it is easy to go out of
-% business is a mistake is made.
-% 
-% There is a lot of exogenous complexity in their environment:
-% regulation, new security types, many other actors to interact with,
-% etc.
-% 
-% Their software has three main kinds of requirements:
-% 
-% * Correctness - most important, related to the "easy to go out of
-% business" point above
-% 
-% * Agility - need to quickly exploit new opportunities as they're found
-% 
-% * Performance - of course
-% 
-% --
-% 
-% Application areas where Jane St. has written OCaml code:
-% 
-% * Research Tools - investigating trading strategies with statistics; prediction
-% 
-% * Trading Systems - was VB in Excel.  used to make trades automatically
-% 
-% * Order Gateways - programs that interact with markets, talking
-%  others' protocols, having to deal with differences between the
-%  specification and reality.
-% 
-% * Post-Trade - internal understanding of completed trades, cleanup
-%  related to closing houses
-% 
-% * Systems Infrastructure - management of systems; IT
-% 
-% * Dev Tools - 100 devs (including part time); OCaml is a good language
-%  but has bad tools
-% 
-% * Trading Tools - visualization using curses; prevent bad UX designers
-%  from doing UX
-% 
-% * Market Data - pull data from exchanges around the world
-% 
-% * Desk Infrastructure - trading desks' tools build (by traders) in
-%  OCaml; one month training in OCaml for new traders
-% 
-% --
-% 
-% Platform:
-% 
-% * Core - stdlib replacement
-% 
-% * Async - sort-of-threads; it is okay to have different abstractions
-%  for different things
-% 
-% * Incremental - large scale computations w/ small updates
-% 
-% * Catalog - pub/sub system w/ high level architecture abstractions
-% 
-% * Nile - distributed message passing (in progress)
-% 
-% --
-% 
-% Future:
-% 
-% * More OCaml - committed fully
-% 
-% * More Open Source - improve community by contributing code back to it
-% 
-% * More Collaboration - improve core technology, tools
-% 
-% ==
-% 
-% Q: What is your experience with the usual pattern of increased
-% rigidity/obscurity with large systems?
-% 
-% A: 1) Can refactor ruthlessly because of strong typing
-%   2) avoid clever tricks, as/when they are hard to explain to others
-% 
-% Q: FP is usually described as 10x more concise than imperative, in
-% your experience, is it 9x?  11x?
-% 
-% A: don't want concision first, want explicitness.  Don't have a real #
-% on rewrites from other code to OCaml because of adding features.
-% 
-% Q: What failures happen often?
-% 
-% A: Jane St. code fails by turning off; this happens, but it's okay.
-% Failure causes are usual problems, load, incorrect
-% specification/understanding of world, etc.
+Jane Street is a quantitative proprietary trading firm that has been a
+well-known user and supporter of OCaml.  Yaron Minsky reviewed the
+past decade of OCaml use at Jane Street.
+
+Jane Street has three kinds of requirements on their own software:
+\begin{description}
+\item[Correctness] Jane Street trades billions of dollars every day~--
+  much more than the company is worth.  Hence, a software error can
+  have disastrous consequences.
+\item[Agility] Jane Street needs to be able to adapt the software
+  quickly to exploit new market opportunities as they are found.
+\item[Performance] The software needs to quickly to exploit market
+  opportunities.
+\end{description}
+%
+Jane Street has written OCaml code for a number of application areas:
+research tools for investiagting trading strategies, trading systems
+(replacing legay systems written in VBA/Excel) that make trades
+automatically, order gateways that implement protocols to interact
+with markets, post-trade software to analyze and clean up completed
+trades, systems infrastructure to manage systems, development tools,
+trading tools, tools for managing market-data and desk infrastructure.
+
+Minsky could not remember a crucial error in the software that
+happened in production: Code at Jane Street generally fails by turning
+off the system, which is acceptable in this environment.  Jane
+Street's user interfaces are all text-based, and written using
+Curses~-- this ``prevents bad UX designers from doing UX.''
+
+Another important that favors OCaml is how the type system eases large
+refactoring projects: The type system catches most mistakes that occur
+in the middle of such projects.  The type system helps programmers
+write readable, explicit code, which is more important than great
+productivity increases or extremely concise programs.
+
+Jane Street has developed a number of generally useful libraries for
+OCaml, many of which are open
+source.\footnote{http://janestreet.github.io/} In particular,
+\textit{Core} is an enhanced ``standard library,'' meant to the
+minimalistic libraries that ship with OCaml.  \textit{Async} is a
+library with monadic concurrency abstractions, similar to available in
+other functional languages such as
+F\#~\cite{Syme:2011:FAP:1946313.1946334}.  \textit{Incremental}
+describes large-scale computations with small updates.
+\textit{Catalog} is a publish/subscribe system.  \textit{Nile} is a
+distributed message-passing library.
+
+In summary, Jane Street is fully committed to OCaml, and will continue
+to do its development in OCaml.  Jane Street will continue to
+contribute to open-source projects, and to collaborate with others
+working on or in OCaml.
 
 \section{Transmitting customised ads to set-top boxes with Erlang}
 
@@ -241,7 +191,8 @@ the handling of mutable state and coordination.
 
 We would like to thank Simon Thompson and Duncan Coutts for helping to
 organize the CUFP tutorials, and Ashish Agarwal for organizing the BoF
-sessions.  Also, we thank Peter Thiemann and Fritz Henglein and the
+sessions.  We thank Kresten Krab Thorup and Yaron Minsky for providing
+notes on their talks.  Also, we thank Peter Thiemann and Fritz Henglein and the
 whole ICFP/CUFP team for their assistance in Copenhagen.  We look
 forward to CUFP 2013 in Boston!
 
