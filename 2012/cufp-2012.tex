@@ -228,8 +228,48 @@ programming.
 
 \section{Functional Programming @ Ghent IT Valley}
 
-% Slides here:
-% http://www.slideshare.net/toolslive/cufp-2012-talk
+Romain Slootmaekers and Nicolas Trangez of Incubaid Research Lab
+reported on using OCaml for implementing a distributed storage
+service.  Incubaid Research Lab is an incubator laboratory for startup
+companies.
+
+In 2009, Amplidata~-- one of those spinoffs~-- was working on a
+\textit{dispersed storage system} (DSS).  The system consists of a
+multi-stage pipeline involving metadata storage, encoding and
+decoding, storage management, and the backend disks.  At the time,
+development on the storage-management component, written in C++, had
+stalled: There were problems with resource management and threads, the
+software had many bugs, and its object model had poor locality, which
+led to poor performance.  Slootmaekers was able to (correctly)
+re-implement the storage component in OCaml within two days, which led
+to Amplidata considering using languages other than C++ for system
+development.
+
+The original reimplementation of the storage component had to be done
+quickly, and was able to leverage OCaml's object-oriented substrate to
+duplicate the architecture of the C++ original.  Also, the existence
+of precise specifications and a test suite helped speed the rewrite.
+
+The successor version of the system was then re-implemented mostly in
+OCaml, and involved more leisurely and more complete refactoring.  The
+rewrite used the \textit{Lwt}~\cite{Vouillon:2008:LCT:1411304.1411307}
+library, and was delightfully painless.  Performance improved more
+than twofold, and Amplidata was able to preserve code size while
+adding significant features.  In particular, the newly written Arakoon
+distributed key-value store was developed to hold the system's metadata.
+
+OCaml helped developers through type inference, a fast compiler that
+produces sufficiently fast code, the convenient C FFI, and the help
+the type system gives when refactoring.  Downsides are poor tool
+support, a scarce and fragmented library landscape, problems with
+multicore support, that the object-oriented model which does not fit
+well with the rest of the language.  Slootmaekers also cited the lack
+of visual tools to talk about system architecture as a notable
+problem.
+
+In conclusion, Slootmaekers noted that any sufficiently large project
+should be ready to use more than one language, and that functional
+programming and distributed systems are a good match.
 
 \section{From Streams to Functions (and Back Again)}
 
