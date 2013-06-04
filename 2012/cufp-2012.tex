@@ -163,6 +163,37 @@ working on or in OCaml.
 
 \section{Transmitting customised ads to set-top boxes with Erlang}
 
+Macías Lopez, David Cabrero and Laura M.\ Castro from the University
+of A Coruña reported on \textit{ADVERTISE}
+project~\cite{Lopez:2012:DDA:2370776.2370800,
+  Lopez:2012:FTC:2364489.2364498}.  \textit{ADVERTISE} is a
+distributed system for transmission of customised ads to TV set-top
+boxes via the TV network of a cable provider.  The system~-- entirely
+written in Erlang~-- compiles events, emits ``advertising signals'' to
+set-top boxes, and collects statistics about how many times specific
+ads were displayed on consumer boxes.  ADVERTISE sends ads to more
+than 100,000 clients.
+
+Lopez reported on the difficulties of developing and deploying such a
+large-scale system.  In particular, after the original system
+implementation, the customer only provided hardware that did not
+satisfy the original minimum specifications.  Moreover, the network
+exhibits frequent node failures and netsplits, which disrupted the
+operation of the original system.  Thus, while Erlang was a good
+choice for implementing the system, merely using Erlang does not make
+a distributed system robust in highly unreliable environments.
+ADVERTISE yielded insights into best practices for implementing
+distributed systems in such environments.
+
+Netsplits in particular are problematic, as nodes may incorrectly
+conclude other nodes are down, and then compete for control of the
+network.  This may lead to data inconsistencies and duplicate
+implementations of responsibilities assumed to be unique. An ADVERTISE
+node, when it loses network connectivity, immediately suspends
+execution and waits until it is restored, choosing consistency over
+availability in such scenarios to avoid corrupting advertising
+campaigns.
+
 \section{Haskell for XenClient}
 
 \section{Functional Programming @ Ghent IT Valley}
