@@ -196,6 +196,36 @@ campaigns.
 
 \section{Haskell for XenClient}
 
+Matthias Görgens reported on using Haskell in the XenClient project at
+Citrix: XenClient is a virtual-machine manager for clients, primarily
+laptops in corporate and government environments, where XenClient
+offers functionality different from the long-established XenServer,
+such as trusted-computing support with hard-drive encryption and
+native graphics performance.
+
+The XenClient management stack consists of many daemons that commicate
+via D-Bus and V4V (a VM-to-VM communications protocol).  Originally,
+many of the daemons were written using Ruby, but a rising bug count
+motivated the development team to look for alternatives, particularly
+statically-typed languages to catch more bugs at development time.
+Some daemons were then rewritten in Haskell.  By now, there are about
+25,000 loc in Haskell in the system.  The XenClient daemons are
+typically long-running, perform short bursts of communication and
+computation upon a request discovered via polling, do not hold much
+state and are restartable: Haskell is well-suited for this kind of
+application.
+
+As XenServer already uses OCaml for its management toolstack, it is a
+bit surprising that XenClient chose Haskell: Görgens cited personal
+preferences, the availability of more libraries, and the fact that
+Haskell ``relieves pressure to share code with XenServer.''
+
+Görgens also cited a few problems with using Haskell: XenClient found
+it difficult to handle IO-heavy workloads, making Haskell work with
+the OpenEmbedded build system in use in XenClient, and the
+successfully train developers not yet familiar with functional
+programming.
+
 \section{Functional Programming @ Ghent IT Valley}
 
 % Slides here:
