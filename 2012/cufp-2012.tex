@@ -273,6 +273,63 @@ programming and distributed systems are a good match.
 
 \section{From Streams to Functions (and Back Again)}
 
+Frank McCabe of Starview, Inc.\ reported on Star, a new programming
+language, that is part of Starview's event-processing platform.  (Star
+is available by request the author via \url{www.star-lang.com}.)  The
+purpose of Starview's platform is to provide \textit{operational
+  intelligence}: to notice when a significant business event happened,
+and to decide what to do about it, in real time.  The Star language
+was developed to express this intelligence: It started out as
+``StarRules,'' a simple language based on a ``on pattern do
+something'' construct.  It could perform straightforward statistical
+processing and infer significant events from event data.
+
+StarRules's first application was scheduling in the semiconductor
+industry.  In this domain, it is not enough for software to make
+simple inferences from the data: It needs to make complex decision in
+the face of an ever-changing environment, where machines frequently
+break, invalidating any long-term plans.  The software needed here did
+not fit StarRules's ``on pattern do'' construct.  Consequently,
+Starview decided to turn StarRules into a general-purpose language,
+and renamed it to Star.
+
+A number of requirements shaped Star's design: Star needed to support
+different programming styles in use at Starview.  The
+semiconductor-fab scheduling application demanded safety, as errors in
+the deployed software can be extremely costly.  Moreover, it needed to
+satisfy modest real-time requirements: the software needs to be fast
+enough to provide useful output before it is obsolete.
+
+McCabe then made the following basic design decisions for Star: Star
+is strongly to help with safety, but also to support tooling and help
+communication in teams.  To avoid the bureaucracy of dealing with
+types in Java, the language has type inference.  The type system is
+based on algebraic types rather than objects, and has no
+\texttt{null}.  (This decision was controversial within Starview,
+which is still in many ways a ``Java house.'')
+
+Star then amalgamated influences from various languages, in particular
+functions as an organizing principle from other functional languages,
+macros from April~\cite{fgm-klc:95} and Lisp to support syntatic
+extensibity, as well as the Concurrent ML substrate for parallelism
+and concurrency~\cite{Reppy1999}.  The type system borrows much from
+Haskell: Star's type contracts are a variant of Haskell's type
+classes~\cite{WadlerBlott1989}.  Star also includes influences from
+Prolog and SQL.  Moreover, its actors based on \textit{speech
+  actions}~\cite{searle:69} provide a mechanism for implementing
+agent-like entities. Star is designed to be readable rather than
+concise: This makes its texture distinct from other functional
+languages such as Haskell or ML.
+
+The combination of functions, macros and overloading provides a
+coherent methodology for implementing DSLs in Star: A developer can
+start with an ontological commitment in her problem domain, provide
+appropriate syntax, which is translated into a macro invocation, which
+is turned into function invocations, which are often backed by
+contracts.  In particular, actors are implemented this way, as is
+higher-level functionality for analytics and event processing.
+
+
 \section{Functional Big-Data Genomics}
 
 \section{Using F\# to Prove Stabilization of Biological Networks}
