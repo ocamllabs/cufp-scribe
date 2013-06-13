@@ -332,6 +332,63 @@ higher-level functionality for analytics and event processing.
 
 \section{Functional Big-Data Genomics}
 
+Ashish Agarwal reported on joint work with Sebastien Mondet, Paul
+Scheid, Avid Madar, Richard Bonneau<sup>1, Jane Carlton,. and Kristin
+C.\ Gunsalus at New York University: the Genomics Sequencing Core used
+to enable entry, storage and analysis of genomic sequencing data,
+implemented in OCaml.
+
+Since the sequencing of the human genome in 2000, modern sequencing
+equipment has been getting faster at high rates: Whereas storage costs
+per amount of data are halving every 14 months, the data that
+accumulates in genome sequencing doubles in volume every five months.
+This places high demands on the computational infrastructure used to
+process sequencing data.  In particular, where the sequencing
+itself~-- performed by custom machines~-- used to dominate the time
+spent in a typical genome-related project, the emphasis is migrating
+to experimental design and datastream analysis.
+
+The project described by Agarwal provides the computational
+infrastructure for acceping and storing sequencing data and
+sequencing, and making it accessible to distributed computations on a
+compute cluster.  In particular, the Genomics Sequencing Core provides
+an application server for managing the overall functioning of the
+system, a job queue for computations that interfaces to the compute
+cluster, and a web front end for the entire systems.  The system
+maintains metadata tracking samples, libraries and protocols.
+
+The data that accumulates in the system is characterized by high
+volume, but also by a high variety of different formats.  (The
+velocity at which it arrives is not yet a problem, but may become a
+challenge in the future.)  Agarwal and his colleages have developed a
+DSL embedded into OCaml that is used to generate multiple
+functionalities, among them serialization, SQL schemas, query scripts,
+OCaml code for performing reads in inserts, web widgets, and diagrams.
+This enables rapid development of functionality, and easy migration
+between formats.
+
+The Core also maintains a virtual filesystem that distinguishes
+between ``original'' data and recomputes ``derived'' data on the fly.
+
+The entire system is implemented in OCaml, using a wide variety of
+libraries~-- in particular the
+Ocsigen~\cite{Balat:2009:ERO:1596550.1596595} web framework, the Core
+and Batteries libraries, and the Biocaml, PG'OCaml, Xmlm and Ocamlnet
+libraries.  ``1.3 developers'' built the system and delivered the
+first version in production within two months.  The experience with
+OCaml has been mostly positive: Agarwal cited OCaml's
+industrial-strength implementation, the availability of needed
+libraries, and the excellent performance.  Agarwal mentioned the
+complications maintaining a build system and the lack of ``blessed
+libraries'' as factors that could still be improved.
+
+Agarwal closed by summarizing the standing of functional programming
+in biology: Functional programming is becoming a recognized term, and
+thus the field is developing demand for software engineers who can
+acquire domain knowledge and build software fast.  He noted that this
+profile is different from that of data analysts, who need more
+in-depth knowledge of the field and statistics.
+
 \section{Using F\# to Prove Stabilization of Biological Networks}
 
 \section{Developing an F\# Bioinformatics Application with HTML5
