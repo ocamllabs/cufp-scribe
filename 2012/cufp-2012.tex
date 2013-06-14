@@ -391,6 +391,53 @@ in-depth knowledge of the field and statistics.
 
 \section{Using F\# to Prove Stabilization of Biological Networks}
 
+Samin Ishtiaq reported on the \textit{Bio Model
+  Analyzer}~\cite{Benque:2012:BVT:2362216.2362280} (or \textit{BMA},
+online at \url{http://biomodelanalyzer.research.microsoft.com/})
+developed by an interdisciplinary team at Microsoft Research: The Bio
+Model Analyzer analyzes models from System Biology, which are
+program-like descriptions of networks that describe systems like skin
+or blood.
+
+Particularly important to BMA are \textit{stability} properties: For
+example, healthy skin should grow as many cells as it sheds.  If it
+sheds more than it grows, sores develop and wounds do not heal well.
+Growing more than it sheds is the definition of cancer.
+
+The programs describing such biological networks are asynchronous
+dataflow diagrams with typically tens of thousands of variables.  Each
+variable has an associated update function that computes a new value
+from the the values of other variables connected with it in the
+network.  The objective of BMA is not just to simlulate a network, but
+to prove general stability-related properties independent of a
+particular starting state, such as the existence of a unique fixpoint,
+several fixpoints or cycles.  This may be useful for developing new
+drugs.
+
+Traditional program-analysis tools do not scale or do not work for
+programs with this many variables.  Consequently, BMA uses newly
+developed techniques: It attempts to prove lemmas for small
+subnetworks and propagate them through the entire networks in the hope
+that enough lemmas propagate to prove stability.  The prover core does
+not just report on the success of the proof search, but also allows
+interactively stepping through the lemma-propagation process.  The
+designers in the BMA team have targeted the UI at system biologists,
+which use visualizations different from those computer scientist
+
+BMA consists of three parts: The prover core written in F\#,
+Microsoft's Z3 SMT solver written in C++ (but only linked into the
+project), and the UI written in C\#.  The ``debugging functionality''
+in the prover provides the propagation steps in a lazy sequence.  This
+is very natural in F\#.  The UI is not written in F\#: in particular,
+it benefits from the better tool support for C\#.
+
+Ishtiaq had previously worked in OCaml using Emacs, and offered some
+thoughts on the transition to F\# in Visual Studio: In particular,
+Visual Studio offers interactive type checking and thus supports
+exploratory programming in ways Emacs does not.  On the other hand,
+OCaml still offers some higher-level abstraction mechanisms such as
+GADTs, modules, and functors, which F\# still lacks.
+
 \section{Developing an F\# Bioinformatics Application with HTML5
   Visualization}
 
