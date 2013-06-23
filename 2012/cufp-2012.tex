@@ -355,7 +355,7 @@ compute cluster.  In particular, the Genomics Sequencing Core provides
 an application server for managing the overall functioning of the
 system, a job queue for computations that interfaces to the compute
 cluster, and a web front end for the entire systems.  The system
-maintains metadata tracking samples, libraries and protocols.
+maintains metadata racking samples, libraries and protocols.
 
 The data that accumulates in the system is characterized by high
 volume, but also by a high variety of different formats.  (The
@@ -440,6 +440,28 @@ GADTs, modules, and functors, which F\# still lacks.
 
 \section{Developing an F\# Bioinformatics Application with HTML5
   Visualization}
+
+Adam Granicz reported on joint work between University of Nebraska
+Medical University and IntelliFactory on the \textit{functional
+  genomics explorer} (or \textit{fgx}), which visualizes the genetic structure of a
+Methicillin-Resistant Staphylococcus Aureus.  Methicillin-Resistant
+Staphylococcus Aureus is more commonly known as \textit{MRSA}: MRSA
+cause more deaths in the USA annually than HIV/AIDS.
+
+The fgx software is a web application written in F\# using
+IntelliFactory's \textit{WebSharper} web framework.  WebSharper
+contains a transpiler from F\# to JavaScript, which allows the
+complete application~--- with all client and server code~--- to be
+written in F\#.  The fgx software uses a HTML5 canvas for drawing, and
+interfaces to the the Krona JavaScript visualization
+library~\cite{OndovBergmanPhilippy2011} through an F\# wrapper.  The
+data that fgx visualizes is too large to transport to the web browser
+in its entirety: fgx uses a combination of RPC calls and streaming via
+WebSocket to transfer it incrementally.
+
+Plans are underway to extend the software to a full Laboratory
+Information Mangagement System, which would track and manage
+sequencing experiments, samples, tools, and resources used.
 
 \section{Developing Medical Software in Scala and Haskell}
 
