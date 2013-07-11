@@ -465,6 +465,69 @@ sequencing experiments, samples, tools, and resources used.
 
 \section{Developing Medical Software in Scala and Haskell}
 
+Stefan Wehr reported on software developed by factis Research in
+Freiburg for managing electronic patient records: Doctors can access
+and enter patient information on tablets, which synchronize with a central
+server.
+
+The software needs to deal with significant amounts of data: Per day,
+a hospital department with 170 patients generates about five lab
+reports per patient per day. (20 in intensive care.)  Also, the
+department produces about 150 images. (More than 1000 if CTs or MRI
+scans are made.)  Also, the hospital's IT systems produce 34,000 HL7
+messages.  (HL7 is a set of interoperability standards for healthcare
+IT systems.)  All in all, the software needs to synchronize about
+13~Megabytes per patient per day.
+
+The tables serve as simple data viewers and entry points, with little
+domain-specific knowledge of the healthcare application domain itself.
+They are able to function offline, with periodic synchronization with
+a \textit{synchronization server}, written in Haskell.  The
+synchronization server generates documents from standardized import
+data, and regenerates them if the input data changes.  It then
+transfers the documents and images to the tablets, and receives and
+processes data from them, keeping track of the synchronization state.
+These server components also contain only little domain-specific code.
+
+The domain-specific code resides in a separate \textit{data server},
+written in Scala, which connects to the hospital's IT systems using
+various protocols and APIs such as HL7, SQL, DICOM SAP.  It
+communicates with the synchronization server via the
+\textit{roundtrip} library, based on invertible syntax
+descriptions~\cite{Rendel:2010:ISD:1863523.1863525}.  factis developed
+roundtrip for Haskell and then ported it to Scala.
+
+Generally, the experience with using functional programming for this
+project has been expectedly positive.  factis (with four employees and
+six freelancers) has been working on the application since 2010.  By
+now, the synchronization server has about 69,000loc, and the data
+server about 37,0000loc.
+
+Wehr cited as Haskell's advantages the very expressive, rich static
+type system, fine-grained control over side effects, ``immutability by
+default'', very good support for testing, the excellent support for
+concurrency, as well as an active and helpful community.  Haskell's
+laziness occasionally proved problematic, with space profiling
+providing only partial solutions.  Also, cabal proved problematic.
+Wehr also reported that Haskell had a steep learning curve for
+developers new to Haskell.
+
+factis chose Scala for the data server because many Java APIs were
+available that were helpful in integrating existing hospital IT
+infrastructure.  Scala also has a very expressive, rich static type
+system, favors immutability, good support for testing, a powerful yet
+simple build system (sbt), direct access to the Java API, and powerful
+monitoring facilities through Java ecossystem.  Java programmers find
+it quite easy to adopt Scala.  On the other hand, Scala provides no
+static control over side effects.  Subtyping makes Scala's type system
+quite complex, which occasionally makes the type system difficult to
+control.  Also, the easy migration path for Java programmers is a
+double-edged sword, as Scala programmers coming from Java do not
+always adopt functional programming as completely as they should.
+
+All in all, Wehr concluded that both Haskell and Scala are excellent
+languages for commercial software development.
+
 \section{Functional programs connected to the power grid}
 
 \section{Clojure iPad analytics dashboard in energy sector}
