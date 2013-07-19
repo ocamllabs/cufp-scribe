@@ -530,6 +530,71 @@ languages for commercial software development.
 
 \section{Functional programs connected to the power grid}
 
+Sebastian Egner of Entelios AG, Berlin, reported on Entelios's project
+on coordinated reduction of electrical loads at industrial production
+facilities.  Entelios is a VC-funded startup founded in 2010 with
+currently 20 employees.
+
+In order to maintain stability in the German electrical system, the
+\textit{Transmission System Operators} (TSOs---the companies that
+maintain the network itself) balance supply and demand of electricity.
+This is increasingly becoming a challenge with the advent of
+electricity from renewable sources, particularly solar and wind
+energy.  While these sources were able to provide 20\% of Germany's
+elecricity demands on a single day in 2012, their supply is subject to
+fluctuations and complex regulation.
+
+Entelios provides \textit{operating reserve power}---the electricity
+reserve needed to maintain stability---to the network by
+\textit{demand-response management}, particularly by cooperating with
+big consumers of electricity in the 100kW--100MW range such as arc
+furnaces or paper mills.  These consumers can be switched off for
+limited periods of time, thus providing ``negative consumption''
+equivalent to positive production of electricity.  Entelios is
+currently prequalified to provide operating-reserve power to all four
+TSOs.
+
+At consumers, Entelios installes ``EBoxes'', small embedded systems
+connected to the Internet that interface with the control systems of
+the consumers.  The software at Entelios's office controls the EBoxes.
+In particular, Entelios maintains two redundant \textit{Network
+  Operation Centers} at its two offices, with back-office software for
+maintaining communication with the EBoxes and front-office software
+for user interaction.  Both components are subject to frequently
+changing requirements as the regulatory framework and market
+environment changes.
+
+The back-office software was originally written in Python, which was
+available on the embedded systems at the heart of the EBoxes.  While
+Python worked well enough at first, software had difficulty keeping up
+with changing requirements, however, especially with unanticipated
+changes in the sampling rate.  Python's threading facilities had
+trouble keeping up with the soft real-time requirements.  As a result,
+the back-end software has been rewritten in Erlang.
+
+The front-office software is a rich client running on Windows, written
+in F\# using the WPF framework.  Development of the front office was
+outsourced to a company who are experts in \textit{functional-reactive
+  programming}~\cite{Elliott:2009:PFR:1596638.1596643}, which became
+the paradigm of the software for managing time-series data.
+
+Experience with using functional programming has generally been
+positive and enabled Entelios to roll out new features and react to
+changing requirements quickly.  In particular, moving from Python to
+Erlang showed a striking contrast: Whereas Python required substantial
+work going from prototype to production-ready software, prototypes in
+Erlang were usually quite close to production already.  Moving from
+Python to Erlang required moderate deployment effort: Entelios found
+two bugs in the Erlang system that have since been pushed upstream.
+The experience of F\# was more mixed: While F\# is an effective
+language for developing WPF applications, new developers found it
+difficult to start working on the code base---F\#'s notational density
+and rich interface to .NET often make it difficult to see which
+language feature a particular piece of code exercises.  Also,
+differences between the production and debugging environments made it
+difficult to weed out some time and space leaks, which required
+withdrawing and redoing several releases.
+
 \section{Clojure iPad analytics dashboard in energy sector}
 
 \section{The Awesome Haskell FPGA Compiler}
