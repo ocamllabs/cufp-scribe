@@ -643,6 +643,34 @@ difference is irrelevant for many applications.
 
 \section{The Awesome Haskell FPGA Compiler}
 
+Peter Braams of Parallel Scientific described the benefits of using
+the \textit{Haskell Hardware Description Language (HHDL)} for
+programming FPGAs.  HHDL (designed by Serguey Zefirov) is a DSL
+embedded in Haskell.  HHDL programs can either directly in the Haskell
+run-time environment or be compiled to Verilog code and deployed on
+the FPGA.  Using HHDL instead of Verilog directly allows FPGA
+programmers to design at the conceptual level, and shorten the
+test/design cycle significantly.  HHDL provides a rich set of types,
+and the ensuing type safe helps assure the correctness of HHDL
+programs.  The initial version of HHDL took merely five months to
+develop.
+
+Parallel Scientific uses HHDL to program an Arista Ethernet switch,
+which contains an FPGA directly connected to eight 10~GB Ethernet
+ports.  As the FPGA sits directly in the data path, it can receive and
+thus process the Ethernet traffic faster than a separate CPU over a
+traditional bus.  (The data rate on the ports exceeds the bandwith on
+a PCIe, for example.)  HHDL allows building combinators to parse and
+build packets, which can be alyered to build complex algorithms.  In
+particular, Parallel Scientific is using HHDL on the switch to build a
+ticker plant for financial exchanges, which aggregates and then
+normalizes and maintains market data from multiple sources.  For
+ticker plants, performance is crucial.  Parallel Scientific's solution
+uses both the regular CPU in the switch for command and control as
+well as the FPGA to receive and normalize the financial data.  The
+resulting application is able to keep up with the port traffic in real
+time.
+
 \section{Conclusion}
 
 We would like to thank Simon Thompson and Duncan Coutts for helping to
