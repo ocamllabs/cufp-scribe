@@ -1,0 +1,167 @@
+
+Notes on "CUFP 2012 Workshop Report" 
+
+In general, I really enjoyed reading this report. If I had read it before
+ICFP in Boston, I might have attended CUFP despite my serious time
+constraints. The following notes are minor editorial suggestions. 
+
+Five global issues come up repeatedly: 
+
+1. Type-setting an apposition with dashes requires an m-dash (3x "-") that
+touches the bordering words. For example, "... a criticism---in the sense
+of these notes---is a suggestion on how to present ..." is the right way to
+type-set m-dashes. 
+
+2. Your use of colon (":") is highly Germanic. According to Strunk and
+White (the American bible) a colon primarily introduces enumerations; on
+rare occasions you use it for a single point (an enumeration of one). Many,
+though not all, of your uses justify the main clause with a colon clause. 
+
+3. Also avoid putting remarks in parentheses. Integrate the phrases into
+the sentences or use footnotes instead. 
+
+4. Your section headings should use a consistent capitalization rule. 
+
+5. Type-set footnotes to the right of punctuation, e.g.,
+ ".. words,\footnote{hello} ... "
+
+The rest are page by page enumerations of issues: 
+
+page 1:
+------
+
+abstract, line 1: "yearly" => "annual" 
+para 2, line 2: "(taking cues ...)" => "Taking cues from anthropology,
+ Thorup described ..." 
+para 3, line -2: "their" => "his/her" 
+para 4: dashes 
+
+page 2: 
+------
+
+para 2, line 1: "series" => "serious" (possibly something else)
+description environment: 
+ "Performance" change to "The software needs to run fast ..." (or something
+ else missing?) 
+para -3, line 2: "(replacing ...)" => "replacing legacy systems implemented
+ in VBA/Excel" 
+para -2, line 1: does "happen during production" mean "was discovered after
+ deployment"? I cannot believe that they didn't discover any bugs during
+ the production of the code 
+
+page 3: 
+-------
+
+para 1, line 2: check spelling of Caroun 
+para 2, line 2: "meant to" => "meant to supplement" (?) 
+para 5, line 2: cut "only" 
+para -1, line 1: "Grgens" => "Görgens" 
+ ** throughout section 5"
+
+page 4: 
+-------
+
+para 1, line 1: "communicate" (spelling)
+para 1, line 6: consider expanding "loc" (once)
+para -1, line -1: re-arrange to "also cited as notable problem the lack of
+ visual tools to talk about a system's architecture." 
+
+page 5: 
+-------
+
+para 2, line -3: "based on a ``on pattern do something'' construct" =>
+ "based on an ``on pattern do something'' construct"  
+para 3, line 2: ":" => ";" 
+para 4, line 1: "... design and it ..." => "... design, and it ..." 
+para 4, line 2: spell out "fab" 
+para 4, line -1: cut "the software ... obsolete." (This adds no
+ information.) 
+para 5, line 2: "but also to build .. in teams." I do not understand this
+ phrase at all. 
+para 6, line 3: "extensibility" (spelling) 
+para 7, line 2: ":" => "." 
+footnote: "Star is available from the author on request via ..." 
+
+page 6: 
+-------
+
+section 8, para 1: a four-line sentence, drags on, nearly incomprehensible 
+ AA reported on the Genomics Sequencing Core project, jointly run by ... It
+ is used to ..." might work. 
+section 8, para 2: consider "getting faster at high rates" => "getting
+ faster quickly" 
+section 8, para 3, line -1: "systems" => "system"
+section 8, para 4: this paragraph may need expansion, consider
+ "distinguishes between original and derived data, re-computing the latter
+ on the fly" 
+para -2, line 3: "``1.3 developers''" is extremely awkward. How about "A
+ full-time developer with a part-time assistant ..." or "1/3-time
+ assistant" 
+
+page 7: 
+-------
+
+para 4, line 2: ":" => ". In particular, " 
+para 4, line 3: "networks" => "network" 
+para 4, line 4: should this be "systems biologists" (extra "s")
+para 4, line 5: "from those computer scientists" -> missing words  
+para 6, line 2: ":" => "." 
+para 7, line -1: "Methilician S- A-, commonly known as MRSA, which causes
+ ..." 
+
+[[ We both disagree with the presenter concerning the content of the last
+paragraph on the capabilities of Emacs. Perhaps a footnote is in order. ]]
+
+page 8: 
+-------
+
+para 1, line 1: "the the" => "the" 
+para 1, line 3: ":" => ". Hence, " 
+para 1, line 4: should this be "WebSockets" 
+para 3, line 5: "messages.^3." => "messages.^3" 
+para -3, line -1: should this be "370,000loc" or "37,000loc"
+
+page 9: 
+-------
+
+para 1, line 3: "Java ecossystem" => either "Java's ecosystem" or "the Java
+  ecosystem" (also note extra "s")
+para 3, line 2: possibly expand "VC"
+para 4, line 2: "(TSO ... itself)" => should expand into a footnote 
+para 4, line 5: "electricity" (spelling) 
+para -1, line 2: "who are" => "whose programmers are" 
+
+page 10: 
+-------
+
+para 1, line -2: use "Entelios filed two bug reports for the Erlang system"
+para 2, line -2: "exercizes" => "exercises" (spelling) 
+section 13, para 1: What are you trying to say with "... that such a log
+ file ..." I didn't get it. 
+section 13, para 2, line 2: "work^4," => "work,^4" 
+section 13, para 2, line 4: "accessible" (spelling) 
+section 13, para 3, line 2: "library^5," => "library,^5" 
+section 13, para 4, line 1: "it provides" => cut 
+section 13, para 4, line 3: "quirks, and" => "quirks and" 
+section 13, para 4, line -1: "structures immutable" => "structures are
+ immutable"
+para -1, line 1: second occurrence of "state" replace with "that" 
+para -1, line -3: "(" => cut 
+para -1, line -1: ")" => cut 
+
+page 11: 
+-------
+
+para 2, line 3: "can either directly" => "can either run directly"
+para 2, line -2: "safe" => "safety" (?) 
+para 3, line 6: "alyered" (spelling)
+
+last para: "well-attended" -- rumor has it that attendance was sparse
+cut last sentence because it's too late for that one 
+
+page 12: 
+-------
+
+Your bibliography does not live up to JFP standards. Please compare with
+existing papers. 
+
