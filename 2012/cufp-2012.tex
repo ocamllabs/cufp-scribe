@@ -62,8 +62,8 @@ organizes several well-respected conferences.
 
 While Trifork originally capitalized almost exclusively on its Java
 expertise, it now successfully applies Erlang in large-scale
-industrial projects.  Thorup described (taking cues from anthropology)
-how many organizations have not been able to make such transitions
+industrial projects.  Thorup described---taking cues from
+anthropology---how many organizations have not been able to make such transitions
 easily. Groups tend to gather around an idea that keeps them together,
 and try to keep new ideas at bay.  This makes it difficult for
 long-time OO developers to adopt functional programming.
@@ -127,7 +127,7 @@ Jane Street has three kinds of requirements on their own software:
 %
 Jane Street has written OCaml code for a number of application areas:
 research tools for investigating trading strategies, trading systems
-(replacing legacy systems written in VBA/Excel) that make trades
+replacing legacy systems written in VBA/Excel that make trades
 automatically, order gateways that implement protocols to interact
 with markets, post-trade software to analyze and clean up completed
 trades, systems infrastructure to manage clusters of physical machines,
@@ -208,7 +208,7 @@ such as trusted-computing support with hard-drive encryption and
 native graphics performance.
 
 The XenClient management stack consists of many daemons that commicate
-via D-Bus and V4V (a VM-to-VM communications protocol).  Originally,
+via D-Bus and V4V.\footnote{a VM-to-VM communications protocol}  Originally,
 many of the daemons were written using Ruby, but a rising bug count
 motivated the development team to look for alternatives, particularly
 statically-typed languages to catch more bugs at development time.
@@ -244,7 +244,7 @@ decoding, storage management, and the backend disks.  At the time,
 development on the storage-management component, written in C++, had
 stalled: There were problems with resource management and threads, the
 software had many bugs, and its object model had poor locality, which
-led to poor performance.  Slootmaekers was able to (correctly)
+led to poor performance.  Slootmaekers was able to correctly
 reimplement the storage component in OCaml within two days, which led
 to Amplidata considering using languages other than C++ for system
 development.
@@ -292,7 +292,7 @@ StarRules's first application was scheduling in the semiconductor
 industry.  In this domain, it is not enough for software to make
 simple inferences from the data---it needs to make complex decisions in
 the face of an ever-changing environment where machines frequently
-break (invalidating any long-term plans).  The software needed here did
+break, invalidating any long-term plans.  The software needed here did
 not fit StarRules' ``on pattern do'' construct.  Consequently,
 Starview decided to turn StarRules into a general-purpose language
 and renamed it to Star.
@@ -429,8 +429,7 @@ designers in the BMA team have targeted the UI at system biologists,
 which use visualizations different from those computer scientist
 
 BMA consists of three parts: the prover core written in F\#,
-Microsoft's Z3 SMT solver written in C++ (but only linked into the
-project), and the user interface written in C\#.  The ``debugging functionality''
+Microsoft's Z3 SMT solver written in C++, and the user interface written in C\#.  The ``debugging functionality''
 in the prover provides the propagation steps in a lazy sequence.  This
 is very natural in F\#.  The UI is not written in F\#.  In particular,
 it benefits from the better tool support for C\#.
@@ -475,7 +474,7 @@ server.
 
 The software needs to deal with significant amounts of data---a hospital
 department with 170 patients generates about five laboratory reports per
-patient per day (and 20 in intensive care.) The department also produces
+patient per day and 20 in intensive care. The department also produces
 about 150 images per day, growing to more than 1000 if CTs or MRI
 scans are made.  The hospital's IT systems also produce 34,000 HL7
 messages.\footnote{HL7 is a set of interoperability standards for healthcare
@@ -501,8 +500,8 @@ descriptions~\cite{Rendel:2010:ISD:1863523.1863525}.  factis developed
 roundtrip for Haskell and then ported it to Scala.
 
 Generally, the experience with using functional programming for this
-project has been positive.  factis (with four employees and
-six freelancers) has been working on the application since 2010.
+project has been positive.  factis---with four employees and
+six freelancers---has been working on the application since 2010.
 As of late 2012, the synchronization server had about 69,000loc, and the data
 server about 37,0000loc.
 
@@ -538,9 +537,10 @@ on coordinated reduction of electrical loads at industrial production
 facilities.  Entelios is a VC-funded startup founded in 2010 and
 had 20 employees as of late 2012.
 
-In order to maintain stability in the German electrical system, the
-\textit{Transmission System Operators} (TSOs---the companies that
-maintain the network itself) balance supply and demand of electricity.
+In order to maintain stability in the German electrical system,
+companies called
+\textit{Transmission System Operators} (TSOs) maintain the network
+itself and balance supply and demand of electricity.
 This is increasingly becoming a challenge with the advent of
 electricity from renewable sources, particularly solar and wind
 energy.  While these sources were able to provide 20\% of Germany's
@@ -638,9 +638,9 @@ visualization by a pure function generating DOM fragments.  The C2
 framework then synchronizes the generated HTML code with the actual
 DOM in the browser, keeping the visualization consistent with the
 state.  This decouples the specification of the underlying application
-from the visualization.  (It also couples markup and software
+from the visualization.  It also couples markup and software
 development, which may not be compatible with all design/development
-workflows.)  C2 thus provides a clear dataflow in one direction, which
+workflows.  C2 thus provides a clear dataflow in one direction, which
 makes development easier than with direct manipulation of the DOM.
 C2's method is inherently slower than direct DOM manipulation, but the
 difference is irrelevant for many applications.
@@ -664,8 +664,8 @@ Parallel Scientific uses HHDL to program an Arista Ethernet switch,
 which contains an FPGA directly connected to eight 10~GB Ethernet
 ports.  As the FPGA sits directly in the data path, it can receive and
 thus process the Ethernet traffic faster than a separate CPU over a
-traditional bus.  (The data rate on the ports exceeds the bandwidth on
-a PCIe, for example.)  HHDL allows building combinators to parse and
+traditional bus.  The data rate on the ports exceeds the bandwidth on
+a PCIe, for example.  HHDL allows building combinators to parse and
 build packets, which can be alyered to build complex algorithms.  In
 particular, Parallel Scientific is using HHDL on the switch to build a
 ticker plant for financial exchanges, which aggregates and then
@@ -689,7 +689,7 @@ visualization, data processing, and complete systems for cutting-edge
 research in sectors such as genomics and systems biology.
 
 We would like to thank Simon Thompson and Duncan Coutts for helping to
-organize the CUFP tutorials (which covered Erlang, F\#, Haskell, Clojure, Scala and OCaml, and were well-attended), and Ashish Agarwal for organizing the evening BoF
+organize the CUFP tutorials---which covered Erlang, F\#, Haskell, Clojure, Scala and OCaml, and were well-attended---and Ashish Agarwal for organizing the evening BoF
 sessions.  We thank Kresten Krab Thorup and Yaron Minsky for providing
 notes on their talks.  Also, we thank Peter Thiemann and Fritz Henglein and the
 whole ICFP/CUFP team for their assistance in Copenhagen.  We look
