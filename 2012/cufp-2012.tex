@@ -64,20 +64,21 @@ While Trifork originally capitalized almost exclusively on its Java
 expertise, it now successfully applies Erlang in large-scale
 industrial projects.  Thorup described (taking cues from anthropology)
 how many organizations have not been able to make such transitions
-easily: Groups tend to gather around an idea that keeps them together,
+easily. Groups tend to gather around an idea that keeps them together,
 and try to keep new ideas at bay.  This makes it difficult for
 long-time OO developers to adopt functional programming.
 
 Trifork managed to stay flexible by making learning about new ideas
-and communicating them part of their regular operation: Everyone at
+and communicating them part of their regular operation.  Everyone at
 Trifork is encouraged to spend 10\% of their time in the structured
 exchange of knowledge, by giving presentations, organizing meetings,
 give training classes, or organizing conferences.
 
 Thorup reviewed object-oriented programming and the ecosystem around
-it to show how it had become successful: through an intuitive idea~--
-``an object is an independent encapsulated entity that inteprets
-inputs on its own account''~-- but also because of the availability of
+it to show how it had become successful through an intuitive
+idea---``an object is an independent encapsulated entity that
+interprets
+inputs on its own account''---but also because of the availability of
 thinking tools: graphical notation for design, tools for mapping those
 designs to programs, books on comon problems akin to ``Design
 Patterns''~\cite{GammaHelmJohnsonVlissides1995}, analysis methods for producing systems,
@@ -93,7 +94,7 @@ is not primarily a functional programming language, but that
 functional programming helps Erlang meet its goal of being a
 language for writing robust distributed applications.
 
-Thorup described large-scale projects done using Erlang: One for
+Thorup described large-scale projects done using Erlang, one for
 managing health-care records in Denmark, and one for sharing data
 among ``sometimes connected devices'' such as a cell phones at a music
 festival.
@@ -102,7 +103,7 @@ Thorup concluded by noting that two fundamental classes of problems in
 software development require different classses of solutions:
 \textit{Interactive systems} with multiple parties are fundamentally
 stateful, and where developers should understand the handling of
-state~-- for those problems, actors are a good model.
+state---for those problems, actors are a good model.
 \textit{Transformational systems} map input to output, where
 developers want to abstract over the details of hardware utilization,
 the handling of mutable state and coordination.
@@ -115,7 +116,7 @@ well-known user and supporter of OCaml, and last presented at CUFP in
 
 Jane Street has three kinds of requirements on their own software:
 \begin{description}
-\item[Correctness] Jane Street trades billions of dollars every day~--
+\item[Correctness] Jane Street trades billions of dollars every day---
   much more than the company is worth.  Hence, a software error can
   have disastrous consequences.
 \item[Agility] Jane Street needs to be able to adapt the software
@@ -134,10 +135,10 @@ development tools, trading tools, and tools for managing market-data
 and desk infrastructure.
 
 Minsky could not remember a single crucial error in the software that
-happened in production: Code at Jane Street generally fails by turning
+happened in production. Code at Jane Street generally fails by turning
 off the system, which is acceptable in this environment.  Jane
 Street's user interfaces are all text-based and written using
-Curses and OCaml~-- this ``prevents bad UX designers from doing UX.''
+Curses and OCaml---this ``prevents bad UX designers from doing UX.''
 
 Another important task that favors OCaml is how the type system eases large
 refactoring projects. Jane Street's code base is designed to use the
@@ -171,8 +172,8 @@ of A Coruña reported on the \textit{ADVERTISE}
 project~\cite{Lopez:2012:DDA:2370776.2370800,
   Lopez:2012:FTC:2364489.2364498}.  \textit{ADVERTISE} is a
 distributed system for transmission of customized ads to TV set-top
-boxes via the TV network of a cable provider.  The system~-- entirely
-written in Erlang~-- compiles events, emits ``advertising signals'' to
+boxes via the TV network of a cable provider.  The system---entirely
+written in Erlang---compiles events, emits ``advertising signals'' to
 set-top boxes, and collects statistics about how many times specific
 ads were displayed on consumer boxes.  ADVERTISE sends ads to more
 than 100,000 clients.
@@ -215,15 +216,15 @@ Some daemons were then rewritten in Haskell.  By now, there are about
 25,000 {\em loc} in Haskell in the system.  The XenClient daemons are
 typically long-running, perform short bursts of communication and
 computation upon a request discovered via polling, do not hold much
-state and are restartable: Haskell is well-suited for this kind of
+state and are restartable.  Haskell is well-suited for this kind of
 application.
 
 As XenServer already uses OCaml for its management toolstack, it is a
-bit surprising that XenClient chose Haskell: Görgens cited personal
+bit surprising that XenClient chose Haskell.  Görgens cited personal
 preferences, the availability of more libraries, and the fact that
 Haskell ``relieves pressure to share code with XenServer.''
 
-Görgens also cited a few problems with using Haskell: XenClient found
+Görgens also cited a few problems with using Haskell.  XenClient found
 it difficult to handle IO-heavy workloads, making Haskell compile with
 the OpenEmbedded build system used in XenClient, and
 successfully training developers not yet familiar with functional
@@ -236,7 +237,7 @@ reported on using OCaml for implementing a distributed storage
 service.  Incubaid Research Lab is an incubator laboratory for startup
 companies.
 
-In 2009, Amplidata~-- one of those spinoffs~-- was working on a
+In 2009, Amplidata---one of those spinoffs---was working on a
 \textit{dispersed storage system} (DSS).  The system consists of a
 multi-stage pipeline involving metadata storage, encoding and
 decoding, storage management, and the backend disks.  At the time,
@@ -282,14 +283,14 @@ is available by request of the author via \url{www.star-lang.com}}  The
 purpose of Starview's platform is to provide \textit{operational
   intelligence}: to notice when a significant business event happened,
 and to decide what to do about it, in real time.  The Star language
-was developed to express this intelligence: It started out as
+was developed to express this intelligence.  It started out as
 ``StarRules,'' a simple language based on a ``on pattern do
 something'' construct.  It could perform straightforward statistical
 processing and infer significant events from event data.
 
 StarRules's first application was scheduling in the semiconductor
 industry.  In this domain, it is not enough for software to make
-simple inferences from the data: it needs to make complex decisions in
+simple inferences from the data---it needs to make complex decisions in
 the face of an ever-changing environment where machines frequently
 break (invalidating any long-term plans).  The software needed here did
 not fit StarRules' ``on pattern do'' construct.  Consequently,
@@ -300,7 +301,7 @@ A number of requirements shaped Star's design and it needed to support
 different programming styles in use at Starview.  The
 semiconductor-fab scheduling application demanded safety, as errors in
 the deployed software can be extremely costly.  Moreover, it needed to
-satisfy modest real-time requirements: the software needs to be fast
+satisfy modest real-time requirements---the software needs to be fast
 enough to provide useful output before it becomes obsolete.
 
 McCabe then made the following basic design decisions for Star: to
@@ -325,7 +326,7 @@ concise: this makes its texture distinct from other functional
 languages such as Haskell or ML.
 
 The combination of functions, macros and overloading provides a
-coherent methodology for implementing DSLs in Star: A developer can
+coherent methodology for implementing DSLs in Star.  A developer can
 start with an ontological commitment in her problem domain, provide
 appropriate syntax, which is translated into a macro invocation, which
 is turned into function invocations, which are often backed by
@@ -336,7 +337,7 @@ higher-level functionality for analytics and event processing.
 
 Ashish Agarwal reported on joint work with Sebastien Mondet, Paul
 Scheid, Avid Madar, Richard Bonneau, Jane Carlton and Kristin
-C.\ Gunsalus at New York University: the Genomics Sequencing Core used
+C.\ Gunsalus at New York University on the Genomics Sequencing Core used
 to enable entry, storage and analysis of genomic sequencing data,
 implemented in OCaml.
 
@@ -346,7 +347,7 @@ The data that accumulates in genome sequencing doubles in volume every five mont
 while storage costs per amount of data are {\em halving} every 14 months.
 This places high demands on the computational infrastructure used to
 process sequencing data.  In particular, where the sequencing
-itself~-- performed by custom machines~-- used to dominate the time
+itself---performed by custom machines---used to dominate the time
 spent in a typical genome-related project, the emphasis is migrating
 to experimental design and datastream analysis.
 
@@ -374,12 +375,12 @@ distinguishes between ``original'' data and recomputes ``derived'' data
 on the fly.
 
 The entire system is implemented in OCaml, using a wide variety of
-libraries~-- in particular the
+libraries---in particular the
 Ocsigen~\cite{Balat:2009:ERO:1596550.1596595} web framework, the Core
 and Batteries libraries, and the Biocaml, PG'OCaml, Xmlm and OCamlNet
 libraries.  ``1.3 developers'' built the system and delivered the
 first version in production within two months.  The experience with
-OCaml has been mostly positive: Agarwal cited OCaml's
+OCaml has been mostly positive.  Agarwal cited OCaml's
 industrial-strength implementation, the availability of needed
 libraries, and the excellent performance.  Agarwal mentioned the
 complications maintaining a build system and the lack of ``blessed
@@ -431,7 +432,7 @@ BMA consists of three parts: the prover core written in F\#,
 Microsoft's Z3 SMT solver written in C++ (but only linked into the
 project), and the user interface written in C\#.  The ``debugging functionality''
 in the prover provides the propagation steps in a lazy sequence.  This
-is very natural in F\#.  The UI is not written in F\#: in particular,
+is very natural in F\#.  The UI is not written in F\#.  In particular,
 it benefits from the better tool support for C\#.
 
 Ishtiaq had previously worked in OCaml using Emacs, and offered some
@@ -447,7 +448,7 @@ Adam Granicz reported on joint work between University of Nebraska
 Medical University and IntelliFactory on the \textit{functional
   genomics explorer} (or \textit{fgx}), which visualizes the genetic structure of a
 Methicillin-Resistant Staphylococcus Aureus.  Methicillin-Resistant
-Staphylococcus Aureus is more commonly known as \textit{MRSA}: MRSA
+Staphylococcus Aureus is more commonly known as \textit{MRSA}. MRSA
 cause more deaths in the USA annually than HIV/AIDS.
 
 The {\tt fgx} software is a web application written in F\# using
@@ -458,7 +459,7 @@ written in F\#.  The {\tt fgx} software uses a HTML5 canvas for drawing, and
 interfaces to the the Krona JavaScript visualization
 library~\cite{OndovBergmanPhilippy2011} through an F\# wrapper.  The
 data that {\tt fgx} visualizes is too large to transport to the web browser
-in its entirety: fgx uses a combination of RPC calls and streaming via
+in its entirety.  fgx uses a combination of RPC calls and streaming via
 WebSocket to transfer it incrementally.
 
 Plans are underway to extend the software to a full Laboratory
@@ -472,7 +473,7 @@ Freiburg for managing electronic patient records. Doctors can access
 and enter patient information on tablets, which synchronize with a central
 server.
 
-The software needs to deal with significant amounts of data: a hospital
+The software needs to deal with significant amounts of data---a hospital
 department with 170 patients generates about five laboratory reports per
 patient per day (and 20 in intensive care.) The department also produces
 about 150 images per day, growing to more than 1000 if CTs or MRI
@@ -582,16 +583,16 @@ the paradigm of the software for managing time-series data.
 
 Experience with using functional programming has generally been
 positive and enabled Entelios to roll out new features and react to
-changing requirements quickly.  In particular, moving from Python to
-Erlang showed a striking contrast: Whereas Python required substantial
+changing requirements quickly---in particular, moving from Python to
+Erlang showed a striking contrast.  Whereas Python required substantial
 work going from prototype to production-ready software, prototypes in
 Erlang were usually quite close to production already.  Moving from
-Python to Erlang required moderate deployment effort: Entelios found
+Python to Erlang required moderate deployment effort.  Entelios found
 two bugs in the Erlang system that have since been pushed upstream.
 
-The experience of F\# was more mixed: while F\# is an effective
+The experience of F\# was more mixed---while F\# is an effective
 language for developing WPF applications, new developers found it
-difficult to start working on the code base---F\#'s notational density
+difficult to start working on the code base.  F\#'s notational density
 and rich interface to .NET often make it difficult to see which
 language feature a particular piece of code exercizes.  Also,
 differences between the production and debugging environments made it
