@@ -1,0 +1,1782 @@
+Liveblogging CUFP 2013
+
+Posted September 22, 2013 by Anil Madhavapeddy & filed under
+Conference, Programming.
+
+I’m here at the Commercial Users of Functional Programming workshop at
+ICFP 2013) with Heidi Howard, David Sheets and Leo White.
+
+Marius Eriksen and Michael Sperber are co-chairing this year.
+Functional programming is a hot topic these days, and this year’s
+program reflects the maturing nature of the program. Record number of
+submissions, and we could easily have made this a multi-day program.
+Videos will be available online after the event.
+
+Keynote is from Dave Thomas on what we can learn from the “language
+wars of the past”. His talk will cover the business, social and
+technical ends of building Smalltalk and his “objaholic” experiences
+with pushing language technology into businesses, where they never had
+any intention of changing in this regard. This worked over the years
+because it made a material difference to these businesses. Dave still
+uses the K programming a lot at work.
+
+Dave is responsible for the Eclipse IDE and the IBM Java virtual
+machines, and has delivered software on everything from mainframes to
+wristwatches.
+
+Rush in the 70s with Symbolics and the amazingly cool hardware,
+followed by the rush to logic programming that led to his grants
+disappearing. Midway through the 80s, they discovered we wouldnt get
+parallelism for free with all this magic. After that came the era of
+machine learning and knowledge ontology crusades, but they are very
+specialised bits of tech. There remain sectors where ontologies are
+useful. Nowadays its the multicore crusades, and FP is emerging as
+useful.
+
+Every road leads to some form of FP, because the principles underlying
+it apply. Dave does vector programming, Haskell does this with array
+transformation.
+
+Dave was talking to Simon PJ outside and claimed that “FP has won!”,
+at which point Simon replied “really?” (laughter). OO techniques can
+also lead to a lot of tangled code: witness the evolution of Smalltalk
+to the current generation of languages.
+
+FP technical challenges: what happens when you have a lot of
+functions, and a group of consenting adults are doing it together.
+This is called software engineering, or at worst, IT!
+
+Lots of good work in the community on approaching large scale
+programming. Scala is a bit too complex for Dave (and audience rumbles
+in agreement or disagreement?). Java and JNI should just die. Erlang
+and actors are successful to decouple software. But do we really need
+to hide all our queues, and do we really need to hide our queues?
+Static analysis of queues are desired.
+
+Want to go fast? Computers like rectangles, all the way down! Array
+operations and vector processing is the way to go in the long-term.
+
+To go to industry, we need end-to-end toolchains. If you use MS
+Project, then you probably shouldn’t introduce any new tools.
+
+The first commercial customer for Smalltalk in the 1980s was
+Techtronix, who wanted to embed reusable tech in their oscilloscopes.
+If you’re building a serious product like this, it needed language
+interop between C++ (the logic sensor) and the Smalltalk. Respect the
+language cultures among components (anyone remember s-records?). ROM
+had to be replaced with Flash because noone can write code that
+doesn’t need upgrading (groans from the audience).
+
+With the right tools, programmers will be able to go as quickly as
+Smalltalk, or at worse Java. We need the work of Simon [PJ] and
+colleagues on Haskell. Scala is so complex will become the Java (which
+is the Cobol of tomorrow).
+
+When shipping products, you need to track all the versions of language
+components in the toolchain. Too many FP toolchains are monolithic and
+make it hard to track components in the field. JVMs are so slow
+because they don’t have a good sharing model (DLLs).
+
+What Dave would like is version-to-version transformation in
+languages. Y2K was a problem not because IBM hadn’t fixed it in their
+OS, but because customers had modified their local installations and
+were pinned 6-10 versions behind! The same will happen for existing
+FPs that fragment into multiple implementations, so will they descend
+into multiple version hell or will standards emerge from the
+community?
+
+Also, lets not leave the data behind. Can we alias data from existing
+legacy sources into our new languages, and not aim for the perfect
+representations? Most of our programs are dealing with problems with
+existing data, not code.
+
+Onto deployment issues. Erlang works very well for the problem domain
+that it’s designed for, but more complex domains exist like OSGI. Hot
+codeswap and live updates are often viewed as “boring problems” but
+are vital to real world deployments. Space usage must be paid
+attention to: how long can a given JVM stay up without leaking?
+Serialization is important to persist data across versions. If we’re
+going to use “esoteric control structures” like CallCC, tailcalls or
+tags, the JVM isn’t going to get us there.
+
+These days, if you can’t stay in your local cache, you will lose
+several orders of magnitude performance… you’ll need directly
+connected CPU (or SSD!) memory, and static initalization, and language
+interop (eagerly vs laziness). Functional data structures and
+immutable collections are still immature, but need more work to
+convince doubting Thomas’ about their scalability in real
+applications.
+
+Hardware support for these are important. Intel Haswell has hardware
+transaction support (hence can be used by Azul JVMs etc) but we need
+more for functional langauge performance. There have been $2bn put
+into speeding up the JVM to make it as fast as C++. Google has a
+technology called Pinnacle which uses software write barriers that use
+VMs that execute directly, with a register model and not a stack model
+(which is easy to put together but hard to make fast). The new
+generation of language VMs will support direct execution and support
+modern functional programming languages.
+
+“We all love types” — Dave on objects, but not variables (“its easy to
+be cooperative with that definition!”). Pluggable types by Gilad are
+really cute, because they move us towards a world where particular
+features (Dave likes behavioural types) can be woven in. Perhaps can
+be done in a dependently typed world. Another good candidate are
+approximate types and dimensional types. When all these are put
+together though, it all needs to fit together with sound compositional
+semantics.
+
+When using an interesting PL, Dave wants warnings to be emitted when
+the compiler makes space/time tradeoffs so that the programmer can
+decide between elegance and performance (also mentioned that Haskell
+programmers do this for.
+
+How does language evolution work? Arthur Whitney maintains K, and he
+ensures that every version of K is incompatible with the previous one.
+This is a blessing (!) since it avoids a kitchen sink language and
+ensures a high quality set of libraries. Quite often there’s a tussle
+between languages and libraries because there’s not enough
+coevolution. For example, are closures in Java really useful for the
+tradeoff in the complexity of the VM? Perhaps we should be looking
+towards a collection of small correct languages instead of a few
+partly right and largely wrong languages such as Ada or Java (the Java
+hate is strong here — editor).
+
+Those of us that have programmed in vector languages (going back to
+APL) are largely write once read once languages because the code is so
+hard to read. One trick Dave does with K is to annotate comments
+inside expressions and use cold-folding without a point-free style to
+understand vector codeflow better. Also seeing the environment and
+current name bindings is extremely useful for teaching new languages.
+
+The real problem is: comprehensions, folds, monads — WTF? Yet to see
+anyone from the monad community give a talk to understand monads. It’s
+typically “you dont need monads” and then the word is used multiple
+times in the talk. If it’s not important, why mention it so often?
+Quite often, the FP experience makes normal programmers feel stupid
+because they don’t break through this terminology barrier. We as a
+community need to help people break through the barrier of not being
+formally trained in mathematics for whatever reason (“category theory
+for breakfast?”) and *be productive* in FPs.
+
+Smalltalk was like this in the early days. People see a blank window
+and aren’t sure what to do next. Objects irritated people when they
+came out, but FP scares people. This is a danger as we go through and
+wow people with what we can do, but make it look like magic. People
+change their habits are different rates and we need to understand
+that. With Haskell, it was odd that he had to get the program “right”
+(or right/wrong) before it work, as opposed to not working.
+
+Bill Buxton (UI researcher friend) pointed out that people can’t much
+get beyond programming a VCR. 4GLs were pretty much their limit.
+Dave’s done a lot of work on evangelizing Smalltalk, but feels it was
+still too hard. People just didn’t understand how to separate
+behavior, as the best practices on how to build objects were foreign
+to most of them. This all settled on some mix of SQL and some glue
+code, which doesn’t require learning a lot of new technologies.
+
+Given there are many different types of programmers, do they all
+really need the full power of FP? Some subset of features is more
+useful, with one way to do things that doesn’t change from release to
+release. For example, a simple dictionary keeps changing from Hashmap
+to concurrent Hashmap to something else, but ultimately is still a
+dictionary. How do we separate the reasoning over performance and
+structure and not scare people with both at the same time. Knuth
+started doing this decades ago with literate code, and we *still* dont
+have a decent way of writing documentation and code in the same place.
+
+We are still missing a pure FP book that is built in the same style
+and comprehension as SICP. We need thinks that you look the code and
+represent things more densely (for example, why don’t we use Unicode
+in the same style as APL symbols to increase the succinctness?). They
+are working on J programs that move glyphs around on the iPad as an
+example of this 4GL density.
+
+We need to take all these ideas and *talk more* about metaphors in FP.
+Where’s the “Scala, F#, Clojure, the good parts” and a frank
+exposition about the antipatterns? Don’t lie about where the dragons
+are, but colour code them appropriately to not surprise programmers.
+
+We need to understand how to design with types. In the vector
+languages, this is called “shape shifting” as they don’t have types,
+but similar concept. It’s also hard to get the community people to
+talk about shape shifting, and as a result the art is being lost in
+the new generation of languages. For FP, can the Yodas in the audience
+help their audience to “trust the types”?
+
+Q: In the top 20 languages, every language has a free-or-open-source
+runtime. This will make a huge difference as it lets people
+experiment.
+
+A: It’s not been a barrier in experimentation for Dave, but it has
+been a barrier for commercial use. Dave would not attribute a
+particular significance to open source as it’s never been a real
+problem for him (using trial versions and so forth). Open source is a
+mixed sword, as it tends to product impoverished language teams that
+don’t have enough resources to move forward. The really good virtual
+machine implementors are commercially polished (c.f. the $2bn behind
+the JVM performance from earlier). Clojure is a great example where
+they appealed to the community to pay on their own behalf to donate
+for a production version. To build a serious production PL, you need a
+lot of government research money or a major commercial sponsor.
+
+Q: Marius asks about mobile and embedded and why FP hasn’t cracked it.
+
+A: they are often late to the game, and it’s often not easy to target
+the runtimes with a high performance runtime. You have to be willing
+to understand the interface.
+
+Q: Phil Walder says the scariest thing is that if you become a
+success, then Smalltalk takes the form of C++
+
+A: (or Java!). Being able to maintain the independence of the language
+creators vs a major player is crucial to conceptual integrity. (Phil)
+Tools that will migrate between version X and Y and a sustainable
+ecosystem. It’s important to ensure that the creators get paid to
+maintain — even the JVM only has 10-20 people in the core team and a
+vast ecosystem.
+
+OCaml at Facebook via the Hack language
+
+Julien Verlauget is talking about how Facebook is adopting OCaml.
+
+Why PHP is good: fast installation times, lots of libraries, easy to
+learn, and scales in a parallel way (multiple instances).
+
+However, Facebook doesn’t care about any of these features. What
+Facebook wants is a fast feedback loop between writing code and having
+it appear on screen. There’s no good way to write a unit test for an
+experience, and instead a fast feedback loop between code and a live
+site is how people still work at Facebook today.
+
+Performance at the scale of Facebook really matters. 1% can be a huge
+bump, but PHP is really hard to optimize due to all the dynamic
+features in the language. Aside from runtime performance, the other
+concern is development time for engineers, who need to avoid security
+problems and general bugs in an incredibly large codebase.
+
+The first attempt at this was to scale the runtime via HipHop. The
+first attempt was to compile PHP into an interpreter (via sandboxes)
+and then compile production code to C++. Unfortunately this lead to a
+huge divergence in performance characteristics between the interpreter
+and compiled code which led to confusion in production.
+
+The current one is HHVM which is a combined model via JIT runtime that
+patches code at runtime and helps merge these models.
+
+HHVM is still a PHP platform, and a new model called Hack provides a
+*new programming language* that targets HHVM (which is essentially a
+PHP runtime).
+
+Hack is a statically typed language for HHVM. It’s compatible with PHP
+and interoperates with no overhead and has the same runtime
+representation as PHP. It has evolved from PHP, and so if you know
+PHP, you know Hack. It’s designed for incremental adoption via
+introducing gradual typing (c.f. keynote talk about not scaring
+programmers not used to types).
+
+function foo(): void {
+$x ='hello';
+return $x;
+}
+
+This returns a readable error message in the style of a statically
+typed language, since the inference algorithm keeps a witness about
+every value’s type and shows counter examples.
+
+The Hack type system must be annotated with class members, function
+parameters and return types. Everything else is inferred to minimize
+programmer burden.
+
+Hack types include:
+
+• Nullable such as
+
+?int
+
+mainly because of the huge code base that had no pattern matching, so
+null propagation is important
+• Tuples
+• Closures
+• Collections such as
+
+Vector<int>
+
+that have generics too
+• Constraints
+• Type Aliasing
+• Extensible Records
+
+Demo of a simple mailbox demo follows. HH has a command line mode that
+lets you syntax highlight which parts of the source code are
+dynamically checked, by outputing the code with red if it’s
+potentially unsafe. Awesome!
+
+class Mailbox {
+private $data;
+public function send($data) {
+$this->data = $data
+}
+public function fetch() {
+return $this->data;
+}
+}
+
+(very PHP like but now he annotates it with specific types)
+
+class Mailbox {
+private string $data;
+public function send($data): void {
+$this->data = $data
+}
+public function fetch(): string {
+return $this->data;
+}
+}
+
+As a programmer, I now want to know if this has all been statically
+checked (since the previous checking mode showed several red sections
+which were potentially unsafe). He runs the compiler with a strict
+mode that rejects the source if there is any unsafe bits.
+
+He then demonstrates how to propagate null types through the code, and
+then introduces several subtle errors that are all caught.
+
+An audience members asks what happens if you send both an int and a
+string to a mailbox, and Julien demonstrates a “mixed” type that
+covers both (is this some sort of row polymorphism? — editor).
+
+The response time of the type checker is close to instantaneous (for
+the developer loop). Even with a thousand files, the type checkers
+gets back in a second or less with an error message.
+
+To get the tooling right, Hack uses js_of_ocaml to compile the entire
+OCaml type checker to Javascript and then run in a complete web-based
+IDE (demonstrates a full cloud9-like IDE they use internally at FB).
+To work at scale, they created a server that runs persistently in the
+background and type checks all the files and responds from a memory
+cache.
+
+At scale, the the autocomplete requires very lowlatency in the
+webbased editor, and users also use version control (e.g. switching
+between branches). The server also has to use a reasonable amount of
+RAM and have a reasonable initalization time. Fundamentally it has to
+be stable as developers have to depend on their tools.
+
+A vast amount of code is written in OCaml for the tools. Good choice
+because it is ideal for symbolic computation, excellent performance
+and can be compiled to Javascript. Good C interop is really good. The
+main challenge is the lack of multicore, although Facebook works
+around it with their multiprocess architecture.
+
+Architecture: the master process has multiple processes which uses
+shared memory to avoid having to go through the master. The underlying
+buffers are lock free (similar to our Xen shared memory ring! —
+editor).
+
+Advice on OCaml at scale:
+
+• IPC — use lockfree structures and think about sockets/pipes instead
+of just TCP
+• GC small heap and shared memory is compacted by master
+• OCaml makes you think hard about shared objects, which is a good
+thing.
+
+Q: is it open source??
+A: soon, this is the first time Facebook has talked about it
+publically.
+
+OpenX and Erlang ads
+
+What is OpenX: (i) An opensource PHP ad server (ii) OpenX is a global
+company with an ad service featuring a big ad exchange written in
+Erlang. This talk is about the transition from PHP to Erlang.
+
+1998-2007. it was a conventional PHP management system and MySQL. The
+company started using it as an EC2-based SaaS ad server and serving up
+clients successfully.
+
+In 2008, they wanted to mix in an ad exchange, to add liquidity to
+marketplaces that have empty ads. At the same time, they moved offices
+to Pasadena and looked at new tech. Switched to Hadoop (Java) and
+Postgres (for some reason). Poor technical choices were made, such as
+writing to the database for every request (sometimes multiple times!).
+
+In 2009 as the customers increased, there was a big push to scaling
+things up for performance (this is when the speaker joined the
+company). Switched Postgres to Cassandra to move from a relational
+database to a more NoSQL approach that had the appropriate consistency
+properties. At this time, the architecture was also decomposed to give
+them headroom to scale for a while, particularly by adding HTTP load
+balancers and so on.
+
+They wanted to add even more low latency stuff, such as spot bids for
+immediate bids on empty slots. Anthony decides that the model was a
+good fit for Erlang, since one request needed to fan out to multiple
+backend services with a soft-realtime limit to return a response to
+the user. It took a few months to prototype an Erlang based solution
+which worked very well.
+
+After this first experience with Erlang and evangelising it, and
+pointing it out to his coworkers, they came up with another good
+problem: analyzing the frequency of how often someone looks at an ad.
+This required a new database that would hold bespoke data efficiently,
+and also integrated Riak from Basho to interface with the database to
+run the query engine. This now holds on the order of billions of keys.
+
+In 2007, they ran into problems with Cassandra due to making an
+incompatible upgrade which would have required OpenX to shut down
+their business to upgrade, which was unacceptable. Since they had a
+good experience with Riak core, they developed a new system to move
+away from Cassandra and add more Erlang for management stack.
+
+In 2011, they decided to split their UI layer into a more Web 2.0-like
+UI API. The API continues to be implemented in PHP (with a Javascript
+UI clientside), but the Erlang evolution continued with a gateway
+service and marketplace service that are both pure Erlang. The basic
+problem is ad selection, and the logic for this is written as a DSL
+implemented in both Erlang and Java to enable code reuse across the
+tools.
+
+However, Cassandra was still sticking around, and they wanted to move
+away from it. They implemented a data service layer to abstract away
+from the database. From the early days, they made a bad (but fast)
+choice to have clients directly call Cassandra via Thrift, as it was
+easy. They moved away to a more abstract model to get away from
+Thrift, and so could change clients. The new system could call both
+Cassandra and Riak to help evolve with both services running
+simultaneously and provide a seamless migration path to the new
+service (in stark contrast to the Cassandra upgrade story from
+earlier).
+
+They also decided that the PHP use for the API was a bad idea, and so
+switched to Python. They engaged Erlang Solutions to write them an API
+router since their core team was busy (an example of external
+consultants coming in and being useful — editor). The current system
+involved RabbitMQ coordination, and Riak’s replication logic to move
+out to the colos for publication.
+
+Currently they have 14-15 services in Erlang 7-8 in Java, and a blend
+of Python/PHP.
+
+How did a PHP shop end up with so much Erlang? Well, they laid off all
+the PHP developers when they moved offices (lots of audience
+laughter).
+
+More seriously, the architectural choices are important:
+
+• Cloud based (generic hardware, automated bootstrap, deployment,
+package oriented development and fault tolerance).
+• Service based (loosely coupled, single purpose components, pools of
+components, polyglot so multiple languages/
+• Cross language tools: Thrift (RPC between components), protobuf (RTB
+and Riak) and Lwes (logging and monitoring) which was open sourced by
+Yahoo after being originally written at Goto.com. A system called
+Framework that provides templates for code layout, builds RPMs/debs
+and integrates with autotools. It enforces versioning and
+reproducibility across languages.
+• Finally, evangelism is really important. If possible fix the game
+via architectural choices to set the scene for change. Find a project
+to showcase the technology, and be responsible for the project’s
+success. Make sure to share work, and remember that tools are really
+important to make it easy for others to use.
+
+Really important is figuring out build toolchain — it can be so
+arcane. They did spend time on integrating with Erlang (erlrc
+inegrates with packaging system, erlstart to manage lifecycle, erlnode
+for?).
+
+Hiring: train people rather than trying to hire knowledgeable.
+Operations have unfamiliar systems to manage, and developers have new
+concepts and patterns.
+
+How did Erlang help OpenX developers? The language fit the service
+model very well. The let-it-crash philosphy and supervision trees led
+to fewer real service outages.
+
+OpenX is doing really well as a business, too: 250+ billion monthly
+transactions, 12+ billion daily bids, thousands of machines in 5
+colos, 300 employees and $150m+ revenue in 2012.
+
+Q: Marius: with a service based solution, how do you library them up?
+A: Their services aren’t hugely fine grained and so usually a module
+or two (not a lot of state)
+
+Q: Anil: is framework usable from languages? RPM integration seems
+killer
+A: It’s still esoteric and internals not docced, but would welcome a
+chat!
+
+BAE systems on Redesigning the Computer for Security
+
+Tom Hawkins speaking on DARPA funded project.
+
+SAFE is a codesign of:
+a new application langauge (breezE)
+a new systems programming language (Tempest)
+A new OS
+A new processor
+and security at every level for defense in depth.
+
+Emphasising hardware enforced security since dynamic checking is too
+much overhead in software, for example for fine-grained information
+flow control. Hardware IFC handles the most general attack model
+(scripting down to machine code injection).
+
+Hardware overview: every word of data contains a tuple of (group 5
+bits, tag 59 bits and payload 64 bit). The Atomic Group Unit checks
+atom typs (e.g. instructions, data pointers and streams). The Fat
+Pointer Unit (confusingly, FPU) checks pointer operations, and tag
+management unit (TMU).
+
+The label model can be used for efficient hardware typing, and more
+recently they are using labels for Control Flow Integrity (e.g. to
+prevent return oriented attacks). Register file is 32 elements deep,
+memory is accessed through load/store, and every bit of data in the
+system is a well-formed atom (and so has tag/groups associated with
+it).
+
+FPU deals with buffer range checks (e.g. underflow or overflows for a
+buffer).
+
+The TMU is where the magic is. It combines all the operations from the
+various operations being worked on (instructions, memory) and the TMU
+acts as a “database” checking that the operation is consistent with
+local policy, and the machine can continue execution or raise a
+security exception.
+
+At day 1, they had an outline for an ISA but nothing else. TIARA
+project was a baseline (Howie Shrobe, Andrw DeHon, Tom Knight) and
+they had no languages, no hardware and no toolchain.
+
+They started by sketching out an assembly language and then building
+an ISA simulator. They simulated simple assembly programs, and HW
+researchers started coding in Bluespec (a Haskell-like FP that Lennart
+keynoted about at CUFP 2011 in Japan).
+
+The PL researchers started designing Breeze. Plan was to “steal”
+Andrew Meyers work on JIF, and “Breeze should be done in a couple of
+months”!. It didn’t quite work out that short (laughter).
+
+SAFE assembly is as low level as expected, but it adds some new
+properties:
+
+• frames manage fat pointer bounds
+• Atomic group declarations on data mark critical sections
+• Tags on data can be marked (e.g. bootloader private)
+• Secure closures is code/data with the authority to run code over the
+data (they call it gates)
+
+Assembly is tedious and so they started with macros. The Breeze
+interpreter is now running and there was pressure to start building
+the compiler. The OS guys wanted a language to build the higher level
+components.
+
+Solution: a SAFE assembly DSL embedded in Haskell that uses Haskell as
+the macro language and becomes the library for the future Breeze
+compiler.
+
+Breeze Language: version 7 — just the datatypes for Booleans was hard
+and took 4-5 weeks (“this IFC stuff is kind of tricky”). The
+convenience and modularity of lexical authority passing and
+one-principal per module is extremely inconvenient!
+
+SAFE Assembly in Haskell looks like a typical EDSL. A monad captures
+program descriptions, and macros set up data tags and also for better
+control flow (such as a while loop or ifelse conditionals in the
+asssembly).
+
+At Year 1.5, the EDSL is still assembly language, no matter how many
+macros there are. Manual register allocation, calling conventions and
+data structures. Meanwhile the Breeze compiler was inching off the
+ground, but there is an awkward transition from high level CPS IR to
+assembly. There needs to be an intermediate form somewhere. However,
+the SAFE EDSL in Haskell works great in the compiler backend plugged
+in seamlessly with the Breeze code generator, which was nice.
+
+Breeze Language is now on Version 12 and continues to answer
+questions. “What do we do on an access violation?”. Simply stopping
+the machine isn’t enough, since “What if I maliciously send you data
+that you can’t access?”. “Simple I’ll just check the label before I
+attempt to read it?”. “But what if the label itself is private?”. This
+was the big “aha” moment in IFC, since private labels end up being a
+poison pill in IFC.
+
+At Year 2.0, the Breeze compiler is going through a major overhaul
+since it needs improvements (the middle IR is improved but not
+enough). They temporarily shelve the compiler and they realize it wont
+come to the rescue of the OS. They really needed a higher low-level
+language than just assembly.
+
+Breeze language v23 has a solution to poison pills: make all labels
+public! To label data you must specify the label in advance
+(brackets), but public labels are not compatible with lexical
+authority passing so they had to relax their original vision a little.
+
+Year 2.5: Tempest is started as the systems PL for SAFE. Imperative
+with register allocation and optimizations and control of assembly
+with inlining and user specified calling conventions. It uses the SAFE
+EDSL to generate assembly (that was a successful DSL) and nicely fills
+the Breeze IR gap in the compiler for when that is resurrected.
+
+Breeze language 34: delayed exceptions with not-a-value values (Nav).
+
+The Tempest EDSL with inline assembly has a SAFE assembly sublanguage.
+The SAFE flow isnow the Breeze, Templest and Safe Assembly layers,
+with EDSLs of each gluing the compiler pipeline together. There is a
+SAFE ISA simulator and debugger, along with a Bluespec simulator to
+save on the FPGA debugging cycles. The TMU is an elaborate piece of
+hardware (an exotic CAM and cache structure) that a lot of the effort
+has gone into.
+
+Lessons learnt:
+
+• designing a higher order IFC language is very hard even with some of
+the most brilliant PL researchers in the world. Optimal number of
+researchers is 2-7 rather than any more:) Ben Pierce and Greg
+Morrisett arguing over very hard problems was a lot of fun in a hard
+problem space.
+• Day 1 should have started with Tempest, not assembly. Hard to be
+productive with assembly code, and tempest is the right level of
+runtime/processor codesign. Level of indirection provides insulation
+from a changing ISA.
+• EDSLs are great for bootstrapping a language and make excellent
+backend libraries. However, engineers must be comfortable with the
+host language and not all the engineers were comfortable with Haskell
+when they started. EDSLs are hard to debug (line number information
+apparently hard to get out of error messages vs a concrete syntax).
+• Concrete syntax is more relevnt for some languages than others (e.g.
+Tempest vs SAFE assembly). The best transition point to a concrete
+syntax is after developer pressure for modular programming. Once
+language has modularity, then the switch can be made without
+disruption.
+• Would a DSL have helped hardware design? Forever debugging ISS and
+FPGA instead of raw Bluespec. A DSL describing ISA semantics would
+have kept is synchronized by generating Bluespec, ISS and SAFE EDSL
+and Coq documentation.
+
+This has been a huge project spanning a vast number of layers. It has
+produces a large number of interesting papers including one at ICFP
+this week on testing non-interference quickly by using QuickCheck to
+generate programs that don’t violate non-interference properties.
+
+FRP at Netflix by Jafar Hussain
+
+Netflix used to have tight coupling between the middle tier and the UI
+teams. One-sized fits all messages and led to inefficient call
+patterns.
+
+The plan was to decouple this by giving UI developers the ability to
+decouple components (or “force!”).
+
+Two developer personas at Netflix: Cloud and UI people. Netflix deals
+with a third of all US broadband traffic, so they need to think at
+scale but also to run on really tiny cheap devices that eke out all
+performance. How do they turn UI developers into effective cloud
+developers who think at scale?
+
+Gave them UI comforts: Groovy, OO API and a Reactive API. Most UI
+developers (or indeed any developers) can’t be trusted with locks.
+This means that reactive programming isn’t enough, which leads to “how
+do we make parallel programs safe for developers”
+
+Enter Erik Meijer, the legend himself! He asked “Whats the difference
+between a database query and a mouse drag event?”. Database would use
+functional code and a mouse drag might be imperative. Erik points out
+that they are both collections.
+
+New JS closure syntax in ES6 is fantastic to make them easier to use.
+If you imagine a query for well-rated movies, then you need to map
+over video lists. He then shows a mouse drag event, but points out
+that the structure of the code is very simpler. Instead of a “filter”
+operator, he uses “takeUntil” which stops the operation after some
+predicate has been satisfied.
+
+The iterator pattern is similar to the observer, except for the
+bidirectional signalling. Iterators can throw next/hasNext/Throwable,
+but Observers dont have a similar completion semantic. What happens
+when we add these to the Observer? We end up with “onNext” and
+“onCompleted” and “onError”, so now the Observer has comparable
+semantics to Iterator, so the only thing that changes is the direction
+of the errors.
+
+Some platforms also have an Iterable. There is now also an Observable
+to which you can pass an Observer, in the same vein as passing an
+iterator to a Java Iterable. We also add a Disposable to both, so that
+when the IO stream has terminated, it can be stopped immediately
+without having to junk the rest of the data.
+
+Erik and his team at MSR demonstrated that these patterns are dual, so
+that Iterable and Observable are dual! These are the Reactive
+Extensions libraries that is a combinator library for the Observable
+type. It’s open source and has been ported to a number of other
+languages than C# (including Java).
+
+Observable Monad is a Vector version of the Continuation monad. Null
+propagation semantics of the Maybe monad and Error propgation
+semantics of the Either monad. Produced and consumed with side-efects
+and acts as a fault line between pure and impure code. It can be
+composed functionally and cancellation semantics are clean. It can be
+synchronous or asynchronous which is a common mistake (to assume that
+Iterable is async — either can also be sync simply by calling the
+functions immediately).
+
+If you Map over Observable, then
+
+(rapid transcript)
+var map = (observable, func) =>
+{ forEach: observer =>
+{
+var subscription =
+observable.forEach
+onNext: item => oserver.onNext(func(item))
+onError: error => observer.onError (error)
+onCompleted () => observer.onCompleted()
+
+We can use this to come up with a single reactive type for cloud and
+UI developers! Jafar demonstrates example of social notifications in
+the middle tier, but using Observable to filter notifications from a
+composition of the socialService and messageService. Both underlying
+services are returning observables, and are non-blocking and
+completely parallel. Both can execute synchronously or asynchronously
+and decide which knobs to turn for their particular scheduling needs.
+The programmer doesn’t need to care about the details.
+
+Another example is search autocomplete, which is surprisingly hard.
+Need to decide how often to send requests (throttle them to be not
+per-key) and also deal with concurrent responses from keypresses
+coming in out of order.
+
+var res =
+keyPresses.throttle(20).flatMap(
+search =>
+getSearchResults(search).takeUntil(keypresses));
+res.forEach(resultSet => listBox.setItems(resultSet)
+
+This code fragment does all this composably and handles all that
+logic. It’s throttled, ordered correctly and terminates until the
+keypresses stop (with respect to the throttling policy.
+
+The full tier is a UI (huge amount of mutable state), dropping in to a
+distributed functional style, and heading into the data tier. Recall
+this is at huge scale.
+
+Wins: Rx is open sourced from MS and ported to Java (Observable) and
+generally better tooled now.
+Evangelism comes up again since you can’t assume the best technical
+solution will win. Practice public speaking and focussing on soft
+skills! Speaker got better in a short amount of time at distilling the
+essence of the benefits, and explaining to the target audience why
+something matters (e.g. to a UI developer vs a cloud developer as he
+explained earlier).
+
+Challenges: Training/Hiring. Netflix didn’t fire all their UI
+developers as the previous speaker did (audience laughter). Instead,
+they leveraged their skills at eking out mobile performance, and
+taught them alternatives: functional programming, vector programming
+and reactive programming. Be available to help out people (developers
+work weird hours!) and interactive training exercises really help too.
+Also help them understand when to apply each technqique for a
+particular programming task.
+
+Some of the Javascript programmers had some intuition for these
+techniques from things like Promises. It wasn’t quite the right
+answer, as sometimes you need vector versions for performance instead
+(since it degenerates to a scalar version by passing a vector of size
+1). Netflix dont bother teaching scalar, only vector.
+
+Although the programmers are used to mapreduce, the embedded version
+of this is a lot harder for them to grasp — it’s just a programming
+style and not just magic in Hadoop. Hiring process adapts to spot the
+competent functional programmer.
+
+bind/flatMap/concatMap/mapcat/mapMany are all monadic versions with
+subtle semantics and so they use interactive training exercises to
+train developers in their runtime semantics.
+
+Challenges: performance needs some chunking for lowend devices (vector
+a manually chunked scalar monad) and is best applied to less chatty
+event streams. It worked for search on lowend devices since it takes
+so damn long to type anything in, so a less chatty UI stream (audience
+laughter). “We are screwed if the hardware UIs improve”.
+
+Type-unsafe flatMap is easier to understand but needs to be used
+carefully, but is useful on lowend deviecs.
+
+http://github.com/Reactive-Extensions/RxJS has all the source, so give
+it a try!
+
+Q: How do Databinding in Rx?
+A: No templates, but many other tiers before the view layer are bound
+together. We introduce an Observable with both pure and impure code
+(an Observable type with a value property). However they learnt how to
+do this directly since Observable’s lazy default is the wrong for data
+binding. Implementing a different type that is strict and publishes
+the result directly.
+
+Medical Device Automation using message passing concurrency in Scheme
+
+What does a molecular diagnostic device do and what does Scheme have
+to do with all this?
+
+Detects the presence of specific strands of DNA/RNA in sample and then
+does necleic acid extractions and purification. Sample are excited
+using lasers as they undergo PCR which results in spectrographs.
+Device contains 19 boards with temp, motor control with many parts
+that move simultaneously at very high precisions. (author shows demos
+of the motors running and playing music from the system!)
+
+Client is written in C# and WPF and is thin/stateless. Sever is
+written in Scheme and Erlang with OTP embedded. Supervision structure
+to isolate hardware failures. A DSL provides the glue logic.
+
+Scheme is exceptionally clear and simple syntax, and they love the
+hygeinic syntactic abstractions for their DSL and the first-class
+functions and continuations are key. Arbitrary precision arithmetic is
+important for result calculations.
+
+The Erlang embedding in Scheme is how they interop. They embed records
+by referring to structured data by field name instead of field index.
+This allows for copying a record and changing particular fields.
+
+There’s no pattern matching built into Scheme and enables matching on
+all the usual datatypes (strings, lists, vectors and records). It also
+allows matching the value against a local variable and/or binding
+values to local variables in the pattern itself, which is new in
+Scheme (but quite ML-like? — editor)
+
+Processes are on-shot continuations with software timer interrupts.
+The Gen-server patterns provide a functional way of serializing
+messages and mutating state. The
+init/handle-call/handle-cast/handle-info and terminate are all
+encoded, and so it’s all done except code-change (the FDA wouldnt
+appreciate code changing on the fly!)
+
+The event manager is responsible for event logging and subscriptions,
+and supervisors monitor processes and execute a restart or clean
+shutdown semantic (with enough logging for a field debug cycle).
+
+How it works in the instrument server: “let is crash” throughout and a
+notable lack of defensive programming due to the actor model. They
+manage some big hardware which fails all the time and this
+architecture directly addresses that reality.
+
+Easy assay is executed via a DSL which defines the pipeline in a
+confirm mode to estimate running time, suggest missing resources and
+warn about a lack of timeslots. Once satisfied this is all taken care
+of, the queuing is done via a Tetris-style binpacking heuristic. Each
+action has its own process for fault tolerance. The DSL exposes an
+option to ignore action failures which is important for test runs and
+debugging (also during hardware development).
+
+Some examples of device failures are very bad: Therac 25 was a RTOS
+that gave people fatal radiation doses. It was tracked down to bad use
+of mutable state and integer overflow (taken care of in their system
+with FP and arbitrary precision math). Ariane 5 was due to interger
+overflow due to conversion precision, which also doesn’t happen in
+their Scheme system which has non-lossy conversion. And finally the
+space shuttle simulator crashed due to memory unsafety (a restart was
+unclean), which cannot happen in Scheme. The supervision hierarchy in
+Erlang/Scheme can handle crashes with a stable strategy at any layer.
+
+Why a DSL? The assay developers need to write their own recipes such
+as “which recipes for this instrument, and in which order?”. The
+scientists shouldn’t need software engineers to help them work, so the
+DSL sorts that out. Mechanical engineers need to check reliability and
+timing/variability on the hardware, which they can do by configuring
+DSL parameters.
+
+There are a few bits to the DSL: an extraction/purification language
+(tip loading, pipetting, moving magnets) and the protocol language
+(aspirating, dispensing, etc) and finally the motor language.
+
+Shows an example of the PCR language, which is a complex recipe
+involving baking, thermal cycling in loops. The DSL follows the logic
+flow of the English language version of the recipe very closely (with
+more brackets).
+
+Wrote a web server that supports HTTP requests and JSON/jQuery and an
+sexpression-based HTML code generator. Can render pages with Scheme
+logic and render to webbrowsers. Use by engineers for debugging and
+prototyping without having to touch the real UI, and non-engineers use
+it to map data sources from instruments into JSON (which can be fed
+into validation tools, for example to send to the FDA for regulation).
+
+Lessons learnt:
+
+• Message passing is great but not a silver bullet. Gen servers can
+deadlock between each other despite being deadlock free internally.
+Timeouts in genservers and supervisor logging makes this possible to
+catch at a higher level, which is crucial!
+• Not much on the web about a design pattern for the supervisor
+structure, so they had to pioneer it (didnt really want to pioneer it
+though)
+• Automated unit test frameworks also built by them by hand
+• Hiring remains hard into this unique environment.
+• Existing quality metrics like bug density are problematic, since
+Scheme is terse and so looks artificially worse than more verbose
+languages!
+• FDA has more scrutiny into this system since this is different from
+the usual C/C++/C# codebases and also the large number of open source
+tools such as Sqlite/Emacs/git. Unique to this regulated problem space
+of course.
+
+Message passing concurrency makes reasoning about semantics of
+concurrent process easier, ass well as debugging problems via fault
+isolation. Let-it-crash leads to shorter, less defensive code with
+fewer branch points and test cases. Strong typing and runtime checks
+provide cognizant failure instead of silent corruption (crucial to
+avoid in this medical space).
+
+Mixing languages has been nice, since they can pick the good bits of
+Scheme (macros, arbitrary precision math) and Erlang (OTP). DSLs
+provide the glue here, and rapid prototyping for non-expert software
+developers.
+
+Gilt and Scala microengines
+
+Clothing group, and they need to customize the website with per-user
+targetting. The customer facing stuff is the tip of the iceberg with a
+bunch of backoffice features that need to be plumbed through. The
+traffic patterns are all about flash traffic that spike massively
+during sales, and if they go down in these times they lose lots of
+money.
+
+Gilt is about six years old, and it was built as a Rails app in the
+beginning that was quite large. It had unclear ownership, complex
+dependencies, lengthy test cycles, and unexpected performance impacts
+from small changes. Rails encourages to “throw everything into one
+directory — a thousands models in one directory” which is really
+unscalable as the number of engineers grew. Some bad production issues
+came out of this problem.
+
+Then they started to transition to microservices by transitioning a
+few core critical pieces into microserviecs such as inventory
+management. The number of services grew to over 300 services in just 4
+years (each HTTP microprotocols), all built using Scala. They
+developed an architecture to support this sort of growth of
+microservices.
+
+Cornerstones of infrastructure (goal==cool stuff for customers!)
+
+• Build system: SBT is a “simple build tool” which then turned into
+“Scala build tool” due to its complex mental model. Configuring
+everything correctly can be tricky if you have a number of
+dependencies. Gilt wanted to abstract developers from this so they
+could focus on writing appliction code. They solved it via a large SBT
+plugin that takes care of dependency management that provides a
+standardized configuration for everything.
+A complete build specification is shown which is very succinct: it
+just has a combinator for adding dependencies. Behind the scenes, the
+plugin provides a huge amount of support (testing, rpms, dependency,
+continuous builds, and many more)
+• Configuration is handled by a Zookeeper cluster and can be
+overridden with local files or system properties. It’s mapped into
+strongly-typed classes in Scala and validated via Hibernate so that
+configuration must match up with service expectations.
+• Testing is the most challenging part of a microservice architecture.
+Functional tests are the gold standard, but hard for developers to run
+300 services on their local laptops. Unit tests can run locally, but
+there’s no mocking service for these (and overmocking results in
+useless testing that in non representative). They use the Cake pattern
+for dependency injection, which enables type-safe and scalable
+composition. It uses Scala’s self-types and multiple trait
+inheritance. Things like object repositories or configuration
+providers can be expressed in this way. The pattern lets them mixin
+different sources and weave in real/mocked sources. UI Testing is
+handled via Selenium and is built on ScalaTest. Automated browser
+testing with reusable components works well, and leverages Scala’s
+type system well to reject invalid tests/code/configuration.
+• Continuous Delivery lets them deliver 20 to 30 service versions
+every day using the aforementioned structures
+
+Some cool stuff: on their website, there are badges on their website
+showing inventory for each item. The inventory badges update in
+realtime as you look at the page, which really motivates people to buy
+as they spot inventory dropping down. Shoppers get excited and feel
+like they’re in a Black Friday sale and are engaged in the shopping
+activity! Building this stuff was quite easy to do using event-driven
+Play application and Akka actors.
+
+They build on this for “freefall sales”. Essentially a Dutch auction
+and is also web sockets and Play based. It initiates a sale that lasts
+for a fixed time with the price dropping regularly. The highlight is a
+$16000 purse that leads to audience laughter.
+
+Q: how to deal with production side of microservices such as service
+discovery or log aggregation?
+A: no service discovery as Zookeeper tracks where everything is (which
+ports something is on). Log aggregation isnt great at the moment, so
+they’re working on centralized collection atm.
+
+Q: what’s the greatest win of FP here? Is type safety really important
+or something like that?
+A: in the context of the company development and the technical stack,
+one nice thing about Scala is that it combines the “good parts” of
+Ruby (concise, expressive) with type safety and performance (as they
+had in Java). Scala provided a balance between Java and Ruby by giving
+them type safety, performance and conciseness, which is a big win in
+terms of expressivity and reuse of components.
+
+Q: how do you handle versioning of microservices?
+A: each service maintains back compat in its API until they ensure all
+their clients are upgraded. The URI path has the version number, so
+service providers bump the version number for new clients and keep the
+old version working. They then migrate all the clients of the service
+as quickly as is practical.
+
+PalletOpts and infrastructure automation
+
+(I missed a lot of this talk due to a lunch chat spilling over. I’ll
+fill it in later –editor)
+
+A Clojure DSL that runs shell scripts and handles very complex
+infrastructure automation.
+
+Q: Yaron: How do you handle error propagation through scripts (the
+equiv of set -e in sh)
+A: Each combinator propagates errors and there are different run
+strategies that handle errors differently depending on needs.
+
+Streaming data at Twitter with Summingbird
+
+Speaker is @sritchie ( his slides).
+
+Summingbird is how to do streaming Map Reduce at the scale they have
+at Twitter (scale is “staggering”). It has been open sourced since Sep
+3rd and a bunch of internal systems at Twitter run on it. Mainly three
+people: @posco @sritchie and Ashu — small teams.
+
+Vision:
+
+• “Write your logic once”: Twitter has a number of 1000+ host Hadoop
+clusters and a lot of their data is done via k/v processing with
+Hadoop. Going streaming had to be done evolutionary by letting it be
+done either on Hadoop or on some new streaming service. Programmers
+experimenting with data shouldn’t have to make systems decisions early
+on in the process. Twitters scale: 200m+ active users, 500M tweets/day
+and scale is pervasive.
+• Solve systems problems once so that systems that are scaling stay
+fixed.
+• Make non-trivial realtime compute as accessible as Scalding.
+
+This leads onto Summingbird: a declarative map/reduce streaming DSL.
+It’s a realtime platform that runs on Storm, and a batch platform that
+runs on Hadoop. The datastructures that come out of the DSL can be run
+on either platform (so you can choose between batch/streaming very
+late in the process).
+
+One of the big concepts that Summingbird embraces is the idea of
+“associative plus” operations — the monoid.
+The 4 S’ of Summingbird (“you know you’re onto something when they all
+have something in common!”):
+
+Source[+T]
+Store[-K,V]
+Sink[-T]
+Service[-K,+V]
+
+Source is where data comes from, Store is a k/v store that is being
+aggregated into. Sink is a dump as processing items, and Service
+permits k/v lookups during a job.
+
+Store: what values are allowed? What constraints can we place on a MR
+job such that any valid value can make progress.
+
+trait Monoid[V] {
+def zero: V
+def plus(l:V, r:V):V
+}
+
+“less scary than a monad!”. If you can take any two values and smash
+them together, you have a monoid — e.g. integers. Also Sets have a
+monoid (concat) and lists (concat) and maps (recursively pull in the
+monoid on the value). Others include: HyperLogLog, CMS, ExponentialMA,
+BloomFilter, Moments,MinHash,Topk. All you need to do is find a
+datastructure with a monoid and you can use Summingbird. There is an
+open source library called Algebird (birds birds birds!).
+
+It took some convincing (the words like “monoid” still scared people
+at Twitter, sadly).
+
+Monoids are amazing due to Associativity. If you know that the values
+you are reducing are associative, then it’s easy to parallelise since
+they can be built “in any order”.
+
+Even though realtime is important at Twitter, noones wanted to dip in
+due to the difficulty of getting started. Summingbird can pull in data
+from an existing static Hadoop cluster and then union it with a
+realtime feed. If you give the logic to Summingbird, it will run the
+logic on Hadoop (consuming discrete batches of data) and the client
+will keep track of how far it’s gone. The realtime comes from partial
+aggregations over fixed time buckets, and is merged together in the
+client using the monoid to aggregate them together to look like a
+proper realtime feed.
+
+One cool feature: when you visit a tweet, you want the reverse feed of
+things that have embedded the tweet. The MR graph for this comes from:
+when you see an impression, find the key of the tweet and emit a tuple
+of the tweetid and Map[URL,Long]. Since Maps have a monoid, this can
+be run in parallel, and it will contain a list of who has viewed it
+and from where. The Map has a Long since popular tweets can be
+embedded in millions of websites and so they use an “accountment
+sketch” which is an approximate data structure to deal with scale
+there. The Summingbird layer which the speaker shows on stage filters
+events, and generates KV pairs and emits events.
+
+Twitter advertising is also built on Summingbird. Various campaigns
+can be built by building a backend using a Monoid that expresses the
+needs, and then the majority of the work is on the UI work in the
+frontend (where it should be — remember, solve systems problems once
+is part of the vision).
+
+Future plans:
+
+• Akka, Spark, Tez platforms
+• Pluggable graph optimizations since various planners do improved
+filter push
+• Metadata publishing with HCatalog — in OSS, this means better
+tooling for EC2 and other cloud platforms.
+• And of course, more tutorials
+
+All work happens on Github so contributors are welcome.
+
+Summingbird is working well for the majority of realtime apps at
+Twitter. It’s all about the Monoid! Data scientists who arent familiar
+with systems can deploy realtime systems, and 90%+ of the code is
+reused across the realtime and batch systems.
+
+Q: Did Hadoop need any changes to cope with the interfacing with
+Summingbird.
+A: Scalding (written at Twitter) handles much of the interfacing with
+Hadoop. Hadoop is really the classical k/v store now. Real problem is
+figuring out which operations can work on both the batch and realtime
+and only admitting realtime.
+
+Q: Yaron: associativity is one nice thing about Monoid, but what about
+commutativity is also important. Are there examples of non-commutative
+datastructures
+A: Good examples. It should be baked into the algebra
+(non-commutativity). This helps with data skew in particular. An
+important non-commutative application is Twitter itself! When you want
+to build the List monoid, the key is userid,time and the value is the
+list of tweets over that timeline (so ordering matters here). It’s not
+good to get a non-deterministic order when building up these lists in
+parallel, so that’s a good example of when associativity and
+commutativity are both important.
+
+Functional Probabilistic Programming
+
+Avi from Charles River, introducing the Figaro language.
+
+Problem: Suppose you have some information (“suppose Brian ate pizza
+last night”) and you want to answer some questions based on this (“is
+Brian a student or a programmer?”) and keep track of the uncertainty
+in the answers.
+
+Solution: Create a joint probability distribution over the variables,
+assert the evidence and use probabilistic inference to get the answer
+back.
+
+One common way to do this generative models. Probabilistic models in
+which variables are generated in order. Later values can depend on
+previous variables with a binding. This is a v popular approach with
+several implementations available over the years.
+
+Developing a new model requires figuring out a representation, an
+inference algorithm and a learning algorithm. All of these are
+significant challenges with each of them still being considered
+paper-worthy.
+
+The dominant paradigm is functional probabilistic programming. An
+expression describes a computation that produces a value.
+
+let student = true in
+let programmer = student in
+let pizza = student && programer in
+(student, programmer, pizza)
+let student = flip 0.7 in
+let programmer = if student flip(0.2) else flip(0.1) in
+let pizza = if student && programmer flip(0.9) else flip(0.3)
+(student, programmer, pizza)
+
+How are we supposed to understand this kind of program. Sampling
+semantics: run this program many times, each with a sample outcome. In
+each run, each outcome has some probability of being generated. The
+program defines a probability distribution over all the outcomes.
+
+This is a powerful approach since we are taking a Turing powerful
+language and probabilistic primitives are added, and this naturally
+expresses a wide range of models.
+
+Structured variable elimination, Markov chain Monte Carlo, importance
+sampling and so forth can all be built using functional probabilistic
+programming. PPLs aim to “democratize” model building — one shouldn’t
+need extensive training in ML or AI to build such models, or use them
+effectively.
+
+IBAL (2000-2007) is the first practical PPL, implemented in OCaml but
+not embedded in OCaml. Exact inference using structured variable
+elimination and later had intelligence important sampling. However, it
+was hard to integrate it with applications and data (in IBAL the data
+had to be hardcoded into the data, which wasnt practical). It also
+lacked continuous variables. Therefore the speaker built Figaro to
+work around the limitations.
+
+Figaro (2009-present) is a EDSL in Scala and allows distributions over
+any data type. It has a highly expressive constraint system that
+allows it to express non-generative models. There is an extensible
+library of inference algorithms that contains many of the popular
+probabilistic inference algorithms (eg. variable elimination).
+
+The goals of Figaro are to implement a PPL in a widely used library:
+Scala is the interop language as Java compat is a prime goal. Figaro
+provides various good abstractions such as OO that come out of Scala
+(not sure, he skipped slide rapidly here? — editor)
+
+Figaro has an Element[T] which is a class of probablistic models over
+type T. Atomic elements (Constant,Flip, Uniform, Geometric) are
+combined with compound elements (If (Flip(0.9), Constant(0.5)...).
+
+Under the hood, there is a probability monad to track the state. The
+Constant is the monadic unit and Chain(T,U) implements the monadic
+bind. Apply(T,U) implements monadic fmap. Most elements in Figaro are
+implemented using this monad.
+
+Example 1: Probabilistic walk over a graph. In Figaro, we start by
+defining datastructures over the webpage graph (Edge, Node, Graph) and
+then we define some parameters of the random walk.
+
+Example 2: Friends and smokers. Create a person with a smokes
+variable. Friends are three times as likely to have the same smoking
+habit than different, so this is a constraint variable. Finally this
+is applied to all pairs of friends by adding constraints to the pairs.
+This is then instantiated in a particular situation by building a set
+of people (alice, bob, clara) and running the inference algorithm
+(VariableElimination) to calculate the probability that Clara smokes.
+
+Example 3: Hierarchical reasoning. We observe an object (say a vehicle
+on a road, or a person, or something) and we want to know what type of
+object it is. We have some observations about this object (its size,
+color or shape) and we want to know if its something we should be
+interested in. It’s very natural to think of these objects via an
+inheritance hierarchy. In Figaro, every element has a name and belongs
+to an element collection. A reference is a sequence of names (such as
+vehicle size). Starting with an element collection, we can get to the
+vehicle associated with an element (go through through the sequence of
+nested element collections). However, there may be uncertainty in the
+identity of a reference (e.g. you dont know what vehicle1 is). Figaro
+resolve the element to the actual element.
+
+Obtaining Figaro is free and open source (cra.com/figaro) but v2 is on
+GitHub (like everything else today, it seems).
+
+Q: What are the limitations of Figaro, such as non-terminating
+Bernoulli tasks and what constraints cant be encoded?
+A: Anything you can express can be put in constraints since any code
+can go in there. It’s very easy to express something that you cant
+compute. Figaro is working on helping the programmer that can be
+computed over, such as via rejection sampling or simply rejecting the
+bad constraint.
+
+Q: Similar to Norman Ramsey’s work (such as Church), whats the
+relationship
+A: The languages fall into categories: their own languages and
+embedded libraries. The latter is Figaro and Infer.NET and Factory.
+INFER.NET is limited in expressivity and so can be compiled into a
+factor graph so is very efficient. Similarly Factory is lowlevel and
+compiles to factor graph. Lots to discuss here.
+
+Haskell and FPComplete
+
+Company exists to fix Haskell development tools. All the tools are
+cloud-based and run in a web browser. Content can be browsed
+anonymously. This talk will not have the Monad word in it!
+
+There exists a feature to create tutorials and embed code within those
+tutorials.
+
+Latest product (being announced today) is a Haskell IDE that is a web
+based tool which requires no setup and no download. It has a number of
+cool features:
+
+• Errors are displayed immediately as it compiled as you type
+• Git based so full version control
+
+Company goals: increase Haskell adoption and make it more accessible.
+Offer commercial grade tools and support and simplify Haskell
+development. Also to support the Haskell community and leverage the
+community to improve FP Complete’s own products.
+
+The FP Haskell Center (released in Sep 2013) has:
+
+• a web front end (no setup,access to help and integrated with
+Haskell)
+• Haskell backend has project management, developer feedback with
+errors, build system and a cloud based execution and deployment
+platform. The cloud allows for faster product evolution!
+• Soon to have a personal version and version that will work behind
+firewalls etc.
+
+It is all implemented in a Haskell web framework like Yesod. Lots of
+library support via conduits, and the UI uses Javascript (via Fay).
+All the heavy lifting is done in the backend and not via Javascript.
+Very few issues surfaced using Yesod and no major modifications were
+required to build their product.
+
+Challenges were outside the scope of Haskell usually, but Haskell was
+used to fix them.
+
+• Javascript coding was significant in the frontend
+• Stable set of libraries are important
+• Compiler integration (feedback and errors) must be available as a
+library to let the IDE spot identifier location problems
+• Uses LXC containers to created isolation containers — ephemeral
+storage and containers can run on either shared or dedicated systems.
+• IDE uses isolation git state to separate users from each other. When
+projects are created, there is a visual representation of projects (in
+git repositories each, in S3) and each repo is accessed via Gitlib-2.
+Interesting is that this offers multiple backends for git access: Git
+C library, GitHub C library, IDE local repo in S3 or others in the
+future.
+
+For building projects, code is being precompiled continuously in the
+backend and so bytecode can generated quickly and run within the IDE.
+Bytecode runs in the GHC frontend container and exceptions dont break
+the IDE. Keter and Chef provide deployment assistance to get it into a
+shared application server or container, and FP Complete offers this
+deployment as part of their product.
+
+Billing Processor provides SOAP APIs. Added SOAP Haskell libraries to
+Haskell via C++ bindings.
+
+Mobile gaming from Japan
+
+They normally built mobile games using Ruby, PHP, etc, but have
+switched to FP in recent years for reliability, high performance and
+productivity. However, they’ve suffered from memory leak (blaming
+Haskell’s laziness, to audience laughter), and some data loss and
+performance degradation.
+
+Gree is one of the largest mobile games platforms, with 37 million
+users and 2000 games as of June 2013. They develop social games and a
+platform for 3rd party games. They also do social media and
+advertising and licensing, and also venture capital.
+
+Employees are 2582 with a significant number of engineers (cant
+disclose exact numbers). On client side, it’s normally Java, ObjC,
+Javascript and Unity/C#. Server side is usually PHP, MySQL and Flare
+(a KV store written in C++ developed internally at Gree). They started
+a Haskell project in Jun 2012 and they have 6 Scala and 4 Haskell
+engineers.
+
+They developed a KVS management system using Haskell, to setup and
+destroy KVS nodes in response to hardware faults and sudden access
+spikes. It’s used in a large social game application. Another example
+is an image storage gateway, which converts WebDAV to memcached/S3 for
+the SNS photo uploader to store images. It uses Warp and http-conduit
+to do this conversion.
+
+Some pitfalls they faced with Haskell:
+
+• Memory leaks via lazy evaluation: frontend server keeps a list of
+active thread ids in a TVar for monitoring. When deleting from the
+thread list, the function didnt reduce the function to a normal form
+and so held onto a reference. This led to a serious memory leak that
+took the service down. It was fixed easily by evaluating to the
+normalform and forcing sequentialisation. They felt it is too easy to
+mix up TVar/MVar writes with other IO operations (which do reduce to
+normal form and avoid the leak). There is much confusion over the
+strict/lazy alternatives for non-IO functions
+• Race conditions: Data put in a queue is very rarely lost. The reason
+is that the timeout functions can be used only once safely with an IO
+function. (details omitted)
+• Performance degradation: from forking a lot of threads to do
+monitoring. This was easy to fix but happens often since Haskell
+libraries are developed actively and the implications of changes are
+not always obvious.
+
+How to fix all this? Better testing to start with. Haskell has a great
+QuickCheck framework and they developed HUnit. This lets services be
+started in the setup (in their example, memcached using a spare port),
+and then run services against it and make sure its torn down in a
+timely fashion. They used this to extensively test their KVS system
+and Flare (written in C++). Over 150 system tests and a control server
+with 5000+ assertions, so this is a big scale test.
+
+Next up is documentation in Haskell. A problem report describes
+details of the problem and linked from a bug tracker. The timeline,
+workaround, impact and details caused must all be captured and are
+mixed up with a number of other reports, so none of the Haskell people
+read it. They collected up the aggregation and summarised it for other
+Haskell products. Despite this, other Haskell programmers still dont
+read it (audience laughter). To sort this out, they do automated
+checking using hlint. They customize hlint to “grep” for their
+particular pitfall, and then check for Emacs. hlint isnt quite good
+enough for a lot of their pitfalls though, such as the timeout issue
+from earlier, so they had some workarounds to deal with this. The good
+thing is that hlint is integrated into their text editor. Not all
+pitfalls can be caught by hlint: high level design issues will remain
+problematic.
+
+Education is also important. They have a brown bag (lunch? — editor)
+FP meeting where they “Make GREE a better place through the power of
+FP”. They cover both Scala and Haskell topics. They also run an
+education program for new graduates, and they have a Haskell code
+puzzle series from Project Euler to help the new graduates.
+
+They conclude that they love FP and they develop some key components
+of our service using FP. But there are many pitfalls, and they are
+developing tools to assist them sort them out.
+
+Haskell for distributed systems
+
+Jeff Epstein (formerly a masters student in the Cambridge SRG, so it’s
+good to see him again!) talks about their new distributed system that
+they are building in Haskell. His company is also available for
+hiring!
+
+HA middleware manages networked clusters, aiming for exabyte-scale
+clusters. It’s architected by Mathieu Boespflug and Peter Braam (who
+has spoken about their FPGA work at past CUFPs). It manages 10000+
+nodes and creates consensus in the cluster about the location of
+active services. It can handle events due to failures, recovery time
+should be approx. 5 seconds.
+
+Zookeeper didn’t scale (audience interruption: why didnt Zookeeper
+scale? Jeff says he doesn’t know and should chat offline, audience
+member notes that they maintain Zookeeper and wants to know more).
+
+Events are sent by nodes and aggregated at a proxy node, and enqueued
+at an HA station. Events are processed by the hA coordinator and
+updates a node state graph (which is also replicated — everything is
+replicated and is a key theme in the talk). The HA coordinator is the
+decision maker which decides what to do on failure. Its main action is
+updating the node state graph to reflect the new strategy after
+failure.
+
+Key components are: Haskell, Cloud Haskell and Paxos.
+
+How we used Haskell:
+
+• Functional Data structures result in a purely functional graph and
+replicated (impurely) between cluster managers. Most of the feels
+imperative though, which was important.
+• Refactoring being easier was important due to strong typing.
+• Laziness was yet again a problem causer in IO due to space leaks in
+low-level networking code. He notes that distribution is a natural
+barrier to laziness, since the act of serializing a message forces its
+evaluation. He also notes that processes much behave the same between
+processes on the same host as between hosts, and so even local
+communication must be forced. Phil Walder interjects to ask “why did
+you use Haskell? It’s a bad fit! Jeff replies that “we like Haskell”
+and introduces Cloud Haskell, the topic of his MPhil thesis.Cloud
+Haskell is a library for distributed concurrency in Haskell and
+provides an actor-style message-passing interface, similarly to
+Erlang. It provides a “typed erlang”.Cloud Haskell is a good fit for
+this project in terms of interacting communicating components.
+Refactoring is easy, and this isn’t a “big data” project in the sense
+of data size. There is a huge amount of communication messages
+though.CH has a pluggable transport layer such as TCP, but also for
+different underlying networks (they built Infiniband). However, CH
+requires ordered delivery of packets and this was a poor fit (they
+want out of order delivery, which could be built with UDP, but CH
+requires an ordering for some reason). Space leaks are a real problem
+in this layer.Cluster bringup is tough for CH, since nodes need to
+find each other at start of day, and there some hacks in there to work
+around a morning storm of messages. (Interjection from audience: why
+not use Erlang? Jeff: performance wasnt up to par, and static types
+are important for them). Possibly the native code / bytecode erlang
+might be useful but speaker wasn’t sure if it would work.
+
+Paxos: is all about making systems agree (well-known proven algorithm
+for consensus). They implemented this as a general purpose library on
+top of CH. The algorithm is a good match for the programming model,
+with the client, acceptor, proposer learning and leader all built as
+CH processes. It ended up being a small readable implementation
+(1.5kLOC) that closely matched the pseudocode in the original Paxos
+paper (made them feel better about correctness). It’s used for
+synchronizing the state graph and for the distributed message queue.
+
+Challenges: Paxos is hard and untyped messages in CH make it worse.
+Getting reasonable performance from it also requires the modified
+variants. Liveness also is tricky to avoid overapproximations to
+prevent nodes being fenced out of the consensus unnecessarily.
+Multipaxos is something that solves some of this, and they’re working
+on more specific stuff also.
+
+Debugging: The CH programming model makes it tractable to debug a
+distributed application on a single machine. Nevertheless, distributed
+code is still parallel and involves race conditions and mixing
+messages. They would like a distributed ThreadScope but instead mainly
+used oldskool logging.
+
+They did build a deterministic CH thread scheduler to replace CH’s
+core message handling primitives, and they also used PROMELA
+
+Q: how much is open source or will be?
+A: none as far as speaker knows
+
+Q: Marius: how are non-deterministic sources composed with the
+deterministic scheduler?
+A: deterministic scheduler is for testing only, so timeouts also so
+deterministic.
+
+IQ: Functional Reporting
+
+Speaker is Edward Kmett on how they got FP in the door at S&P Capital
+in the door, their extensions to Haskell and generally how they’re
+working on opensourcing their tech. SAP is huge and have a number of
+products (S&P Capital IQ Platform, ClariFI, AlphaWorks, Compustat).
+
+Getting FP in the door:
+
+• Monoids (introduced as with the Summingbird talk, for easy
+parallelisation)
+• Reducers are another really powerful abstraction which can take a
+container full of values and give you back a structure, and it has a
+comonadic structure that lets you (e.g.) pass it many containers full
+of structures and generally compose things nicely. Reduction can also
+be done simultaneously across monoidal structures and essentially “we
+dont see the wiring hanging out of our code any more”.
+• Performance attribution: This is a model that breaks down the
+reasons why you make money (what did you do that was significant). The
+old and busted model (implemented in Java, full dataset in memory,
+hard to extend) was horrible, and the new hotness is implemented in
+Scala, runs in constant space, is really fast and results are
+flattened elegantly via combinators to a database backend. In other
+words: better, but some details are glossed over (multipass
+algorithms, iteratees, caching layers, and handling missing data) —
+but all this was sorted out and really sold Scala to the bigger
+company as a real asset.
+
+They developed Ermine, which is Haskell with Row Types. It’s not quite
+Haskell, but it’s main feature is that it’s not Scala either (audience
+laughter). Writing functional programs in Scala is quite painful (e.g.
+not blowing stack with monads requires trampolining everything and is
+labour intensive just to get by day to day). They wrote Ermine in both
+Scala and Haskell with a portable Core that can run on the JVM.
+
+Ermine has a strong type system, with novel row types and polymorphic
+and constraint kinds (“they were just coming into GHC at the time and
+I wanted to understand them”) and Rank-N types via a derivative of
+HMF. It fit their domain requirements really wel, and has builtin
+database support, can be exposed to end users, a structured code
+editor that can only generate type-safe code as you’re defining, and
+full control over error messages.
+
+Row types are a powerful way of describing the presence of a
+particular field. Its modelled via has, lacks and/or subsumes
+constraints. This is easily checked, but now inference flows
+unidirectionally through a join.
+In Ermine, they have existentials in their constraint types (technical
+explanation follows, not shown here –editor).
+
+Their reporting layer has one declarative specification to do all the
+relational algebra specifications they want, and push it into specific
+backends (SQL Server, etc) and ensure they run their queries as close
+to the data as possible. They can also create extensive HTML reports
+that render pretty consistently across different target platforms.
+Their example of Ermine was written by a functional programmer that
+had done no functional programming previously, which required a little
+hand holding to work through some of the more obscure type errors, but
+generally it worked ok.
+
+All the code is being stuck onto Hackage/Github etc.
+
+Q: has it been rolled out to a lot of users?
+A: being used on the main S&P website. One big client facing page for
+users. The next gen stuff is using Ermine more widely. The desktop app
+coming soon has Ermine and will be used by a huge number of users.
+Trend is to use it in an increasing number of their products.
+
+Enterprise scheduling with Haskell at skedge.me
+
+They have a cloud-based scheduling platform that takes care of complex
+enterprise scheduling. It has a branded customer experience (like
+Google Apps does), a flexible workflow and deep integration with
+backend systems and in-store workflow (e.g. on iPads).
+
+Example is Sephora who do makeup, and their appointment system is
+integrated via skedge.me that is embedded in an iFrame that looks like
+a seamless part of their site so that endusers cant tell the
+difference.
+
+When speaker started at skedge.me, there was a lot of fire fighting.
+It was 43k lines of Groovy on Grails, and several major intractable
+bugs were affecting the business: timezones, double bookings,
+recurring events not firing and notifications being delayed.
+Performance was an issue, as things that were interactive were
+sometime taking minutes to load. There was also a lot of inflexibility
+— hilariously, they had to sometimes ask clients to change their
+business model to fit with the skedge.me model.
+
+After some careful though, they decided they had to rewrite skedge.me
+to cope with growth and better service. The author had done Haskell
+before, but not specifically was with building a website using it.
+
+Haskell had the perfect model for fixing their scaling problems. At
+the lowest level, they built a RawDB on top of the IO monad that did
+everything necessary to maintain ACID guarantees during transactions.
+An example is that once an effect gets committed (e.g. an email gets
+sent confirming an appointment and then is cancelled, which happened
+on their old racy platform). This RawDB layer gives them stronger
+consistency guarantees with tracked effects and automatic retries on
+temporary failure.
+
+On top of the RawDB, they build a DB monad which provides a higher
+level than SQL via algebraic data types, caching and data validation.
+They then layer a security monad on top of the DB monad to guarantee
+that all accesses have been checked. Finally there is a business logic
+layer to enforce local policy and customise per customer (which was a
+real problem in the past).
+
+Security is complex due to all the customization, and they needed
+roles by client (owner, staff, customer) but also because clients can
+customise their verbs that only make sense within the component
+(Appointments can be joined, rescheduled, or notifications can be
+sent, edit cancelled). Haskell lets all this fit within a
+multiparameter type class, instead of doing OO-style inheritance that
+will rapidly get out of control. They map customisations from the
+customer onto a more standard schema that they can manipulate
+generically on a component-by-component basis, and it’s all statically
+checked and generally easy to read (important for security critical
+code).
+
+Haskell “lets them build code for the long run”. Sometimes though, you
+need to write code quickly and not care about longevity. This was the
+case for the importer, which is a quick-and-dirty hack to get code
+into their system. It has a limited set of inputs, the “end user” is
+the developer, and it’s thrown away once the job’s done. (shows epic
+type). Often when people need to do this sort of thing, they resort to
+bash or dynamically typed systems. In this case, even for this “quick
+hack”, they couldnt have achieved what they did “as badly as they did,
+without the help of the type system”. Generally very positive!
+
+Libraries help them not have to write code. Haskell is generally lower
+in terms of package count, but their *use* of Hackage libraries has
+been a lot higher than Javascript. They use 9 Javascript libraries,
+and 71 unique Hackage libraries (+87 dependencies). Its a lot harder
+to find a quality library that works in the dynamically typed land.
+Only one of their Haskell libraries had to be replaced due to bugs.
+This is because Hackage is well-organized, and it’s easier to vet a
+library since the purely functional ones are less risky (fewer
+sideeffects through other code). In contrast, Javascript libraries can
+sideeffect (e.g. on the DOM) very late in the QA process. So: fewer
+Haskell libraries, but the number of useful libraries seems to be
+higher.
+
+Problems: cyclic module dependencies with hs-boot files are unwieldy,
+so avoid them. Scalability with 4+cores was limited, but they havent
+tested GHC 7.8 (which apparently fixes a lot of this). Idle GC can
+cause issues with long pauses, so disable this feature — it depends on
+your workload but it was ok for their server based workload.
+
+Debugging production problems without stack traces is really hard, so
+consider using profiling mode for all libraries.
+
+Bottom line: 8200 lines of Haskell from 40k+ lines of Groovy. No
+recurring bugs and very good performance and flexibility for customer
+needs. Used daily by thousands of people. Check out the website!.
+
+Q: what about testing (QuickCheck?)
+A: they’ve done some QuickCheck on critical components (such as an map
+from times to events). Overall though, just putting Haskell together
+in the most obvious way led to improvements over their previous
+platform. Their QA guys are now writing unit tests in Haskell (because
+their Selenium bindings were harder).
+
+Integration of Mathematica with MapReduce
+
+From Paul-Jean Letourneau, a data scientist at Wolfram Research.
+Started with a show of hands: most of the audience has used
+Mathematica and had heard of Wolfram.
+
+The speaker has been responsible for a lot of the personal analytics
+posts on the Wolfram blog (the email analysis, genomics and several
+others). The theme of all his projects has been to work on large data.
+Mathematica has always kept its data oncore, which is a problem with
+very large data sets, and so this talk is about how they migrate over
+to a more big-data model to run offcore.
+
+Fundamental principles of Mathematica: everything is an expression,
+expressions are transformed until they stop changing, and
+transformation rules are in the form of patterns. Expressions are data
+structures (actually m-expressions in Lisp parlance). (full
+explanation of these in Mathematica demonstrated but omitted here)
+
+Expressions in Mathematica are immutable data structures (“program as
+data”) and so expressions can be rebound. Homoiconicity is pervasive
+as expressions are the data structure, even internally during
+evaluation (where it’s represented as a tree).
+
+“everything is a one-liner in Mathematica… for a sufficiently long
+line” (Theo Gray). (audience laughter). He demonstrates some cool
+oneliners that are Tweetable (<140chars) and demonstrates how to
+construct an image recursively out of itself (wow).
+
+He views it as a gateway drug to declarative programming
+
+y = 0
+For[i=1; i<=10; i++,y+=i^2]; y
+385
+
+(and then they discover Fold and all the advanced topics such as
+scoping, evaluation control and the MathLink protocol for IPC).
+
+HadoopLink is how they link Mathmetica to Hadoop. Example is
+WordCount, wherein he shows code to do it on a single core first (to
+test the output), and then an export to HDFS so that Hadoop can see
+the code. This looks fairly straightforward via a DFSExport command
+from HadoopLik.
+
+The Mapper looks something like:
+
+Function[{k,v},
+With[{words=ToLowerCase
+/@ StringSplit [k,RegularExpression[],...
+
+The reduces is similar, as it users an iterator to sum up each of the
+inputs. It actually communicates to the JVM to ensure that they dont
+have to load all the values into memory. Running the job is just a
+special HadoopMapReduceJob along with all the relevant expressions,
+and it goes ahead and submits it to Hadoop.
+
+Used this to build a genome search engine using all this. He shows how
+to prep data using Mitochondrian genomic data. The mapper only knows
+about a single base in the genome and its position, and the query
+sequence, how can it possibly align the query sequence with the
+genome? Algorithm scales with the size of the query, and not the size
+of the dataset. Hadoop can be used to handle the full dataset so
+getting local algorithm right in Mathematica can be focussed on rather
+than the bigger problem.
+
+Challenges: when this scaled up to search the entire human genome, my
+Hadoop cluster blows up. Nodes start dying, Nagios alerts, the works!
+After drilling down on these cryptic errors, the “garbage collector
+overhead was exceeded” which was hard to interpret. The memory
+consumption on each worker node when running with both Mathematica and
+the slave is quite high. This is a setting that’s made on a
+clusterwide basis and so is problematic to tweak just for this. What
+he’d like to do is add job-specific options to run things like heap
+size.
+
+Its on GitHub and open source (github.com/shadanan/HadoopLink) so go
+for it.
+
+Announcements
+
+Ashish Agarwal is organizing BoFs! On Monday @ 6pm there will be a
+bioinformatics session with Jeff Hammerbacher with location on the
+CUFP website.
+
+On Tuesday there will be a BoF about organizing local events for FP.
+In the same way that politics is local, this BoF will help you figure
+out strategies for local events.
+
+Yaron Minsky announces that 17 organizations have sponsored CUFP this
+year, which helps students. Industry attention to FP is really amazing
+to see how FP is moving into the mainstream. Industrial reception at
+1830 on Monday downstairs.
+
+Our thanks to Marius Eriksen and Mike Sperber for an amazing program!
