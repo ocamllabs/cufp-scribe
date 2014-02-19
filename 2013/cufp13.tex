@@ -1,28 +1,25 @@
-\NeedsTeXFormat{LaTeX2e}
-
+%% \NeedsTeXFormat{LaTeX2e}
 \documentclass{jfp1}
 
-%%% Macros for the guide only %%%
-\providecommand\AMSLaTeX{AMS\,\LaTeX}
-\newcommand\eg{\emph{e.g.}\ }
-\newcommand\etc{\emph{etc.}}
-\newcommand\bcmdtab{\noindent\bgroup\tabcolsep=0pt%
-  \begin{tabular}{@{}p{10pc}@{}p{20pc}@{}}}
-\newcommand\ecmdtab{\end{tabular}\egroup}
-\newcommand\rch[1]{$\longrightarrow\rlap{$#1$}$\hspace{1em}}
-\newcommand\lra{\ensuremath{\quad\longrightarrow\quad}}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{xspace}
 
-\title[CUFP'13: Scribe's report]{}
+\newenvironment{ipar}[0]%
+ {\begin{list}{}%
+ {\setlength{\leftmargin}{1cm}}%
+\item[]%
+ }
+ {\end{list}}
 
- \author[M. Eriksen]
-        {MARIUS ERIKSEN\\
-         Twitter Inc., 1355 Market Street, Suite 900,\\
-         San Francisco, CA 94013, United States\\
-         \email{marius@twitter.com}}
+\newcommand\needcite{{\color{red} [cite]}\xspace}
+\newcommand{\note}[1]{ \begin{ipar}  {\color{Gray} \textit{Note}: #1} \end{ipar}}
 
- \author[M. Sperber]
-        {MICHAEL SPERBER\\
-         \email{sperber@deinprogramm.de}}
+
+\title{CUFP'13 Scribe's Report}
+
+ \author[Authors]
+        {TODO}
+
 
 % \jdate{September 2001, update April 2007}
 % \pubyear{2001}
@@ -30,16 +27,601 @@
 % \doi{S0956796801004857}
 
 \begin{document}
-
 \maketitle
-
-\begin{abstract}
-(CUFP'13 SCRIBE'S REPORT.)
-\end{abstract}
 
 \tableofcontents
 
 \section{Overview}
+
+The Commercial Users of Functional Programming workshop (CUFP) is an
+annual workshop held in association with the International Conference
+on Functional Programming (ICFP), which was held in Boston, MA, USA
+Sep 22--24, 2013. Previous workshops have been reported here
+\needcite.
+
+The aim of the CUFP workshop is to report on the use of functional
+programming in commercial ventures. (To wit, our motto is ``functional
+programming as a means, not an end.'')
+
+This report aims to adumbrate; curious readers may wish to peruse
+the recorded videos from the workshop \needcite --- CUFP does not
+publish proceedings.
+
+\note{Should we expand on the record number of submissions, 
+etc? Or on the quality of submissions?}
+
+\section{Keynote: 21s Century Crusades of Knights of the Lambda
+Calculus — Lessons from Past Language Crusades}
+
+Dave Thomas, who among much else is responsible for the Eclipse IDE
+and the JVM Java Virtual Machine, talked to us about his experiences
+of the ``language wars'' in the past; namely, the introduction of
+object oriented programming into the mainstream. Dave delivered a talk
+sprinkled with anecdotes and history, much opinion, and some advice to
+the the functional programming community.
+
+\section{Analyzing PHP Statically}
+
+%% notes.anil.txt:239
+
+Facebook has invested a significant amount of effort in their PHP
+infrastructure. Julien Verlauget talked to us about Hack, a statically
+typed dialect of PHP used extensively at Facebook. Hack runs on
+Facebook's PHP virtual machine, HHVM, and the compiler is implemented
+in OCaml.
+
+The sine qua non of software development at Facebook is the rapid
+feedback cycle. There should be little time wasted between saving a
+source file, and having the results show up on the screen. Much of the
+HHVM team's efforts are focused on this, the ``developer experience.''
+
+Due to Facebook's very large deployment, performance is very important.
+Even a small performance improvement, say improving CPU utilization 
+by 1\%, can have significant cost impact. It is difficult to optimize PHP
+because of its dynamic nature, requiring an ever-more sophisticated 
+virtual machine.
+
+Hack is compatible with PHP, and indeed interoperates with legacy PHP
+with no runtime cost. Due to Facebook's enormous legacy code base, 
+Hack is explicitly designed to be incrementally adopted. This is done
+by allowing gradual typing. Hack also has type inference, minimizing
+notational overhead, and further aiding adoption. Hack's type system
+is interesting in its own right: it is flexible enough to handle a large
+number of uses where dynamic typing was previously invaluable; at
+the same time, it provides sufficiently strong static guarantees to catch
+a significant number of errors during type checking.
+
+In keeping with the stated goals, the response time from the compiler
+is near instantaneous. Even with thousands of files, the type checker 
+returns within a second. Julien demonstrated this to an impressed 
+audience.
+
+Facebook has also developed a web-based integrated development
+environment (IDE) around Hack. In order to provide autocomplete and
+code navigation features in the IDE, Hack's type checker is compiled 
+to Javascript via \texttt{js\_of\_ocaml}\needcite and run alongside the 
+IDE by the web browser.
+
+The Hack compiler uses a number of resident background processes. A
+master process delegates work to a number of child processes; they
+communicate via shared memory in a lock-free fashion. This
+architecture allows Hack to eagerly type check files before a user
+could even type the requisite commands. This is particularly important
+when there are large changes, for example when switching git branches.
+
+The vast amount of Hack's code is written in OCaml. The language was
+chosen because it is ideal for symbolic computation, has excellent
+performance, and can be compiled to Javascript. OCaml's FFI is also
+very good, which is important when doing systems work. The main
+challenge with this choice is the lack of native multicore support, though
+Facebook worked around this by engineering their own multiprocess
+architecture.
+
+\section{OpenX and Erlang Ads}
+
+%% notes.anil.txt:389
+
+OpenX is an advertising technology company. Their ad exchange was
+written in PHP, but recently transitioned to Erlang. Anthony Molinaro
+shared his perspective on this process.
+
+As their platform grew, its squeaky wheels became quite apparent. In
+addition to architectural issues --- a poor choice of databases, the
+lack of HTTP load balancing --- the application runtime grew to be an
+expensive aspect of OpenX's day-to-day operations. Additionally, OpenX
+wanted to expand their product, requiring better support for
+concurrent and low latency operations.
+
+Molinaro decided that Erlang was a good fit for the problem space ---
+highly concurrent systems with soft-realtime requirements --- and
+prototyped an initial implementation within a few months. This experience
+left him quite satisfied and he started to evangelize it to his coworkers.
+The engineering team began to find more and more projects that
+were suitable for Erlang:
+
+\begin{enumerate}
+
+\item Moved away from Cassandra to a Riak-based data management
+stack. (Riak is written in Erlang.)
+
+\item Added Erlang-based services for various bits and pieces of their
+software stack. A DSL for ad-selection was written so that application
+logic be interpreted by both Erlang and Java based systems.
+
+\item A data-service layer, abstracting the database.
+
+\item An API router. (Written by Erlang Solutions.)
+
+\end{enumerate}
+
+OpenX currently has around 15 services written in Erlang, around 8 in
+Java, and a mix of Python and PHP for frontend tasks.
+
+Molinaro emphasized the importance of the architectural choices that
+enabled the use of Erlang:
+
+\begin{itemize}
+
+\item They are entirely cloud based: they use generic hardware,
+atuomated bootstrap, deployment via packages, and emphasize fault
+tolerance.
+
+\item They use many cross-language tools. Thrift\needcite, Protocol
+Buffers\needcite, Lwes\needcite all contribute to a language-agnostic
+environment. An in-house system called ``Framework'' provides
+scaffolding or code layouts and provides support for building
+deployable packages from code. It also enforces versionign and
+reproducibility across languages.
+
+\item An emphasis on service oriented architecture. Components are
+single-purpose and loosely coupled.
+
+\item An emphasis on evangelism. Architectural choices enabled the use
+of Erlang, but it was important to find a project with which to
+showcase teh technology.
+
+\end{itemize}
+
+\section{Redesigning the Computer for Security}
+
+%% notes.anil.txt:510
+
+Tom Hawkins spoke to us about the SAFE project, which is funded
+by DARPA. SAFE is a codesign of 
+
+\begin{itemize}
+\item a new application language, Breeze;
+\item a new systems programming language, Tempest;
+\item a new operating system; and
+\item a new processor 
+\end{itemize}
+
+The goal of SAFE is security at every level for defense in depth.
+SAFE focuses on hardware enforced security, dynamic checking
+in software being too expensive. The SAFE model requires fine-grained
+information flow control, implemented in hardware.
+
+Words of data in SAFE are called \textit{atoms} comprising 64 bits of 
+metadata and 64 bits of payload. Atom metadata contains type and
+label information, used by the hardware to perform access and integrity
+checks. Every bit of data in SAFE belongs to an atom; metadata can always
+be recovered.
+
+Hardware and software were developed concominantly. While Breeze was
+being designed, there was a need for an assembly language to drive the 
+hardware, and to write low level routines. The assembly language is quite
+traditional, but with a few higher-level constructs to make programming
+the SAFE architecture more convenient.
+
+The team implemented an assembly EDSL in Haskell, using the host
+language itself as a macro language. The EDSL is very much a typical,
+using a monad captures the program description. 
+
+The assembly EDSL was also used as a library to the Breeze compiler;
+it worked seamlessly with the compiler's code generator.
+
+However after 2 years, the Breeze language and compiler still isn't in
+a usable state, and writing the operating system in assembly language,
+even with the help of a macro system, is not a compelling option. The
+team concluded there was a need for a higher low-level language. Thus,
+Tempest.
+
+Tempest is an imperative language with automatig register allocation,
+and an optimizing compiler. It, too, uses the SAFE EDSL assembler
+as a backend. Tempest is itself an EDSL in Haskell. This arrangement
+made it quite simple to inline SAFE assembler.
+
+Hawkins concluded with a handful of lessons learned:
+
+\begin{itemize}
+
+\item Designing a higher order language with information flow control
+is hard. (A humorous aside: the optimal number of PL researchers on
+any given project is somewhere between 2--7.)
+
+\item The team would have been more productive by starting by constructing
+Tempest initially, and not the SAFE assembler. While a valuable building block,
+programming directly in assembly language is unproductive. Furthermore,
+having a higher level language isolates the software and hardware teams:
+the hardware team can now change the ISA without rewriting all the software!
+
+\item EDSLs are excellent for bootstrapping languages like this; they are also 
+highly reusable components, as we have seen.
+
+\item EDSLs do require that engineers are comfortable with the host language
+(in this case, Haskell); and they are more difficult to debug.
+
+\item Concrete syntax is still important. The question is when to best make
+the switch. Hawkins asserted that the best opportunity to inroduce a concrete
+syntax is when a language gains modularity, since then the switch can be made
+without disruption.
+
+\end{itemize}
+
+\section{End to End Reactive Programming}
+
+%% notes.anil.txt:663
+
+Jafar Hussain from Netflix talked to us about their use of functional
+programming techniques; in particular, reactive programming. Their
+path towards reactive programming began by the process of
+componentizing the Netflix software stack. The middle tier and UI
+used to be highly coupled, leading to among other things very
+inefficient call patterns between components since the software
+architecture was not modular and forced developers into using
+omnibus messages to communicate between the application tiers.
+
+\note{This seems to be a theme: teams decompose large monolithic
+applications, and start by tackling niches in which these languages
+and techniques are a good fit; then expand from there.}
+
+Developers at Netflix are roughtly dichotomized into two personas:
+``Cloud'' people and ``UI'' people. Because of Netflix's rather
+massive scale, ``thinking at scale'' must be ubiquitous, and not done
+by only the backend infrastructure engineers. Their central challenge
+was this: how do they get UI engineers to think at scale? How do they
+provide the infrastructure to make them effective ``cloud
+developers?''
+
+Netflix answered the question by providing ``UI comforts:'' the use of
+Groovy, and a reactive API. The next challenge was then: how do
+we mine concurrency and parallelism in a simple fashion? Husain stated
+that no developer can be trusted with locks, that there must be better
+ways.
+
+Husain went on to describe the \texttt{Observable} monad, the central
+datastructure with which Netflix compose their systems. Observable is
+a Java port of Rx.NET\needcite. Briefly, it is is a vector version of
+the Continuation monad with the null-propagation semantics of the
+Maybe monad and error propagation semantics of the Either monad. It
+is composed in a functional fashion, and has clean cancellation
+semantics. \texttt{Observable} can be used in either synchronous or
+asynchronous settings.
+
+At Netflix, \texttt{Observable} is used as the singular data structure
+for both cloud and UI developers: it is applied with ease to problems
+in either setting, and provides a uniform API around which
+applications are structured. Husain demonstrated this by showing
+examples of how the API smooths over the differences between cloud
+and UI programming --- they really are the same! --- providing a
+uniform structure for both. His first example was showing an
+implementation of social notifications, a classic ``long polling''
+example; the second was an autocomplete system for search.
+
+Like other speakers, Husain emphasized the need for evangelism,
+because you simply cannot assume the best technology will win.
+He recommended practicing public speaking and a particular focus
+on ``soft skills.'' In his own experience, within a short amount of time,
+he honed his speaking skills and was able to clearly articulate the
+benefits and importance of a particular technology to his target 
+audience.
+
+In addition to traditional forms of evangelism, Husain's group
+developed interactive training exercises to illustrate the benefits
+of reactive programming. These exercises also helped developers gain
+an intuition of how to use these new constructs. The group  also made
+themselves available at (nearly) all hours of the day to any developer
+with questions.
+
+Netflix's libraries for reactive programming, both in Java and in 
+Javascript are open source and publicly available\needcite.
+
+\section{Medical Device Automation using Message-Passing 
+Concurrency in Scheme}
+
+%% notes.anil.txt:817
+
+Vishesh Panchal from Beckman Coulter Inc gave a talk on their use of
+Scheme to automate a molecular diagnostic device. Its job is to
+detect the presence of specific strands of DNA/RNA in a sample. It is
+a complex beast: it contains a total of 19 boards, with temperature,
+motor control, and sensors. It has two barcode readers and a
+spectrometer. (Panchal showed us a video of such a device playing a
+piece of music by actuating its motors just so!)
+
+Operators use a thin, stateless client to interface with the device.
+The server software is written in Scheme. It embeds Erlang/OTP in
+order to take advantage of Erlang's message-passing concurrency
+model, pattern matching, and supervisor structure, used to isolate
+hardware failures.
+
+Scientists program the machine with a DSL, also written in Scheme.
+Panchal found this use of Scheme very apposite. Its syntax is
+exceptionally clear and simple; hygenic macros played a crucial role
+in constructing the DSL; first class functions and continuations were
+key; finally, Scheme's arbitrary precision arithmetic was important
+for numeric computation.
+
+In order to interoperate with Erlang/OTP, the team constructed an
+Erlang embedding in Scheme. Their library can create, inspect, and
+update Erlang records; they also replicated the Erlang pattern
+matching facility through macros.
+
+The instrument server is decomposed into several processes, all
+arranged in a supervisor tree. These all communicate by passing
+messages; the server also has an event manager that logs events and
+handles subscriptions to event streams.
+
+Panchal enumerated a number of common runtime errors, and showed how
+they are impossible in their system, or otherwise mitigated by the
+use of supervisor trees, enabling principled handling of such
+failures at every layer in their stack.
+
+The flexibility of their diagnostic device is due to its
+programmability. However, scientists shouldn't need the help of
+software engineers to make use of the device. Thus, their DSL must be
+usable by nonexpert scientists. They solved this by making their DSL
+highly specialized: it provides constructs for specifying high-level
+goals, familiar to scientists. Panchal showed a number of examples
+where there was a more-or-less direct translation between a written
+description of a process and their DSL.
+
+Panchal concluded by enumerating their chief take-aways:
+
+\begin{itemize}
+
+\item Message passing proved a useful model for reasoning about
+system semantics. Erlang/OTP's fault isolation lead to shorter
+programs, written less defensively. Smaller programs means simpler
+programs, and thus easier to test. However it is not a silver bullet:
+In their experience, gen-servers can deadlock between each other.
+Here it is crucial to use timeouts and supervisor trees to detect
+these.
+
+\item There isn't much prior art on supervisor structure; the team
+had to invent new methodology.
+
+\item Automated unit testing was crucial throughout the process.
+
+\item It is difficult to hire into their unique environment.
+
+\item Existing quality metrics (e.g. bug density) doesn't adapt well
+to languages like Scheme due to their terseness.
+
+\item There was additional scrutiny from the FDA (the regulating body
+for medical devices in the United States) due to their unusual
+architecture and use of open source software more generally.
+
+\item Mixing languages, glued together by DSLs and macros, allowed
+the team to use the good bits from both Scheme (macros, arbitrary
+precision math) and Erlang (message passing concurrency, OTP). The
+use of DSLs allowed rapid prototyping by nonexpert developers.
+
+
+\end{itemize}
+
+
+\section{Enabling Microservice Architectures with Scala}
+
+%% notes.anil.txt:936
+
+Kevin Scaldeferri from the Gilt Groupe reported on their experience
+building out a large system comprising a large number of small
+services. The Gilt Groupe is a popular Internet clothing retailer
+employing highly user-specific targeting. They employ several schemes
+to drive sales, mostly centered around time- and quantity-limited
+offerings. This makes their traffic very uneven, with massive spikes
+around sales. This also implies that their revenue is distributed
+along the same lines, and so stability during traffic spikes is an
+infrastructure imperative.
+
+As with Netflix and OpenX, the Gilt Groupe was previously a largely
+monolithic architecture, a Ruby-on-Rails application comprised the
+bulk of the application. Scaldeferri explained that, with a growing
+application, and a growing number of engineers, there were seemingly
+intractable software engineering challenges with this model. As well,
+the setup caused a number of production issues.
+
+They decided to pursue a ``microservice'' architecture, splitting
+their application into a large number of welf-defined, self-contained
+services. The transition began by factoring out of the Rails
+application a few core infrastructure systems. Within four years,
+these numbered 300. Each microservice is written in Scala, and uses
+HTTP to communicate with each other. During this transition, the
+engineering group developed architectural support to support this
+large number of services in production:
+
+\begin{itemize}
+
+\item \textit{Build system}: Scaldeferri's group extended Scala's 
+Simple Build Tool (SBT) to abstract away build, configuration, and 
+dependency management. They extended the tool (via plugins)
+extensively to support their use.
+
+\item \textit{Configuration} is stored in a ZooKeeper cluster, and
+can be overriden locally. Configuration is mapped to Scala
+type classes with strict validation.
+
+\item Due to the complex set of dependencies --- both upstream and
+downstream --- \textit{testing} remains challenging in microservice
+architectures. (Scaldeferri remarks: ``It's difficult for developers to run 
+300 services on their laptops.'') Gilt's code base uses the ``cake pattern'' --- 
+which is enabled by Scala's trait mixin system --- extensively and
+uses this in testing to fully or partially satisfy dependencies that would
+otherwise be handled by another service in their prodution environment.
+
+\item Finally, a system for doing \textit{continuous delivery} is an
+important part of Gilt's deployment strategy. 20--30 services are
+deployed automatically on a typical day.
+
+\end{itemize}
+
+Finally, Scaldeferri adumbrated on their use of ``reactive''
+programming. Many aspects of Gilt's products require real-time
+updating. (Example: they show the number of items left for sale.)
+These are constructed using Play\needcite and Akka\needcite actors.
+
+\section{Functional Infrastructures}
+
+%% notes.anil.txt:1028
+
+Antoni Batchelli from PalletOps
+
+\section{Realtime Mapreduce at Twitter}
+
+%% notes.anil.txt:1041
+
+Sam Ritchie of Twitter Inc. described Summingbird, a new open source
+system for computing aggregates in real time.
+
+Summingbird is a declarative-style DSL for expressing map/reduce-style
+aggregates over streaming data. It aims to bridge the gap between
+streaming and batch compuation. You should have to write your logic
+once, and deploy it in a combination of batch- and
+streaming-computation systems. An important goal of Summingbird is to
+improve developer productivity by solving the systems problems in one
+place, so that the runtime (i.e. the Summingbird library ands its
+underlying execution engines) handles efficient execution as well as
+scaling resources usage up and down based on need.
+
+The core datastructure for aggregation in Summingbird is an
+``associative plus'' operation --- the Monoid. It is a very practical
+datastructure for aggregation: due to their being associative,
+computations over Monoids are trivially parallelizable. Ritchie
+described a slew of common datastructures and aggregations that are
+Monoids. These include Sets, Lists, Maps (whose keys are also
+Monoids), HyperLogLog, BloomFilters, Moments, and so on.
+
+It is common to deploy Summingbird in a dual batch/realtime
+configuration. The batch portion, working off of log files or ground
+truth data, computes the aggregate up to a given timestamp; a realtime
+streaming system maintains a sliding window of the same aggregate. At
+serving time, clients query both of these stores, merging the result.
+This style of deployment is desirable because it allows good
+separation of concerns: the batch system aggregates over the entire
+data set, optimizing for throughput; the streaming system has a much
+smaller fixed window of computation, computing updates with lower
+latency.
+
+Ritchie then explained an example production use of Summingbird. When
+showing a tweet, Twitter will show a list of web sites that embed this
+tweet. This is based on impression data, and is ordered by popularity.
+The feature is implemented in Summingbird by consuming events of
+the form \texttt{(TweetId, (URL, Count))} representing that
+the tweet named by \texttt{TweetId} was reached from a given website,
+represented by \texttt{URL}, a given number of times, represented by 
+\texttt{Count}. This fits neatly into the model of Summingbird, as
+these tuples are trivially summable. In order to deal with the large
+cardinality of web sites, they use a \textsc{Count-Min} sketch to 
+reduce the memory requirements for keeping the counts.
+
+\section{Functional Probabilistic Programming}
+
+%% notes.anil.txt:1168
+
+\note{This section in particular needs a bit of review; I don't have the
+slide material. Need to re-watch the video.}
+
+Avi Pfeffer of Charles River Analytics introduced the Figaro language
+for probabilistic programming\needcite. The aim of functional
+probabilistic programming is to ``democratize'' buildling
+probabilistic models.
+
+Pfeffer started with a motivating example: support you have some
+information (e.g. ``Brian ate pizza last night'') and you want to
+answer questions based on this (e.g. ``is Brian a student or a
+programmer?''), all while keeping track of the uncertainty of the
+answers. The solution is to createa joint probability distribution
+over the variables, assert the evidence, and then use probabilistic
+inference to compute the answer.
+
+A common approach to this is through generative models: variables are
+generated in order, wher elater values may bind (depend on) previous
+values. Developing such a model is not a simple task, and is still an
+active area of research.
+
+Expressions in functional probabilistic programming languages are
+computations that produce values with uncertainty. Pfeffer illustrated
+by expanding on the previous example:
+
+\begin{verbatim}
+let student = true in
+let programmer = student in
+let pizza = student && programer in
+(student, programmer, pizza)
+let student = flip 0.7 in
+let programmer = if student flip(0.2) else flip(0.1) in
+let pizza = if student && programmer flip(0.9) else flip(0.3)
+(student, programmer, pizza)
+\end{verbatim}
+
+Such programs may be understood by \textit{sampling semantics}:
+the program is run many times; each outcome of the program has
+some probability of being generated. Thus the program defines a
+probability distribution over outcomes. Since the language itself is
+Turing complete, it is capable of expressing a wide range of models.
+
+Figaro is an EDSL in Scala which allows for distributions over any
+data type. It has an expressive constraint system, and an extensible
+library of inference algorithms containing many popular algorithms
+such as variable elimination. Due to its embedding in Scala, Figaro
+is usable as a library on the JVM, allowing for Java compatibility.
+Programs may also make use of the abstractions afforded
+by the host language.
+
+Figaro's cheap data type is called \texttt{Element[T]} --- a class of
+probabilistic models of type \texttt{T}. A number of atomic elements
+are defined (e.g. \texttt{Constant}, \texttt{Flip}, \texttt{Uniform}, and
+\texttt{Geometric}); these are combined to form compound elements, 
+for example \texttt{If (Flip(0.9, Constant(0.5), ..}.
+
+Figaro uses a probability monad to track state, with \texttt{Constant}
+representing the monadic unit, and \texttt{Chain(T, U)} the monadic
+bind. Most of Figaro's elements are implemented in terms of this monad.
+
+Figaro is open source and freely available\needcite.
+
+\section{Building a commercial development platform Haskell}
+
+%% notes.anil.txt:1290
+
+Gregg Lebovitz from FP Complete reported on the FP Haskell Center, 
+a web-based IDE for Haskell.  FP Complete aims to improve Haskell
+adoption by making it more accessible to more developers. They offer
+``commercial grade'' tools and support in order to simplify development
+in Haskell. They aim to support the Haskell community while doing so.
+
+Their Haskell IDE was built almost entirely in Haskell, using
+libraries and frameworks, mostly as-is, available on Hackage. They
+used Yesod\needcite as a web framework.
+
+The IDE comprises
+
+\begin{itemize}
+
+\item A web frontend. No setup is required, and it is integrated with
+the Haskell compiler.
+
+\item A Haskell backend implementing project management, 
+developer feedback (error reporting), a build system, and an
+execution and deployment platform.
+
+\end{itemize}
+
+
+
+
+
 
 
 
