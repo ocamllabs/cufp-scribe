@@ -601,29 +601,302 @@ adoption by making it more accessible to more developers. They offer
 ``commercial grade'' tools and support in order to simplify development
 in Haskell. They aim to support the Haskell community while doing so.
 
-Their Haskell IDE was built almost entirely in Haskell, using
-libraries and frameworks, mostly as-is, available on Hackage. They
-used Yesod\needcite as a web framework.
+The FP Haskell Center is aimed to take all the hassle out of starting to
+use Haskell. It aims to provide a ready-to-use development environment
+for Haskell that is both complete and easy to use. In other words, it is
+an Integrated Development Environment (IDE) for Haskell.
 
 The IDE comprises
 
 \begin{itemize}
 
-\item A web frontend. No setup is required, and it is integrated with
-the Haskell compiler.
+\item A web frontend, with no setup required;
 
-\item A Haskell backend implementing project management, 
-developer feedback (error reporting), a build system, and an
-execution and deployment platform.
+\item a Haskell backend implementing project management;
+
+\item integration with the compiler to achieve instant developer
+feedback (error reporting); 
+
+\item a help help/documentation system;
+
+\item git-based\needcite version control;
+
+\item a build system; and
+
+\item an execution and deployment platform.
 
 \end{itemize}
 
+The IDE is itself built almost entirely in Haskell, using libraries
+and frameworks, mostly as-is, available on Hackage. Yesod\needcite 
+was used as a web framework. Fay\needcite, a proper subset of Haskell
+that compiles to Javascript, was used for frontend code.
 
+The challenging aspects of this project were largely related
+to integration. Using the compiler as a library allowed for easy
+and type-safe introspection of errors; a user's code is continuously
+precompiled on the backend, so that its bytecode can be run
+quickly within the IDE.
 
+\section{Common Pitfalls of Functional Programming and How 
+to Avoid Them: A Mobile Gaming Platform Case Study}
 
+%% notes.anil.txt:1353
 
+Yasuaki Takebe of GREE, Inc. spoke about the use of functional
+programming in mobile gaming. GREE is a large mobile gaming
+platform in Japan (37 million users, 2000 games, 
+2600 employees) who have historically built mobile games in
+traditional web programming languages like PHP or Ruby.
 
+Recently, GREE has begun using Haskell for some of its backend
+systems. Takebe described one of these projects, a management system
+for their in-house key-value storage system. Its job is to manage and
+scale capacity in their storage clusters. It might, for example,
+increase the cluster size due to hardware faults or to access spikes.
 
+Takebe described a few incidents that were related to Haskell-specific
+issues:
+
+\begin{itemize}
+
+\item \textit{A memory leak due to lazy evaluation.} The frontend server
+keeps a list of active threads in a \texttt{TVar} for monitoring purposes.
+When threads were removed from the list, the function was not reduced
+to normal form and thus created a large memory leak.
+
+\item \textit{A race condition.} \note{NEED DETAILS}
+
+\item \itextit{A performance degradation.} This happened due to forking
+too many threads. \note{Need more details}
+
+\end{itemize}
+
+How does the team prevent these issues from occuring again? They
+decided to employ better testing practices. Using standard Haskell
+tools (QuickCheck\needcite, HUnit\needcite) they developed a 
+harness within which they could start their servers and test them 
+in-situ. They now have over 150 systems tests with more than 
+5000 assertions.
+
+Next, they started to document the issues they ran into, in order to 
+share their experiences and prevent future mistakes of the same kind.
+While they put a lot of effort into this, few developers bothered reading
+them. Next, they started trying to enforce them via HLint\needcite. While
+it is not sufficiently expressive to detect all the issues they care about, 
+it covers a useful subset.
+
+Finally, the group focused on more proactive education. They set up a
+brown-bag lunch where they covered Haskell and Scala topics; they also
+ran a class for new graduates where they sourced problems from project
+Euler, solving them in Haskell.
+
+Takebe considers their use of FP successful --- some of GREE's key
+software is now written in a functional language. He paid particular
+attention to the ``superstructure'' of a language: a community, good
+documentation, good tooling. Takebe considers this the sine qua non
+of introducing FP in a setting like GREE's.
+
+\section{Building scalable, high-availability distributed systems in Haskell}
+
+%% notes.anil.txt:1432
+
+Jeff Epstein of Parallel Scientific spoke about the use of Haskell in
+a high-availability (HA) distributed system for managing resources in
+a large (10k+ nodes) environment --- a cluster manager. The cluster
+manager also needs to be fully consistent, and has to recover from
+failures quickly.
+
+The team, for reasons undisclosed, determined that existing solutions,
+ZooKeeper among them, were not equal to the task. They set out to
+build their own Paxos\needcite implementation with Haskell.
+
+The job of a cluster manager is to present a consistent view of the
+cluster's state. While purely functional data structures were employed
+--- the state of a cluster, for example, is represented by a purely
+functional graph --- the code itself maintained an imperative feel.
+This was important due to the inherently imperative nature of the
+domain.
+
+The group used Cloud Haskell\needcite for distribution. Cloud Haskell
+is a actor-style message-passing system, similar to Erlang. It was a
+particularly good fit for this particular project as its model --- of
+independent, communicating processes --- meshes well with Paxos.
+
+Paxos was implemented as a general purpose library on top of Cloud
+Haskell. Each component of the algorithm --- the client, acceptor,
+proposer, learner, and leader --- were all Cloud Haskell processes.
+Their implementation turned out to be about 1.5kLOC of Haskell,
+closely matching the pseudocode presented in the original Paxos paper.
+This kind of near-transliteration provided great confidence in the
+implementation's correctness.
+
+While their initial implementation was a simple translation of
+Lamport's original Paxos work\needcite, reality is inevitably more
+complex. The team are working on adopting modifications availbale
+in literator\needcite \note{Multipaxos} to improve performance.
+
+Haskell's lazy evaluation was problematic, chiefly due to space leaks
+in low level networking code. Epstein noted that distribution is a
+natural barrier to laziness since messages must be serialized across
+process boundaries. Epstein cites strong typing as a great aid when
+refactoring. Since it provides a platform for distribution, Cloud
+Haskell makes it easy to develop and debug distributed systems on a
+single machine. This setup greatly aided in development. Since such
+systems generally, and Paxos especially, is sensitive to
+nondeterminism, the group developed a deterministic scheduler for
+Cloud Haskell. This allowed them to reliably and meaningfully test the
+system and to reproduce errors.
+
+\section{IQ: Functional Reporting}
+
+%% notes.anil.txt:1525
+
+Edward Kmett from S&P Capital spoke about their use of functional
+programming. First, about the introduction of Scala, followed by a
+description of \textit{Ermine}\needcite, a new Haskell-like  language they
+developed for their domain.
+
+Kmett first used Scala and FP techniques in a ``portfolio analytics''
+engine. This is a product used for performance and risk attribution
+across financial portfolios.
+
+Here, they used monoids for simple parallelization. (This was also
+seen in Twitter's report on Summingbird.). Reducers were used to
+derive structure from containers; they are co-monads and compose
+rather nicely. \note{What's he talking about here, exactly?} Reduction
+is done in parallel across monoidal structures. Kmett noted that this
+enhanced compositionality means that ``we don't see the wiring hanging
+out of our code any more.''
+
+The old version of the portfolio analytics engine was written in Java.
+It was hard to extend, and required all data to be in memory. Their
+rewrite in Scala is much more elegant and extensible; it runs fast, in
+constant space. This project really helped sell the use of Scala and
+FP more generally to the company.
+
+Next, Kmett talked about Ermine, the Haskell-like language they
+developed to build a generic reporting and visualization framework to
+be used in multiple products.
+
+Ermine was developed because the authors were frustrated with Scala.
+Specifically, writing monadic code in Scala can be quite painful as it
+is easy to blow the stack without trampolining. Ermine was developed
+in both Scala and Haskell; a portable core enables it to run on the
+JVM.
+
+Ermine has a Haskell-like type system, but with row types, constraint
+kinds, and rank-N types. Ermine has built-in database support. The
+group also developed a structured code editor that prevents writing
+code that does not type check.
+
+Row types are very useful in this context as they provide a powerful mechanism
+to describe the structure of data. The type system models constraints
+with ``has'', ``lacks'' and ``subsumes''.
+
+Finally, they built a declarative reporting layer which can push reports
+into specific backends (e.g. SQL Server, HTML reports)
+
+\section{Enterprise scheduling with Haskell at skedge.me}
+
+%% notes.anil.txt:1593
+
+Ryan Trinkle skedge.me talked about the cloud-based scheduling
+platform skedge.me. Skedge.me handles complex ``enterprise''
+scheduling for, among others, retailers. For example, Sephora, a
+makeup company, uses skedge.me to schedule appointments with
+customers. Skedge.me is integrated into their site via an iframe; it
+is styled seamlessly to look at part of the host site.
+
+Skedge.me used to be a 43-KLoC application written in Groovy on Rails.
+The codebase had several major intractable issues: timezone problems,
+double bookings, recurring events not firing notifications, and
+delayed notifications. The application also had severe performance
+issues. Perhaps worst of all, the application was inflexible: they
+could not respond easily to customers needs, and even had to resort to
+asking their customers to change the way they conducted business, so
+that it might fit better with the skedge.me model.
+
+After careful deliberation, the team decided to rewrite skedge.me in 
+Haskell. Trinkle had worked with Haskell previously, though not
+to build a web site.
+
+The team began by constructing a monad, \texttt{RawDB}, to maintain
+ACID guarantees during transactions. The \texttt{RawDB} layer tracks
+effects and can automatically retry operations on temporary failure.
+
+The \texttt{DB} monad is built on top of \texttt{RawDB} monad and 
+provides a high-level ``CRUD'' interface. This layer makes heavy 
+use of algebraic data types, and performs caching and validation.
+
+The final layer before the application code is the security layer. It
+implements security policies for various customers. Implementing
+security turns out to be tricky due to the myriad ways in which the
+product can be configured by customers. For example, they may define
+roles (e.g. ``owner,'' ``staff,'' ``customer'') that make sense only
+within their environment; the \textit{verbs} of the product, too, may
+be configured (e.g. appointments may be joined or reschedueld)
+depending on the environment. Thus both sides of the security equation
+--- nouns and verbs --- can change from instance to instance.
+Skedge.me uses Haskell's type class facility to model these security
+policies. These help map customer-specific customizations into a
+standard schema that can be manipulated on a component-by-component
+basis. This technique affords the team a great deal of static
+guarantees from type checking, a criticial property when implementing
+security sensitive systems.
+
+The team made heavy use of Hackage. Their application brings in 
+71 unique libraries from Hackage. (An additional 87 are brought in
+from the transitive dependency graph.) They found Hackage to be 
+well organized. Because most libraries are purely functional in nature,
+the team found them very easy to vet for quality. They replaced just
+one library due to bugs. Trinkle made this observation: compared to 
+the available libraries of other, more popular languages, Haskell's 
+number fewer, but are of higher quality.
+
+Trinkle finally noted that, while Haskell provides a great platform
+for ``building code for the long run,'' the team also made good use of
+the language for quick-and-dirty hacks. As an example, the program
+that imports data from the old system was written in Haskell. It was
+not written with modularity in mind --- it was, truly, a
+quick-and-dirty-hack --- however, the type system still provides very
+useful guarantees. Trickle noted that they couldn't have acheived
+doing this ``as badly as they did'' without the aid of the type
+system.
+
+\section{Wolfram: Programming Map/Reduce in Mathematica}
+
+%% notes.anil.txt:1689
+
+Paul-Jean Letourneau of Wolfram closed this year's CUFP with his talk
+on implementing MapReduce in Mathematica. Letourneau first described
+the Mathematica language: everything is an expression; expressions are
+transformed (rewritten) until they reach a fix-point. Expressions are
+data structures (similar to LISP's m-structures). As such Mathematica
+follows a familiar LISP mantra: programs are data --- homoiconicity
+abound. This allows a Mathematica program to manipulate expressions
+--- e.g. to perform rebinding --- which is powerful for distribution.
+
+Letourneau shared some examples of impressively short Mathematica
+programs (``Everything is a one-liner in Mathematica... for a sufficiently
+long line'' ---Theo Gray) including an image constructed recursively. 
+Letournea described Mathematica as ``a gateway drug to declarative
+programming.''
+
+Next, Letourneau described HadoopLink\needcite, a system that integrates
+Mathematica with Hadoop. HadoopLink allows for nearly seamless 
+distribution of Mathematica programs: mappers and reducers both
+are ordinary Mathematica functions, stitched together by a Hadoop
+link object for input and output. The programs can be defined on a single
+page; HadoopLink takes care of the rest.
+
+Letourneau then went on to build a simple genome search engine using
+these primitives (this problem lends itself particularly well to map/reduce
+style computation). The program, including referring to large datasets,
+was defined within a single Mathematica session; distribution was indeed
+seamless.
+
+Letourneau's talk was a fitting end to an excellent CUFP workshop.
 
 \bibliography{cufp13}
 
