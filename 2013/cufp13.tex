@@ -43,7 +43,7 @@ The aim of the CUFP workshop is to report on the use of functional
 programming in commercial ventures. (To wit, our motto is ``functional
 programming as a means, not an end.'')
 
-This report aims to adumbrate; curious readers may wish to peruse
+This report aims only to adumbrate; curious readers may wish to peruse
 the recorded videos from the workshop \needcite --- CUFP does not
 publish proceedings.
 
@@ -60,6 +60,8 @@ object oriented programming into the mainstream. Dave delivered a talk
 sprinkled with anecdotes and history, much opinion, and some advice to
 the the functional programming community.
 
+\note{TODO: watch the video and fill this in}
+
 \section{Analyzing PHP Statically}
 
 %% notes.anil.txt:239
@@ -70,10 +72,10 @@ typed dialect of PHP used extensively at Facebook. Hack runs on
 Facebook's PHP virtual machine, HHVM, and the compiler is implemented
 in OCaml.
 
-The sine qua non of software development at Facebook is the rapid
-feedback cycle. There should be little time wasted between saving a
-source file, and having the results show up on the screen. Much of the
-HHVM team's efforts are focused on this, the ``developer experience.''
+Software development at Facebook emphasizes a rapid feedback cycle.
+There should be little time wasted between saving a source file, and
+having the results show up on the screen. Much of the HHVM team's
+efforts are focused on this, the ``developer experience.''
 
 Due to Facebook's very large deployment, performance is very important.
 Even a small performance improvement, say improving CPU utilization 
@@ -82,7 +84,7 @@ because of its dynamic nature, requiring an ever-more sophisticated
 virtual machine.
 
 Hack is compatible with PHP, and indeed interoperates with legacy PHP
-with no runtime cost. Due to Facebook's enormous legacy code base, 
+with no runtime penalty. Due to Facebook's enormous legacy code base, 
 Hack is explicitly designed to be incrementally adopted. This is done
 by allowing gradual typing. Hack also has type inference, minimizing
 notational overhead, and further aiding adoption. Hack's type system
@@ -667,7 +669,7 @@ to normal form and thus created a large memory leak.
 
 \item \textit{A race condition.} \note{NEED DETAILS}
 
-\item \itextit{A performance degradation.} This happened due to forking
+\item \textit{A performance degradation.} This happened due to forking
 too many threads. \note{Need more details}
 
 \end{itemize}
@@ -752,7 +754,7 @@ system and to reproduce errors.
 
 %% notes.anil.txt:1525
 
-Edward Kmett from S&P Capital spoke about their use of functional
+Edward Kmett from S\&P Capital spoke about their use of functional
 programming. First, about the introduction of Scala, followed by a
 description of \textit{Ermine}\needcite, a new Haskell-like  language they
 developed for their domain.
@@ -897,6 +899,27 @@ was defined within a single Mathematica session; distribution was indeed
 seamless.
 
 Letourneau's talk was a fitting end to an excellent CUFP workshop.
+
+\section{Conclusion}
+
+From our purview, 2013 was a watershed year for CUFP. The breadth,
+depth, and broad applicability of functional programming was on
+display. This was true not only at the workshop itself, but also of a
+deep bench of submissions we could not accept due to time constraints.
+
+The program was rich in every dimension covered: techniques,
+languages, and industries. We had talks from consumer Internet
+companies, the biotech industry, the medical device industry, gaming,
+and the financial industry. Languages in use varied from embedded
+DSLs, to academic stalwarts, to home-grown languages. It seems that,
+if anything, language considerations are taking a front-seat in modern
+engineering practices.
+
+We would like to thank Simon Thompson and Francesco Cesarini for
+organizing this year's tutorials. Ashish Agarwal organized the evening
+BoF sessions. We would also like the to thank the ICFP organizers for
+their assistance in Boston. We look forward to seeing everyone again
+at CUFP 2014 in Gothenburg!
 
 \bibliography{cufp13}
 
