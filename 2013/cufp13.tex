@@ -54,13 +54,100 @@ etc? Or on the quality of submissions?}
 Calculus — Lessons from Past Language Crusades}
 
 Dave Thomas, who among much else is responsible for the Eclipse IDE
-and the JVM Java Virtual Machine, talked to us about his experiences
-of the ``language wars'' in the past; namely, the introduction of
-object oriented programming into the mainstream. Dave delivered a talk
-sprinkled with anecdotes and history, much opinion, and some advice to
-the the functional programming community.
+and the IBM Java Virtual Machine, talked to us about his experiences
+with the ``language wars'' in the past; namely, the introduction of
+object oriented programming into the mainstream as well as the
+advocacy of logic programming and expert systems. Thomas delivered a
+talk sprinkled with anecdotes and history, much opinion, as well as
+some advice to the the functional programming community.
 
-\note{TODO: watch the video and fill this in}
+%% notes.marius.txt:1
+
+Thomas jokes that his qualifications include his proclivity to
+``infect'' organizations with new technology which they had no
+intention of actually using. The only reason he has been able to do
+this is this is simple: it works. He is careful to introduce new
+technologies when they help solve actual problems, when he can find a
+team who can manage to execute, making full, productive use of
+whatever technology they are introducing.
+
+Next, Thomas pontificated that FP is experiencing a surge in
+popularity not because of concurrency but rather because of multicore
+computing and ``big data'' applications. He warned, though, that 
+the goal of a community should be to experience \textit{modest}
+success as massive industrial successes usually creates a ``really ugly
+winner,'' attendant with lots of ``really ugly code.'' (We assume he
+was referring to Java and to C++.)
+
+Thomas proceeded to give us a laundry list of important
+considerations for a language to succeed commercially.
+
+%% Note: This section was super rambly; I did my best to summarize.
+
+\paragraph{Language interoperability} It's very important that your
+language is able to make use of prior work. Most companies develop
+large legacies; new technologies cannot operate in isolation.
+Similarly, languages need to  plan for their own future obsoletion:
+``if you're successful, you're going to have a lot of code.'' The way
+languages interoperate need to respect existing ``technology
+cultures.'' The first commercial deployment of Smalltalk was for
+Tektronix oscilloscopes; in this project, technologies from several
+``cultures''---hardware, firmware, systems software, application
+software---needed to integrate. This was successful only because 
+the Smalltalk implementation was designed to interoperate in this
+manner.
+
+\paragraph{Have an end-to-end story} It's important that it's possible
+to understand how a system works, end-to-end. Systems must be
+diagnosable, which is especially important when solving 
+``space/time problems.'' Sophisticated JIT runtimes like Oracle's Hotspot
+are antipatterns: they make the runtime behavior of a system too
+difficult to understand.
+
+\paragraph{Serialization and data/code portability} Serialization has
+taken a prominent role in the modern computing environment. The 
+increasingly distributed nature of most systems necessitate good
+serialization. Thomas adviced not to get fancy: most of these problems
+have been solved. Use prior art. Modern systems need tools that
+can extract data from the computing environment; we need to have
+fine-grained control of where this data lives. Distribution also demands
+easy \textit{deployment}; a simple way to create deployable executables
+is a requirement for a modern language.
+
+\paragraph{Performance} Thomas asserted that ``computers like
+rectangles,'' and advised language designers to put a lot of care and
+thought into how arrays are handled and implemented. This will solve
+many problems and also avoid the need for fancy optimization. Modern
+architectures rely on caching for performance, thus control over data
+locality is paramount as critical parts of your application must be
+kept in cache. Thomas also advised against stack machines: ``Stacks
+are easy to put together, but hard to make fast.'' Instead, choose
+a register model for your virtual machine. Virtual machines also
+need intrinsics to take advantage of modern hardware architectures.
+Intrinsics also help future-proof virtual machines---hardware changes
+very, very rapidly.
+
+%% \paragraph{Types} 
+
+\paragraph{Adoption} The main impediment to functional programming
+adoption, Thomas claims, is that functional languages can \textit{make
+users feel stupid}. While dealing with the already-daunting task of
+understanding foreign ways of solving problems, the need to understand
+comprehensions, folds, and monads only further alienate newcomers.
+Functional languages tend to erect high barrier to entry for these
+reasons. Our community needs to pay special attention to this problem
+by focusing on affordances and education. We need to empathize with
+users and understand that they change at different rates. Thomas made
+a special note of a recent feature in Haskell that allows users to run
+\textit{wrong} programs. This he considers a healthy development.
+
+Much of the thrust of functional languages get in the way of
+developers writing ``CRUD (create-read-update-delete) apps;'' the kind
+of application most of the world's developers are busy writing. Thomas
+submitted that perhaps we should make FP languages smaller and more
+focused: ``What we need is a collection of little right languages
+instead of a smaller collection of partly right and partly wrong
+kitchen-sink languages.''
 
 \section{Analyzing PHP Statically}
 
