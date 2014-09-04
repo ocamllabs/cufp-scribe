@@ -1,0 +1,175 @@
+Dave Thomas
+
+Talks to us about the “language wars” of the past.
+
+- responsible for many things, including IBM Java
+
+- managed to “infect” industrial organizations with all sorts of
+technology they and no intent of using. the simple reason is: it
+worked. they managed to find a team of people who can manage &
+execute. that’s it, all that matters.
+
+- worked on many strange languages: e.g. K. use to this day.
+
+- worked on embedded systems. guilty for eclipse — “the world’s
+biggest and ugliest IDE” — for which he apologizes. “the best we could
+do at the time.”
+
+- delivered commercial software in everything from mainframes to
+watches.
+
+- language crusades: symbolic vs. numeric. this is where LISP
+appeared, other things like symbolic math languages.
+
+- 4GL crusades. the savior of “normal people being able to build
+software.” can actually write CRUD without a whole lot of ceremony.
+vendors then made everything into a database, to bring things back
+into their stack.
+
+- expert systems, “AI crusades.”
+
+- logic programming
+
+- AI, machine learning. ontologies failed except for in very narrow
+sectors.
+
+- dominant object crusades.
+
+- now: multicore and big data crusades.
+
+- FP is not there because of concurrency, it’s because of multicore
+and big data.
+
+- what you would like is: modest industrial success. massive
+industrial success creates a really ugly winner, with lots of ugly
+code.
+
+- smalltalk was replaced by much more powerful and hideous programming
+languages.
+
+- “scala is just too complicated for me to understand”
+
+- language interop is important — “will I be able to talk to my old
+Java programs?”
+
+- tektronix — first customer for commercial smalltalk. for
+oscilloscopes. toolchain needs to respect the existing technology
+cultures. otherwise things won’t work together.
+
+- need end-to-end story. need to be able to figure out how things
+actually work.
+
+- need to deal with legacy — this is very important. if you’re
+successful you’re goin got have a lot of code. things get really ugly.
+beware.
+
+- “if you actually want to go fast, computers like rectangles.” you
+need arrays to go fast.
+
+- don’t use fancy optimizers, instead have good array libraries. (not
+hotspot!)
+
+- need tools to extract things from the environment. need to have
+fine-grained control over where the code & the data exists.
+
+- need to have deployable executables. or else, you’re going to have
+problems.
+
+- version-to-version compatibility. or at least version-to-version
+transformation. y2k was a problem not because IBM hadn’t fixed it —
+customers had modified the OS & running 6–8 releases behind. need
+guarantees between one release and another. smalltalk “become” — a
+migration story.
+
+- need some way to hotfix or dynamically upgrade pieces “in the
+field.”
+
+- speed & space still matters.
+
+- high-quality libraries; libraries that ship with tests.
+
+- efficient serialization. needed to move data between machines.
+
+- JVM’s not going to “get us there” if we want to use “esoteric”
+control structures.
+
+
+- static initialization!
+
+- resource awareness; efficient immutability (presumably GC)
+
+- need to keep critical parts of application in cache.
+
+- current VMs are biased towards OO; still somewhat hostile to FP.
+
+- you want a register model for your language, not a stack model.
+stacks are easy to put together, hard to make fast.
+
+- make new generation of VMs explicitly support multiple languages.
+
+- need intrinsics like Java has. the hardware changes very very
+quickly.
+
+- look at type systems in a broader way — they’re constraint systems
+or design-rule systems. gilad bracha’s “pluggable types.” approximate
+types — “this is like this.” still helps you reason. we need to be
+able to reason imprecisely. things like jslint, make sure your code
+“looks reasonable.” we should be able to turn the type knobs up and
+down.
+
+- would like to be warned when there are space/speed problems with
+your elegant constructs.
+
+- let’s look into lots of little languages instead of kitchen-sink
+languages. perhaps what we need is a collection of “little right
+languages” instead of a smaller collection of “partly right and partly
+wrong kitchen-sink languages.”
+
+- lots of times we go golfing — becomes small and beautiful and
+encrypted. these languages frequently become write-once languages;
+their output very difficult to interpret.
+
+- tooling is important: visualize execution, binding environments.
+refactoring. etc.
+
+- the real problems are: “comprehensions,” “folds,” “monads,” … wtf.
+“look FP is really easy: you don’t need to know anything about
+Monads!” — if it isn’t important, why do you have to say it? if it is
+important, then get over it!
+
+- FP makes you feel stupid. we have this challenge to deal with. we
+have to provide the affordances and education to deal with this.
+
+- these really are high-barrier languages. for many people, this is a
+3-month journey. don’t feel bad; everyone does.
+
+- smalltalk was similar. unfamiliar environment. take them by the
+hands!
+
+- this is a very serious problem — people are afraid of FP. “objects
+just irritated them.” “FP scares them.” “makes them feel stupid.” need
+to be very aware of this. people change at different rates. need
+affordances and tools. experience Haskell softly! it’s appealing that
+we can now run a Haskell program that’s wrong.
+
+- most people can’t handle anything that’s much above a VCR. not many
+people can get much above a 4GL.
+
+- what most people really needed was some objects and some SQL. today
+it’s some SQL and some functions.
+
+- layers: do I need to know all of this stuff above the Java stack?
+
+- should there be an FP language for people that “just need to do
+CRUD.”
+
+- really do think there are different types of programmers. maybe
+there is room for other languages.
+
+- can we do literate FP?
+
+- we need a book for pure FP that competes with SICP. SICP made me a
+believer — it helped me understand it.
+
+- patterns in one language is just “reasonable syntax” in other FP
+languages.
