@@ -47,8 +47,10 @@ This report aims only to adumbrate; curious readers may wish to peruse
 the recorded videos from the workshop \needcite --- CUFP does not
 publish proceedings.
 
-\note{Should we expand on the record number of submissions, 
-etc? Mike says Yes.  Or on the quality of submissions?  Mike says No.}
+This year saw a record number of submissions, a reflection of the
+growing popularity of functional programming. The submissions were
+also quite varied; topics ranged from implementing ads serving systems
+in Erlang to medical device automation in Scheme.
 
 \section{Keynote: 21s Century Crusades of Knights of the Lambda
 Calculus — Lessons from Past Language Crusades}
@@ -363,11 +365,6 @@ used to be highly coupled, leading to among other things very
 inefficient call patterns between components since the software
 architecture was not modular and forced developers into using
 omnibus messages to communicate between the application tiers.
-
-\note{This seems to be a theme: teams decompose large monolithic
-applications, and start by tackling niches in which these languages
-and techniques are a good fit; then expand from there.  Mike says we
-should put it in the introduction.}
 
 Developers at Netflix are roughtly dichotomized into two personas:
 ``Cloud'' people and ``UI'' people. Because of Netflix's rather
@@ -1012,6 +1009,17 @@ and the financial industry. Languages in use varied from embedded
 DSLs, to academic stalwarts, to home-grown languages. It seems that,
 if anything, language considerations are taking a front-seat in modern
 engineering practices.
+
+Several talks discussed the role of functional programming in
+\textit{service oriented architectures}. The process of decomposing a
+monolithic application into many, smaller services has been a
+fertile field for adopting functional programming. Teams
+use the transition as an opportunity to reimplement smaller parts of
+the system in new languages which are better suited to the problem at
+hand. This proved a good strategy: the use of functional programming
+is introduced in a controlled manner, gradually and carefully; its
+advantages are made clear in a smaller setting without having to take
+large risks.
 
 We would like to thank Simon Thompson and Francesco Cesarini for
 organizing this year's tutorials. Ashish Agarwal organized the evening
