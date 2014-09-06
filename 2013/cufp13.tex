@@ -55,15 +55,13 @@ in Erlang to medical device automation in Scheme.
 \section{Keynote: 21s Century Crusades of Knights of the Lambda
 Calculus — Lessons from Past Language Crusades}
 
-Dave Thomas, who among much else is responsible for the Eclipse IDE
-and the IBM Java Virtual Machine\note{The JVM? Really? Mike is also
-  hazy on what role he played exactly in Eclipse}, talked to us about
-  his experiences
-with the ``language wars'' in the past; namely, the introduction of
-object oriented programming into the mainstream as well as the
-advocacy of logic programming and expert systems. Thomas delivered a
-talk sprinkled with anecdotes and history, much opinion, as well as
-some advice to the the functional programming community.
+Dave Thomas, former CEO of OTI, the company responsible for the
+initial development of the Eclipse IDE, talked to us about his
+experiences with the ``language wars'' in the past; namely, the
+introduction of object oriented programming into the mainstream as
+well as the advocacy of logic programming and expert systems. Thomas
+delivered a talk sprinkled with anecdotes and history, much opinion,
+as well as some advice to the the functional programming community.
 
 %% notes.marius.txt:1
 
@@ -281,7 +279,7 @@ showcase the technology.
 %% notes.anil.txt:510
 
 Tom Hawkins spoke to us about the SAFE \note{Mike wonders what the
-  acronym stands for.}  project, which is funded
+  acronym stands for. \url{crash-safe.org}}  project, which is funded
 by DARPA. SAFE is a codesign of 
 
 \begin{itemize}
@@ -338,7 +336,8 @@ any given project is somewhere between 2--7.)
 Tempest initially, and not the SAFE assembler. While a valuable building block,
 programming directly in assembly language is unproductive. Furthermore,
 having a higher-level language isolates the software and hardware teams:
-the hardware team can now change the ISA \note{What's ISA?} without rewriting all the software!
+the hardware team can now change the instruction-set architecture
+without rewriting all the software!
 
 \item EDSLs are excellent for bootstrapping languages like this; they are also 
 highly reusable components, as we have seen.
@@ -374,15 +373,12 @@ was this: how do they get UI engineers to think at scale? How do they
 provide the infrastructure to make them effective ``cloud
 developers?''
 
-Netflix answered the question by providing ``UI comforts:'' \note{Mike
-  says: To whom?  Presumably the cloud people, or is there Groovy for
-  the browser?}  the use of
-Groovy, and a reactive API. The next challenge was then: how do
-we mine concurrency and parallelism in a simple fashion? Husain stated
-that no developer can be trusted with locks, that there must be better
-ways.
+Netflix answered the question by providing ``UI comforts:'' a reactive
+API. The next challenge was then: how do we mine concurrency and
+parallelism in a simple fashion? Hussain stated that no developer can
+be trusted with locks, that there must be better ways.
 
-Husain went on to describe the \texttt{Observable} monad, the central
+Hussain went on to describe the \texttt{Observable} monad, the central
 datastructure with which Netflix compose their systems. Observable is
 part of a Java port of Rx.NET done by Netflix\needcite. Briefly, it is is a vector version of
 the Continuation monad with the null-propagation semantics of the
@@ -394,14 +390,14 @@ asynchronous settings.
 At Netflix, \texttt{Observable} is used as the singular data structure
 for both cloud and UI developers: it is applied with ease to problems
 in either setting, and provides a uniform API around which
-applications are structured. Husain demonstrated this by showing
+applications are structured. Hussain demonstrated this by showing
 examples of how the API smooths over the differences between cloud
 and UI programming --- they really are the same! --- providing a
 uniform structure for both. His first example was showing an
 implementation of social notifications, a classic ``long polling''
 example; the second was an autocomplete system for search.
 
-Like other speakers, Husain emphasized the need for evangelism,
+Like other speakers, Hussain emphasized the need for evangelism,
 because you simply cannot assume the best technology will win.
 He recommended practicing public speaking and a particular focus
 on ``soft skills.'' In his own experience, within a short amount of time,
@@ -409,7 +405,7 @@ he honed his speaking skills and was able to clearly articulate the
 benefits and importance of a particular technology to his target 
 audience.
 
-In addition to traditional forms of evangelism, Husain's group
+In addition to traditional forms of evangelism, Hussain's group
 developed interactive training exercises to illustrate the benefits
 of reactive programming. These exercises also helped developers gain
 an intuition of how to use these new constructs. The group  also made
@@ -433,12 +429,9 @@ spectrometer. (Panchal showed us a video of such a device playing a
 piece of music by actuating its motors just so!)
 
 Operators use a thin, stateless client to interface with the device.
-The server software is written in Scheme. It embeds Erlang/OTP
-\note{Mike is hazy on if there's an actual Erlang here or only a
-  re-implementation of its paradigms in Scheme.} in
-order to take advantage of Erlang's message-passing concurrency
-model, pattern matching, and supervisor structure, used to isolate
-hardware failures.
+The server software is written in Scheme. It implements Erlang's
+message-passing concurrency model, and provides pattern matching, and
+supervisor structure, used to isolate hardware failures.
 
 Scientists program the machine with a DSL, also written in Scheme.
 Panchal found this use of Scheme very apposite. Its syntax is
@@ -859,8 +852,7 @@ across financial portfolios.
 
 Here, they used monoids for simple parallelization. (This was also
 seen in Twitter's report on Summingbird.). Reducers were used to
-derive structure from containers; they are co-monads and compose
-rather nicely. \note{What's he talking about here, exactly?} Reduction
+derive structure from containers.  Reduction
 is done in parallel across monoidal structures. Kmett noted that this
 enhanced compositionality means that ``we don't see the wiring hanging
 out of our code any more.''
@@ -968,8 +960,7 @@ Paul-Jean Letourneau of Wolfram closed this year's CUFP with his talk
 on implementing MapReduce in Mathematica. Letourneau first described
 the Mathematica language: everything is an expression; expressions are
 transformed (rewritten) until they reach a fix-point. Expressions are
-data structures (similar to LISP's m-structures).  \note{Mike: Huh?
-  S-expressions?}  As such Mathematica
+data structures (similar to Lisp's S-expressions).  As such Mathematica
 follows a familiar LISP mantra: programs are data --- homoiconicity
 abound. This allows a Mathematica program to manipulate expressions
 --- e.g. to perform rebinding --- which is powerful for distribution.
