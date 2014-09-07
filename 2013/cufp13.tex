@@ -563,9 +563,37 @@ These are constructed using Play\needcite and Akka\needcite actors.
 
 \section{Functional Infrastructures}
 
-%% notes.anil.txt:1028
+Antoni Batchelli from PalletOps described the Pallet platform for
+infrastructure automation.\footnote{\url{http://palletops.com/}}
+Pallet allows users to write programs that build and operate computing
+environments, both locally in the cloud.  
 
-Antoni Batchelli from PalletOps
+Pallet provides abstractions to write \textit{plans} that describe
+configuration actions independently of the target platform.  Pallet
+ultimately translates those plans to shell scripts.  While a shell
+script generated from a plan is specific to a particular target
+platform, the plan itself is target-independent.  Pallet knows about
+many Linux-/Unix-based operating systems and is able to generate
+appropriate shell scripts from these abstract plan specifications.
+
+Pallet is written in Clojure, and allows specializing the actions that
+comprise plans by using Clojure's multimethods.  The central entity in
+a Pallet configuration is a \textit{plan function}, which is a pure
+function that generates a plan object.  The plan object is
+inspectable, and allows the user to query it in various ways~-- for
+example, the user can find out what actions it would trigger on a
+particular platform.  Pallet also optimizes plans.  For example, it
+can coalesce many small actions into a single larger ones if a target
+operating systems supports this.  The user can assemble plans into
+phases that run on servers, and abstract over servers to instantiate
+entire families of similar installations.
+
+Batchelli concluded by noting that, over time, Pallet put a growing
+emphasis on data rather than functions, which allow inspection and
+intrusive manipulation.  While the dynamic typing of Clojure enables
+many parts of Pallet, Batchelli sometimes wishes for dynamic typing.
+
+%% notes.anil.txt:1028
 
 \section{Realtime Mapreduce at Twitter}
 

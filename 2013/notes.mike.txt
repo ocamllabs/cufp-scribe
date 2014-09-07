@@ -1,0 +1,159 @@
+Batchelli on PalletOps
+
+We live a privileged life for most of our days: quick REPL
+prototyping, immutable data structures, abstractions, declarative
+statements, multi-methods, you name it, it's all fun! This fun stops
+when we have to deploy our beautifully crafted functional applications
+inside a larger infrastructure. Then it's all pain: setting up
+servers, installing the right versions of software, updating
+configuration files... Ugh! No more quick REPL prototyping,
+abstractions, code reuse, declarative statements, immutability; all
+gone! It gets worse though. We now use platforms like Hadoop, HBase or
+Cassandra that require complex cross-node configurations. We have
+multiple developers wanting to test on different versions of the
+software and infrastructure. There are also many environments to
+deploy on: Integration, QA, Stage, Production, and There are different
+OS distros and versions to support, each with their own quirks and
+bugs. Oh!, and different hardware options too: cloud, virtualized, or
+even bare metal. You get the gist: a combinatorial explosion of
+complexity. We built Pallet ( http://palletops.com ) as an open source
+functional infrastructure automation platform using Clojure. This
+platform is used in production by many well known companies already,
+usually as a response to the limited capabilities and flexibility of
+mainstream script&template based automation platforms. This talk is
+about how we use functional programming principles to manage
+infrastructure and the big ball of state this infrastructure has.
+
+Antoni Batchelli started programming computers for fun when he was
+eight years old with a ZX Spectrum and has not stopped since
+then. Over the years, Toni has worked in consulting, startups,
+academia and corporations. He has gone back and forth between coding,
+architecting and managing, having fun in each role, while always
+working on large software installations. In 2009, Toni started
+Disclojure ( http://disclojure.org ), a website devoted to news about
+Clojure. in 2009, Toni met Hugo Duncan, with whom he has since them
+been working full time on Pallet ( http://palletops.com ) , an Open
+Source, Clojure-based DevOps platform; and VMFest, a Virtual Machine
+automation library.
+
+
+Antoni Batchelli from PalletOps
+
+- Write programs that will buoild and operate computing environments
+- increase repeatability and reliability, reduce time and resources
+- manage complexity: 
+
+- don't want to call ops guys every time
+
+Complexity
+
+- Dev QA, perf tests, production
+
+Design is static, just keep it alive.  Many infrastructures, though.
+
+new database, or new config for old database
+
+so: multiple versions of infrastructure
+
+in development, no production servers: want same infrastructure on
+different machines or environments
+
+- cloud containers, VMs, hardware
+- clusters, hot stand-by replicate
+
+need to think about what happens when you add or remove server
+
+- OS, services
+automte OSes that were meant to be automated by external agent
+
+=> Complexity
+
+Pallet
+
+- started 3 years ago
+- 30kloc of code
+- works in today's enviromments
+- scaled well with complexity
+- works everythere: cloud, VM, etc., Unbuntu
+- clusters
+- users need to extend it
+
+Managing Complexity
+
+- Abstractions
+
+- Reusable Components
+- Stateless operation
+- Purely functional code
+  no database, fresh every time you run it
+- Library [vs. a service]: Just a jar file
+
+Stack:
+
+your domain
+spec
+plan
+
+Script DSL: Stibidor
+translates Clojure code to shell scripts, target-dependent
+multimethods
+
+build scripts that are further and further away from OS
+
+actions are discrete actions on server
+multimethods dispatches on OS family and version
+
+plans
+plan: sequence of actions run to achieve concrete result
+
+actions have an abstract representation, get converted to shell
+scripts separately
+
+can interrogate Pallet as to what an action would do on a platform
+
+node-spec: What OS & version a machine runs 
+
+group spec: organizes phases - like configure
+
+we just have a function that says how our server will be configured
+
+can just use Clojure to instantiate/abstract over entire groups and
+deploy as needed
+
+when you call pallet, you says phases you want to run
+
+each phase is synchronous, but executes on all nodes in parallel
+
+for each node, create plans from plan fns
+
+then the plan scripts get executed
+
+then next phase
+
+important because building a cluster one thing, operating is another
+
+need to make decision based on current state: Cassandra node may have
+more keys than others, so ask how many keys and spread
+
+two phases: first interrogate, then plan
+
+over time, shifted from functions to data
+
+defer execution
+
+allows optimization on plans before generating script: If many users
+are created, Pallet can optimize it into single step
+
+works on most target OSes, as long as they're *nix
+
+build complex and flexible clusters
+
+sometimes wish we had static typing
+
+A Clojure DSL that runs shell scripts and handles very complex
+infrastructure automation.
+
+Q: Yaron: How do you handle error propagation through scripts (the
+equiv of set -e in sh)
+A: Each combinator propagates errors and there are different run
+strategies that handle errors differently depending on needs.
