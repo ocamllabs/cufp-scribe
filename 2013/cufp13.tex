@@ -3,6 +3,8 @@
 
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{xspace}
+\usepackage{url}
+\bibliographystyle{jfp}
 
 \newenvironment{ipar}[0]%
  {\begin{list}{}%
@@ -36,8 +38,7 @@
 The Commercial Users of Functional Programming workshop (CUFP) is an
 annual workshop held in association with the International Conference
 on Functional Programming (ICFP), which was held in Boston, MA, USA
-Sep 22--24, 2013. Previous workshops have been reported here
-\needcite.
+Sep 22--24, 2013. Previous workshops have been reported in JFP~\cite{JFP:9147276,JFP:8514633}.
 
 The aim of the CUFP workshop is to report on the use of functional
 programming in commercial ventures. (To wit, our motto is ``functional
@@ -190,7 +191,7 @@ audience.
 Facebook has also developed a web-based integrated development
 environment (IDE) around Hack. In order to provide autocomplete and
 code navigation features in the IDE, Hack's type checker is compiled 
-to Javascript via \texttt{js\_of\_ocaml}\needcite and run alongside the 
+to Javascript via \texttt{js\_of\_ocaml}~\cite{DBLP:journals/spe/VouillonB14} and run alongside the 
 IDE by the web browser.
 
 The Hack compiler uses a number of resident background processes. A
@@ -413,7 +414,8 @@ themselves available at (nearly) all hours of the day to any developer
 with questions.
 
 Netflix's libraries for reactive programming, both in Java and in 
-Javascript are open source and publicly available\needcite.
+Javascript are open source and publicly available.
+\footnote{\url{https://github.com/Netflix}}
 
 \section{Medical Device Automation using Message-Passing 
 Concurrency in Scheme}
