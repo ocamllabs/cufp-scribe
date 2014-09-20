@@ -22,8 +22,8 @@
 \author[Marius Eriksen, Michael Sperber and Anil Madhavapeddy]
        {MARIUS ERIKSEN\\
         Twitter, Inc.\\
-        795 Folsom St., Suite 600\\
-        San Francisco, CA 94107, USA.\\
+        1355 Market Street, Suite 900 \\
+        San Francisco, CA 94103, USA.\\
         MICHAEL SPERBER\\
          Active Group GmbH, Hornbergstra\ss{}e 49\\
          70794 Filderstadt, Germany\\
@@ -53,7 +53,7 @@ programming in commercial ventures. (To wit, our motto is ``functional
 programming as a means, not an end.'')
 
 This report aims only to adumbrate; curious readers may wish to peruse
-the recorded videos from the workshop \needcite --- CUFP does not
+the recorded videos from the workshop. CUFP does not
 publish proceedings.
 
 This year saw a record number of submissions, a reflection of the
@@ -145,7 +145,7 @@ adoption, Thomas claims, is that functional languages can \textit{make
 users feel stupid}. While dealing with the already-daunting task of
 understanding foreign ways of solving problems, the need to understand
 comprehensions, folds, and monads only further alienate newcomers.
-Functional languages tend to erect high barrier to entry for these
+Functional languages tend to erect high barriers to entry for these
 reasons. Our community needs to pay special attention to this problem
 by focusing on affordances and education. We need to empathize with
 users and understand that they change at different rates. Thomas made
@@ -154,7 +154,7 @@ a special note of a recent feature in Haskell that allows users to run
 
 Much of the thrust of functional languages get in the way of
 developers writing ``CRUD (create-read-update-delete) apps;'' the kind
-of application most of the world's developers are busy writing. Thomas
+of application most of the world's developers are busy writing. Finally, Thomas
 submitted that perhaps we should make FP languages smaller and more
 focused: ``What we need is a collection of little right languages
 instead of a smaller collection of partly right and partly wrong
@@ -165,10 +165,10 @@ kitchen-sink languages.''
 %% notes.anil.txt:239
 
 Facebook has invested a significant amount of effort in their PHP
-infrastructure. Julien Verlauget talked to us about Hack, a statically
-typed dialect of PHP used extensively at Facebook. Hack runs on
-Facebook's PHP virtual machine, HHVM, and the compiler is implemented
-in OCaml.
+infrastructure. Julien Verlauget talked to us about
+Hack~\cite{Verlaguet:2014:Hack}, a statically typed dialect of PHP
+used extensively at Facebook. Hack runs on Facebook's PHP virtual
+machine, HHVM, and the compiler is implemented in OCaml.
 
 Software development at Facebook emphasizes a rapid feedback cycle.
 There should be little time wasted between saving a source file, and
@@ -177,8 +177,8 @@ efforts are focused on this, the ``developer experience.''
 
 Due to Facebook's very large deployment, performance is very important.
 Even a small performance improvement, say improving CPU utilization 
-by 1\%, can have significant cost impact. It is difficult to optimize PHP
-because of its dynamic nature, requiring an ever-more sophisticated 
+by 1\%, can have significant cost impact. PHP has been difficult to optimize
+due to its dynamic nature, requiring an ever-more sophisticated 
 virtual machine.
 
 Hack is compatible with PHP, and indeed interoperates with legacy PHP
@@ -265,14 +265,12 @@ enabled the use of Erlang:
 atuomated bootstrap, deployment via packages, and emphasize fault
 tolerance.
 
-\item They use many cross-language tools. Thrift\needcite, Protocol
-Buffers\needcite, Lwes\needcite all contribute to a language-agnostic
-environment. An in-house system called ``Framework'' provides
-scaffolding or code layouts and provides support for building
-deployable packages from code.  \note{Mike wanders what it \emph{is},
-  though.}
-It also enforces versioning and
-reproducibility across languages.
+\item They use many cross-language tools. Thrift~\cite{Slee:Thrift},
+Protocol Buffers~\cite{Google:2014:Protobufs}, Lwes all
+contribute to a language-agnostic environment. An in-house system
+called ``Framework'' provides scaffolding or code layouts and provides
+support for building deployable packages from code. Framework also
+enforces versioning and reproducibility across languages.
 
 \item An emphasis on service-oriented architecture. Components are
 single-purpose and loosely coupled.
@@ -389,12 +387,13 @@ be trusted with locks, that there must be better ways.
 
 Hussain went on to describe the \texttt{Observable} monad, the central
 datastructure with which Netflix compose their systems. Observable is
-part of a Java port of Rx.NET done by Netflix\needcite. Briefly, it is is a vector version of
-the Continuation monad with the null-propagation semantics of the
-Maybe monad and error propagation semantics of the Either monad. It
-is composed in a functional fashion, and has clean cancellation
-semantics. \texttt{Observable} can be used in either synchronous or
-asynchronous settings.
+part of a Java port of Rx.NET done by
+Netflix~\cite{Christensen:2013:Reactive}. Briefly, it is is a vector
+version of the Continuation monad with the null-propagation semantics
+of the Maybe monad and error propagation semantics of the Either
+monad. It is composed in a functional fashion, and has clean
+cancellation semantics. \texttt{Observable} can be used in either
+synchronous or asynchronous settings.
 
 At Netflix, \texttt{Observable} is used as the singular data structure
 for both cloud and UI developers: it is applied with ease to problems
@@ -547,8 +546,8 @@ dependency management. They extended the tool (via plugins)
 extensively to support their use.
 
 \item \textit{Configuration} is stored in a ZooKeeper cluster, and
-can be overriden locally. Configuration is mapped to Scala
-type classes with strict validation. \note{Mike has no idea what this means.}
+can be overriden locally. Configuration is deserialized into to Scala
+data structures with strict validation.
 
 \item Due to the complex set of dependencies --- both upstream and
 downstream --- \textit{testing} remains challenging in microservice
@@ -567,7 +566,8 @@ deployed automatically on a typical day.
 Finally, Scaldeferri adumbrated on their use of ``reactive''
 programming. Many aspects of Gilt's products require realtime
 updating. (Example: they show the number of items left for sale.)
-These are constructed using Play\needcite and Akka\needcite actors.
+These are constructed using Play~\cite{Typesafe:2014:Play} and
+Akka~\cite{Typesafe:2014:Akka} actors.
 
 \section{Functional Infrastructures}
 
@@ -659,8 +659,8 @@ reduce the memory requirements for keeping the counts.
 slide material. Need to re-watch the video.}
 
 Avi Pfeffer of Charles River Analytics introduced the Figaro language
-for probabilistic programming\needcite. The aim of functional
-probabilistic programming is to ``democratize'' buildling
+for probabilistic programming~\cite{Pfeffer:2009:Figaro}. The aim of
+functional probabilistic programming is to ``democratize'' buildling
 probabilistic models.
 
 Pfeffer started with a motivating example: support you have some
@@ -697,8 +697,7 @@ some probability of being generated. Thus the program defines a
 probability distribution over outcomes. Since the language itself is
 Turing complete, it is capable of expressing a wide range of models.
 
-Figaro is an EDSL in Scala \note{Mike goes: Huh?  The above code does
-  not look like it's Scala.} which allows for distributions over any
+Figaro is an EDSL in Scala which allows for distributions over any
 data type. It has an expressive constraint system, and an extensible
 library of inference algorithms containing many popular algorithms
 such as variable elimination. Due to its embedding in Scala, Figaro
@@ -716,7 +715,7 @@ Figaro uses a probability monad to track state, with \texttt{Constant}
 representing the monadic unit, and \texttt{Chain(T, U)} the monadic
 bind. Most of Figaro's elements are implemented in terms of this monad.
 
-Figaro is open source and freely available\needcite.
+Figaro is open source and freely available~\cite{CRA:2014:Figaro}.
 
 \section{Building a commercial development platform Haskell}
 
@@ -745,7 +744,7 @@ feedback (error reporting);
 
 \item a help help/documentation system;
 
-\item git-based\needcite version control;
+\item git-based version control;
 
 \item a build system; and
 
@@ -754,9 +753,10 @@ feedback (error reporting);
 \end{itemize}
 
 The IDE is itself built almost entirely in Haskell, using libraries
-and frameworks, mostly as-is, available on Hackage. Yesod\needcite 
-was used as a web framework. Fay\needcite, a proper subset of Haskell
-that compiles to Javascript, was used for frontend code.
+and frameworks, mostly as-is, available on Hackage.
+Yesod~\cite{Snoyman:2012:Developing} was used as a web framework.
+Fay, a proper subset of Haskell that compiles to Javascript,
+was used for frontend code.
 
 The challenging aspects of this project were largely related
 to integration. Using the compiler as a library allowed for easy
@@ -800,21 +800,21 @@ too many threads. \note{Need more details}
 
 How does the team prevent these issues from occuring again? They
 decided to employ better testing practices. Using standard Haskell
-tools (QuickCheck\needcite, HUnit\needcite) they developed a 
-harness within which they could start their servers and test them 
-in-situ. They now have over 150 systems tests with more than 
-5000 assertions.
+tools (QuickCheck~\cite{Claessen:2011:Quickcheck},
+HUnit~\cite{Herington:2014:HUnit}) they developed a harness within
+which they could start their servers and test them in-situ. They now
+have over 150 systems tests with more than 5000 assertions.
 
-Next, they started to document the issues they ran into, in order to 
+Next, they started to document the issues they ran into, in order to
 share their experiences and prevent future mistakes of the same kind.
-While they put significant effort into this, few developers bothered reading
-them. Next, they started trying to enforce them via HLint\needcite. While
-it is not sufficiently expressive to detect all the issues they care about, 
-it covers a useful subset.
+While they put significant effort into this, few developers bothered
+reading them. Next, they started trying to enforce them via
+HLint~\cite{Mitchell:2014:HLint}. While it is not sufficiently
+expressive to detect all the issues they care about, it covers a
+useful subset.
 
 Finally, the group focused on more proactive education. They set up a
-brown-bag lunch where they covered Haskell and Scala topics \note{Why
-  Scala if they're doing Haskell?}; they also
+brown-bag lunch where they covered Haskell and Scala topics; they also
 ran a class for new graduates where they sourced problems from project
 Euler, solving them in Haskell.
 
@@ -836,7 +836,7 @@ failures quickly.
 
 The team, for reasons undisclosed, determined that existing solutions,
 ZooKeeper among them, were not equal to the task. They set out to
-build their own Paxos\needcite implementation with Haskell.
+build their own Paxos~\cite{Lamport:1998:Part} implementation with Haskell.
 
 The job of a cluster manager is to present a consistent view of the
 cluster's state. While purely functional data structures were employed
@@ -845,10 +845,11 @@ functional graph --- the code itself maintained an imperative feel.
 This was important due to the inherently imperative nature of the
 domain.
 
-The group used Cloud Haskell\needcite for distribution. Cloud Haskell
-is a actor-style message-passing system, similar to Erlang. It was a
-particularly good fit for this particular project as its model --- of
-independent, communicating processes --- meshes well with Paxos.
+The group used Cloud Haskell~\cite{Epstein:2011:Towards} for
+distribution. Cloud Haskell is a actor-style message-passing system,
+similar to Erlang. It was a particularly good fit for this particular
+project as its model --- of independent, communicating processes ---
+meshes well with Paxos.
 
 Paxos was implemented as a general purpose library on top of Cloud
 Haskell. Each component of the algorithm --- the client, acceptor,
@@ -859,9 +860,9 @@ This kind of near-transliteration provided great confidence in the
 implementation's correctness.
 
 While their initial implementation was a simple translation of
-Lamport's original Paxos work\needcite, reality is inevitably more
+Lamport's original Paxos work, reality is inevitably more
 complex. The team are working on adopting modifications available
-in literator\needcite \note{Multipaxos} to improve performance.
+in literature~\cite{Chandra:2007:Paxos} to improve performance.
 
 Haskell's lazy evaluation was problematic, chiefly due to space leaks
 in low-level networking code. Epstein noted that distribution is a
@@ -880,9 +881,10 @@ system and to reproduce errors.
 %% notes.anil.txt:1525
 
 Edward Kmett from S\&P Capital spoke about their use of functional
-programming. First, Kmett recounted the introduction of Scala, followed by a
-description of \textit{Ermine}\needcite, a new Haskell-like  language they
-developed for their domain.
+programming. First, Kmett recounted the introduction of Scala,
+followed by a description of
+\textit{Ermine}~\cite{Compall:2014:Ermine}, a new Haskell-like
+language they developed for their domain.
 
 Kmett first used Scala and FP techniques in a ``portfolio analytics''
 engine. This is a product used for performance and risk attribution
@@ -1009,11 +1011,12 @@ long line'' ---Theo Gray) including an image constructed recursively.
 Letournea described Mathematica as ``a gateway drug to declarative
 programming.''
 
-Next, Letourneau described HadoopLink\needcite, a system that integrates
-Mathematica with Hadoop. HadoopLink allows for nearly seamless 
-distribution of Mathematica programs: mappers and reducers both
-are ordinary Mathematica functions, stitched together by a Hadoop
-link object for input and output. The programs can be defined on a single
+Next, Letourneau described
+HadoopLink~\cite{Letourneau:2013:HadoopLink}, a system that integrates
+Mathematica with Hadoop. HadoopLink allows for nearly seamless
+distribution of Mathematica programs: mappers and reducers both are
+ordinary Mathematica functions, stitched together by a Hadoop link
+object for input and output. The programs can be defined on a single
 page; HadoopLink takes care of the rest.
 
 Letourneau then went on to build a simple genome search engine using
