@@ -655,9 +655,6 @@ reduce the memory requirements for keeping the counts.
 
 %% notes.anil.txt:1168
 
-\note{This section in particular needs a bit of review; I don't have the
-slide material. Need to re-watch the video.}
-
 Avi Pfeffer of Charles River Analytics introduced the Figaro language
 for probabilistic programming~\cite{Pfeffer:2009:Figaro}. The aim of
 functional probabilistic programming is to ``democratize'' buildling
@@ -786,15 +783,23 @@ issues:
 
 \begin{itemize}
 
-\item \textit{A memory leak due to lazy evaluation.} The frontend server
-keeps a list of active threads in a \texttt{TVar} for monitoring purposes.
-When threads were removed from the list, the function was not reduced
-to normal form and thus created a large memory leak.
+\item \textit{A memory leak due to lazy evaluation.} The frontend
+server keeps a list of active threads in a \texttt{TVar} for
+monitoring purposes. When threads were removed from the list, the
+function was not reduced to normal form and thus created a large
+memory leak.
 
-\item \textit{A race condition.} \note{NEED DETAILS}
+\item \textit{A race condition.} A race condition between dequeueing
+items and an asynchronous exception thrown by a timeout handler caused
+data to be lost. 
 
-\item \textit{A performance degradation.} This happened due to forking
-too many threads. \note{Need more details}
+\item \textit{A performance degradation.} The GREE team used a
+library, \texttt{http-conduit}, to perform health checks of various
+servers. In a minor version update, this library started to fork new
+threads for each http request, leaving the caller with the
+responsibility to perform explicit resource management. This caused
+a resource leak in their code base; after a little while, the program ran
+with as many threads as there had been health checks.
 
 \end{itemize}
 
