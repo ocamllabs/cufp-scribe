@@ -261,7 +261,7 @@ enabled the use of Erlang:
 \begin{itemize}
 
 \item OpenX's systems are entirely cloud based: they use generic hardware,
-atuomated bootstrap, deployment via packages, and emphasize fault
+automated bootstrap, deployment via packages, and emphasize fault
 tolerance.
 
 \item OpenX's software infrastructure use many cross-language tools. Thrift~\cite{Slee:Thrift},
@@ -306,7 +306,7 @@ label information, used by the hardware to perform access and integrity
 checks. Every bit of data in SAFE belongs to an atom; metadata can always
 be recovered.
 
-Hardware and software were developed concominantly. While Breeze was
+Hardware and software were developed concomitantly. While Breeze was
 being designed, there was a need for an assembly language to drive the 
 hardware, and to write low-level routines. The assembly language is quite
 traditional, but with a few higher-level constructs to make programming
@@ -352,7 +352,7 @@ highly reusable components, as we have seen.
 (in this case, Haskell); and they are more difficult to debug.
 
 \item Concrete syntax is still important. The question is when to best make
-the switch. Hawkins asserted that the best opportunity to inroduce a concrete
+the switch. Hawkins asserted that the best opportunity to introduce a concrete
 syntax is when a language gains modularity, since then the switch can be made
 without disruption.
 
@@ -371,7 +371,7 @@ inefficient call patterns between components since the software
 architecture was not modular and forced developers into using
 omnibus messages to communicate between the application tiers.
 
-Developers at Netflix are roughtly dichotomized into two personas:
+Developers at Netflix are roughly dichotomized into two personas:
 ``Cloud'' people and ``UI'' people. Because of Netflix's rather
 massive scale, ``thinking at scale'' must be ubiquitous, and not done
 by only the backend infrastructure engineers. Their central challenge
@@ -542,7 +542,7 @@ dependency management. They extended the tool (via plugins)
 extensively to support their use.
 
 \item \textit{Configuration} is stored in a ZooKeeper cluster, and
-can be overriden locally. Configuration is deserialized into to Scala
+can be overridden locally. Configuration is deserialized into to Scala
 data structures with strict validation.
 
 \item Due to the complex set of dependencies --- both upstream and
@@ -612,7 +612,7 @@ streaming and batch computation. Summingbird enables developers to write logic
 once and deploy it in a combination of batch- and
 streaming-computation systems. An important goal of Summingbird is to
 improve developer productivity by solving the systems problems in one
-place, so that the runtime (i.e. the Summingbird library ands its
+place, so that the runtime (i.e. the Summingbird library and its
 underlying execution engines) handles efficient execution as well as
 scaling resources usage up and down based on need.
 
@@ -676,7 +676,7 @@ by expanding on the previous example:
 \begin{verbatim}
 let student = true in
 let programmer = student in
-let pizza = student && programer in
+let pizza = student && programmer in
 (student, programmer, pizza)
 let student = flip 0.7 in
 let programmer = if student flip(0.2) else flip(0.1) in
@@ -969,7 +969,7 @@ Skedge.me uses Haskell's type class facility to model these security
 policies. These help map customer-specific customizations into a
 standard schema that can be manipulated on a component-by-component
 basis. This technique affords the team a great deal of static
-guarantees from type checking, a criticial property when implementing
+guarantees from type checking, a critical property when implementing
 security sensitive systems.
 
 The team made heavy use of Hackage. Their application brings in 
