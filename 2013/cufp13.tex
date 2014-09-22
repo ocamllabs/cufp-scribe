@@ -53,12 +53,14 @@ programming in commercial ventures. (To wit, our motto is ``functional
 programming as a means, not an end.'')
 
 This report aims only to adumbrate; curious readers may wish to peruse
-the recorded videos from the workshop. FIXME: available where3 CUFP does not
+the recorded videos from the workshop.\footnote{Available from
+  \url{http://cufp.org/2013/}.} CUFP does not
 publish proceedings.
 
 This year saw a record number of submissions, a reflection of the
 growing popularity of functional programming. The submissions were
-also quite varied; topics ranged from implementing ads serving systems
+also quite varied; topics ranged from implementing systems for serving
+advertisement
 in Erlang to medical device automation in Scheme.
 
 \section{Keynote: 21s Century Crusades of Knights of the Lambda
@@ -83,7 +85,7 @@ team who can manage to execute, making full, productive use of
 whatever technology they are introducing.
 
 Next, Thomas pontificated that FP is experiencing a surge in
-popularity not because of concurrency but rather because of multicore
+popularity because of multicore
 computing and ``big data'' applications. He warned, though, that 
 the goal of a community should be to experience \textit{modest}
 success as massive industrial successes usually creates a ``really ugly
@@ -95,21 +97,18 @@ considerations for a language to succeed commercially.
 
 %% Note: This section was super rambly; I did my best to summarize.
 
-\paragraph{Language interoperability} It's very important that your
+\paragraph{Language interoperability} It is very important that your
 language is able to make use of prior work. Most companies develop
 large legacies; new technologies cannot operate in isolation.
-Similarly, languages need to  plan for their own future obsoletion:
-``if you're successful, you're going to have a lot of code.'' The way
-languages interoperate need to respect existing ``technology
-cultures.'' The first commercial deployment of Smalltalk was for
+The first commercial deployment of Smalltalk was for
 Tektronix oscilloscopes; in this project, technologies from several
 ``cultures''---hardware, firmware, systems software, application
 software---needed to integrate. This was successful only because 
 the Smalltalk implementation was designed to interoperate in this
 manner.
 
-\paragraph{Have an end-to-end story} It's important that it's possible
-to understand how a system works, end-to-end. Systems must be
+\paragraph{Have an end-to-end story} It is that a
+a system be understadable, end-to-end. Systems must be
 diagnosable, which is especially important when solving 
 ``space/time problems.'' Sophisticated JIT runtimes like Oracle's Hotspot
 are antipatterns: they make the runtime behavior of a system too
@@ -118,25 +117,26 @@ difficult to understand.
 \paragraph{Serialization and data/code portability} Serialization has
 taken a prominent role in the modern computing environment. The 
 increasingly distributed nature of most systems necessitate good
-serialization. Thomas adviced not to get fancy: most of these problems
-have been solved. Use prior art. Modern systems need tools that
-can extract data from the computing environment; we need to have
+serialization.  Most of these problems
+have been solved, and thus new systems should use prior art. Modern systems need tools that
+can extract datafrom the computing environment; we need to have
 fine-grained control of where this data lives. Distribution also demands
 easy \textit{deployment}; a simple way to create deployable executables
 is a requirement for a modern language.
 
 \paragraph{Performance} Thomas asserted that ``computers like
-rectangles,'' and advised language designers to put a lot of care and
-thought into how arrays are handled and implemented. This will solve
+rectangles,'' and advised language designers to put care and
+thought into how arrays are handled and implemented. This would solve
 many problems and also avoid the need for fancy optimization. Modern
 architectures rely on caching for performance, thus control over data
 locality is paramount as critical parts of your application must be
 kept in cache. Thomas also advised against stack machines: ``Stacks
-are easy to put together, but hard to make fast.'' Instead, choose
+are easy to put together, but hard to make fast.'' Instead,
+implementors should use
 a register model for your virtual machine. Virtual machines also
 need intrinsics to take advantage of modern hardware architectures.
 Intrinsics also help future-proof virtual machines---hardware changes
-very, very rapidly.
+very rapidly.
 
 %% \paragraph{Types} 
 
@@ -165,7 +165,7 @@ kitchen-sink languages.''
 %% notes.anil.txt:239
 
 Facebook has invested a significant amount of effort in their PHP
-infrastructure. Julien Verlauget talked to us about
+infrastructure. Julien Verlaguet talked to us about
 Hack~\cite{Verlaguet:2014:Hack}, a statically typed dialect of PHP
 used extensively at Facebook. Hack runs on Facebook's PHP virtual
 machine, HHVM, and the compiler is implemented in OCaml.
@@ -173,7 +173,7 @@ machine, HHVM, and the compiler is implemented in OCaml.
 Software development at Facebook emphasizes a rapid feedback cycle.
 There should be little time wasted between saving a source file, and
 having the results show up on the screen. Much of the HHVM team's
-efforts are focused on this, the ``developer experience.''
+efforts are focused on this ``developer experience.''
 
 Due to Facebook's very large deployment, performance is very important.
 Even a small performance improvement, say improving CPU utilization 
@@ -181,7 +181,7 @@ by 1\%, can have significant cost impact. PHP has been difficult to optimize
 due to its dynamic nature, requiring an ever-more sophisticated 
 virtual machine.
 
-Hack is compatible with PHP, and indeed interoperates with legacy PHP
+Hack is compatible with PHP, and interoperates with legacy PHP
 with no runtime penalty. Due to Facebook's enormous legacy code base, 
 Hack is explicitly designed to be incrementally adopted. This is done
 by allowing gradual typing. Hack also has type inference, minimizing
@@ -240,19 +240,18 @@ were suitable for Erlang:
 
 \begin{enumerate}
 
-\item Moved away from Cassandra to a Riak-based data management
+\item OpenX moved away from Cassandra to a Riak-based data management
 stack. (Riak is written in Erlang.)
 
-\item Added Erlang-based services for various bits and pieces of their
+\item The developers added Erlang-based services for various bits and pieces of their
 software stack. A DSL for ad-selection was written so that application
-logic be interpreted by both Erlang and Java-based systems.
+logic could be interpreted by both Erlang and Java-based systems.
 
-\item A data-service layer, abstracting the database.
+\item OpenX implemented a data-service layer, abstracting the database.
 
-\item An API router. (Written by Erlang Solutions.)
-
+\item Erlang Solutions wrote an API router for OpenX
 \end{enumerate}
-
+%
 OpenX currently has around 15 services written in Erlang, around 8 in
 Java, and a mix of Python and PHP for frontend tasks.
 
@@ -261,21 +260,21 @@ enabled the use of Erlang:
 
 \begin{itemize}
 
-\item They are entirely cloud based: they use generic hardware,
+\item OpenX's systems are entirely cloud based: they use generic hardware,
 atuomated bootstrap, deployment via packages, and emphasize fault
 tolerance.
 
-\item They use many cross-language tools. Thrift~\cite{Slee:Thrift},
-Protocol Buffers~\cite{Google:2014:Protobufs}, Lwes all
+\item OpenX's software infrastructure use many cross-language tools. Thrift~\cite{Slee:Thrift},
+Protocol Buffers~\cite{Google:2014:Protobufs}, and Lwes all
 contribute to a language-agnostic environment. An in-house system
 called ``Framework'' provides scaffolding or code layouts and provides
 support for building deployable packages from code. Framework also
 enforces versioning and reproducibility across languages.
 
-\item An emphasis on service-oriented architecture. Components are
+\item OpenX emphases on service-oriented architecture. Components are
 single-purpose and loosely coupled.
 
-\item An emphasis on evangelism. Architectural choices enabled the use
+\item Architectural choices enabled the use
 of Erlang, but it was important to find a project with which to
 showcase the technology.
 
@@ -320,11 +319,11 @@ using a monad captures the program description.
 The assembly EDSL was also used as a library to the Breeze compiler;
 it worked seamlessly with the compiler's code generator.
 
-However after two years, the Breeze language and compiler still isn't in
+However after two years, the Breeze language and compiler still was not in
 a usable state, and writing the operating system in assembly language,
-even with the help of a macro system, is not a compelling option. The
+even with the help of a macro system, was not a compelling option. The
 team concluded there was a need for a higher-level low-level language. Thus,
-Tempest.
+they started a new project called \textit{Tempest}.
 
 Tempest is an imperative language with automatic register allocation,
 and an optimizing compiler. It, too, uses the SAFE EDSL assembler
@@ -367,7 +366,7 @@ Jafar Hussain from Netflix talked to us about their use of functional
 programming techniques; in particular, reactive programming. Their
 path towards reactive programming began by the process of
 modularizing the Netflix software stack. The middle tier and UI
-used to be highly coupled, leading to among other things very
+used to be highly coupled, leading to numerous problems, specifically very
 inefficient call patterns between components since the software
 architecture was not modular and forced developers into using
 omnibus messages to communicate between the application tiers.
@@ -381,8 +380,8 @@ provide the infrastructure to make them effective ``cloud
 developers?''
 
 Netflix answered the question by providing ``UI comforts:'' a reactive
-API. The next challenge was then: how do we mine concurrency and
-parallelism in a simple fashion? Hussain stated that no developer can
+API. The next challenge was then mining concurrency and
+parallelism in a simple fashion.  Hussain stated that no developer can
 be trusted with locks, that there must be better ways.
 
 Hussain went on to describe the \texttt{Observable} monad, the central
@@ -399,14 +398,13 @@ At Netflix, \texttt{Observable} is used as the singular data structure
 for both cloud and UI developers: it is applied with ease to problems
 in either setting, and provides a uniform API around which
 applications are structured. Hussain demonstrated this by showing
-examples of how the API smooths over the differences between cloud
+examples of how the API smoothes over the differences between cloud
 and UI programming --- they really are the same! --- providing a
 uniform structure for both. His first example was showing an
 implementation of social notifications, a classic ``long polling''
 example; the second was an autocomplete system for search.
 
-Like other speakers, Hussain emphasized the need for evangelism,
-because you simply cannot assume the best technology will win.
+Like other speakers, Hussain emphasized the need for evangelism.
 He recommended practicing public speaking and a particular focus
 on ``soft skills.'' In his own experience, within a short amount of time,
 he honed his speaking skills and was able to clearly articulate the
@@ -432,8 +430,8 @@ Concurrency in Scheme}
 Vishesh Panchal from Beckman Coulter Inc gave a talk on their use of
 Scheme to automate a molecular diagnostic device. Its job is to
 detect the presence of specific strands of DNA/RNA in a sample. It is
-a complex beast: it contains a total of 19 boards, with temperature,
-motor control, and sensors. It has two barcode readers and a
+a complex beast: it contains a total of 19 boards, with temperature and
+motor control, sensors, barcode readers and a
 spectrometer. (Panchal showed us a video of such a device playing a
 piece of music by actuating its motors just so!)
 
@@ -449,8 +447,8 @@ in constructing the DSL; first class functions and continuations were
 key; finally, Scheme's arbitrary precision arithmetic was important
 for numeric computation.
 
-In order to interoperate with Erlang/OTP, the team constructed an
-Erlang embedding in Scheme. Their library can create, inspect, and
+The team constructed an
+Erlang/OTP embedding in Scheme. Their library can create, inspect, and
 update Erlang records; they also replicated the Erlang pattern
 matching facility through macros.
 
@@ -503,8 +501,6 @@ architecture and use of open-source software more generally.
 the team to use the good bits from both Scheme (macros, arbitrary
 precision math) and Erlang (message passing concurrency, OTP). The
 use of DSLs allowed rapid prototyping by nonexpert developers.
-
-
 \end{itemize}
 
 
@@ -514,7 +510,7 @@ use of DSLs allowed rapid prototyping by nonexpert developers.
 
 Kevin Scaldeferri from the Gilt Groupe reported on their experience
 building out a large system comprising a large number of small
-services. The Gilt Groupe is a popular Internet clothing retailer
+services. The Gilt Groupe is an Internet clothing retailer
 employing highly user-specific targeting. They employ several schemes
 to drive sales, mostly centered around time- and quantity-limited
 offerings. This makes their traffic very uneven, with massive spikes
@@ -555,7 +551,7 @@ architectures. (Scaldeferri remarks: ``It's difficult for developers to run
 300 services on their laptops.'') Gilt's code base uses the ``cake pattern'' --- 
 which is enabled by Scala's trait mixin system --- extensively and
 uses this in testing to fully or partially satisfy dependencies that would
-otherwise be handled by another service in their prodution environment.
+otherwise be handled by another service in their production environment.
 
 \item Finally, a system for doing \textit{continuous delivery} is an
 important part of Gilt's deployment strategy. 20--30 services are
@@ -612,8 +608,8 @@ system for computing aggregates in real time.
 
 Summingbird is a declarative-style DSL embedded in Scala for expressing map/reduce-style
 aggregates over streaming data. It aims to bridge the gap between
-streaming and batch computation. Developers should have to write your logic
-once, and deploy it in a combination of batch- and
+streaming and batch computation. Summingbird enables developers to write logic
+once and deploy it in a combination of batch- and
 streaming-computation systems. An important goal of Summingbird is to
 improve developer productivity by solving the systems problems in one
 place, so that the runtime (i.e. the Summingbird library ands its
@@ -655,16 +651,16 @@ reduce the memory requirements for keeping the counts.
 
 %% notes.anil.txt:1168
 
-Avi Pfeffer of Charles River Analytics introduced the Figaro language
+Avi Pfeffer of Charles River Analytics introduced the \textit{Figaro} language
 for probabilistic programming~\cite{Pfeffer:2009:Figaro}. The aim of
 functional probabilistic programming is to ``democratize'' buildling
 probabilistic models.
 
-Pfeffer started with a motivating example: support you have some
+Pfeffer started with a motivating example: suppose you have some
 information (e.g. ``Brian ate pizza last night'') and you want to
 answer questions based on this (e.g. ``is Brian a student or a
 programmer?''), all while keeping track of the uncertainty of the
-answers. The solution is to createa joint probability distribution
+answers. The solution is to create a joint probability distribution
 over the variables, assert the evidence, and then use probabilistic
 inference to compute the answer.
 
@@ -752,7 +748,7 @@ feedback (error reporting);
 The IDE is itself built almost entirely in Haskell, using libraries
 and frameworks, mostly as-is, available on Hackage.
 Yesod~\cite{Snoyman:2012:Developing} was used as a web framework.
-Fay, a proper subset of Haskell that compiles to Javascript,
+Fay\footnote{\url{https://github.com/faylang/fay/wiki}}, a proper subset of Haskell that compiles to Javascript,
 was used for frontend code.
 
 The challenging aspects of this project were largely related
@@ -781,30 +777,28 @@ increase the cluster size due to hardware faults or to access spikes.
 Takebe described a few incidents that were related to Haskell-specific
 issues:
 
-\begin{itemize}
+\begin{description}
 
-\item \textit{A memory leak due to lazy evaluation.} The frontend
+\item[A memory leak due to lazy evaluation.] The frontend
 server keeps a list of active threads in a \texttt{TVar} for
 monitoring purposes. When threads were removed from the list, the
 function was not reduced to normal form and thus created a large
 memory leak.
 
-\item \textit{A race condition.} A race condition between dequeueing
+\item[A race condition.] A race condition between dequeueing
 items and an asynchronous exception thrown by a timeout handler caused
 data to be lost. 
 
-\item \textit{A performance degradation.} The GREE team used a
+\item[A performance degradation.] The GREE team used a
 library, \texttt{http-conduit}, to perform health checks of various
 servers. In a minor version update, this library started to fork new
 threads for each http request, leaving the caller with the
 responsibility to perform explicit resource management. This caused
 a resource leak in their code base; after a little while, the program ran
 with as many threads as there had been health checks.
-
-\end{itemize}
-
-How does the team prevent these issues from occuring again? They
-decided to employ better testing practices. Using standard Haskell
+\end{description}
+The GREE team 
+decided to employ better testing practices to battle these problems. Using standard Haskell
 tools (QuickCheck~\cite{Claessen:2011:Quickcheck},
 HUnit~\cite{Herington:2014:HUnit}) they developed a harness within
 which they could start their servers and test them in-situ. They now
@@ -896,7 +890,7 @@ engine. This is a product used for performance and risk attribution
 across financial portfolios.
 
 Here, they used monoids for simple parallelization. (This was also
-seen in Twitter's report on Summingbird.). Reducers were used to
+seen in Twitter's report on Summingbird.) Reducers were used to
 derive structure from containers.  Reduction
 is done in parallel across monoidal structures. Kmett noted that this
 enhanced compositionality means that ``we don't see the wiring hanging
@@ -968,7 +962,7 @@ security turns out to be tricky due to the myriad ways in which the
 product can be configured by customers. For example, they may define
 roles (e.g. ``owner,'' ``staff,'' ``customer'') that make sense only
 within their environment; the \textit{verbs} of the product, too, may
-be configured (e.g. appointments may be joined or reschedueld)
+be configured (e.g. appointments may be joined or rescheduled)
 depending on the environment. Thus both sides of the security equation
 --- nouns and verbs --- can change from instance to instance.
 Skedge.me uses Haskell's type class facility to model these security
