@@ -1,13 +1,3 @@
-%% MF: 
-%% -- use tense consistently across sections and within sections 
-%% -- try to use past tense for opening para
-%% -- and present tense for description
-%% -- consistently use one tense in paras 
-%%
-%% -- re-order material to reduce redundancies 
-%%
-%% -- use concise formulations, eliminate typos, rarely used words 
-
 % BIBLIOGRAPHY: 
 % -- many of the citations come without source: 
 % Charles River
@@ -23,9 +13,6 @@
 %% Please provide at least a URL. 
 %% also try to make the citations internally consistent. 
 %% Thanks 
-
-
-%% see MF: for a few additional remarks/questions
 
 %% \NeedsTeXFormat{LaTeX2e}
 \documentclass{jfp1}
@@ -357,40 +344,13 @@ all hardware features.
 Most importantly, they are also highly reusable components.
 
 \item EDSLs demand that engineers are comfortable with the host language.
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% MF: sentence was ambiguous. Here is what I concluded: 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-EDLs programs are more difficult to debug than programs in an external DSL. 
+They are also more difficult to debug than programs in an external DSL. 
 
 \item Concrete syntax remains important. It is probably best to switch
 from abstract syntax to concrete syntax when a language gains modularity,
 because then the switch can be made without disruption.
 \end{itemize}
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% MF: I considered the snippets below (all in past tense) useless: 
-
-% %% ---
-
-% Hardware and software were developed concomitantly. While Breeze was
-% being designed, there was a need for an assembly language to drive the 
-% hardware, and to write low-level routines. 
-
-% The assembly EDSL was also used as a library to the Breeze compiler;
-% it worked seamlessly with the compiler's code generator.
-
-% However after two years, the Breeze language and compiler still was not in
-% a usable state, and writing the operating system in assembly language,
-% even with the help of a macro system, was not a compelling option. The
-% team concluded there was a need for a higher-level low-level language. Thus,
-% they started a new project called \textit{Tempest}.
-
-% The team would have been more productive by starting by constructing
-% Tempest initially, and not the SAFE assembler.
-
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% -----------------------------------------------------------------------------	
 \section{End to End Reactive Programming}
 
 %% notes.anil.txt:663
@@ -424,7 +384,7 @@ synchronous or asynchronous settings.
 At Netflix, \texttt{Observable} is used as the singular data structure for
 both cloud and UI developers. It is applied with ease to problems in
 either setting, and it provides a uniform API around which applications
-are structured. The video of Hussain's talk includes twp demonstrations of
+are structured. The video of Hussain's talk includes two demonstrations of
 how the API smooths over the differences between cloud and UI programming,
 with a uniform structure for both. The first example shows an
 implementation of social notifications, a classic ``long polling''
@@ -551,13 +511,9 @@ During this transition, the engineering group developed several
 architectural components to support this large number of services in
 production:
 \begin{description}
-\item[Builds] The group extended Scala's Simple Build Tool (SBT) to
-abstract over build, configuration, and dependency management. 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% MF: This is a guess as to what the original sentence could mean: 
-A plug-in API allows developers to specialize the revised build tools to
-their needs.
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[Builds] The group constructed plug-ins for Scala's Simple Build
+Tool (SBT) to abstract over build, configuration, and dependency
+management.
 
 \item[Configuration] A ZooKeeper cluster stores configurations, which can
 be overridden locally. Configurations are deserialized into to Scala data
@@ -692,7 +648,8 @@ example from Pfeffer's talk:
     if student && programmer 
       flip(0.9) 
     else
-      flip(0.3) (student, programmer, pizza)
+      flip(0.3) in
+  (student, programmer, pizza)
 \end{verbatim}
 Such programs are best understood via a \textit{sampling semantics}. That
 is, the program is run many times. Each outcome has some probability of
@@ -700,16 +657,15 @@ being generated, the program thus defines a probability distribution over
 outcomes. Since the language itself is Turing complete, it is capable of
 expressing a wide range of models.
 
-Figaro's central data type is called \texttt{Element[T]}, i.e., the class
-of probabilistic models of type \texttt{T}. A number of atomic elements
-are defined, e.g. \texttt{Constant}, \texttt{Flip}, \texttt{Uniform}, and
+Figaro's central data type is called \texttt{Element[T]}, i.e., the
+class of probabilistic models over type \texttt{T}. \texttt{Element[T]}s may be
+stochastic or non-stochastic. A number of atomic elements are defined,
+e.g. \texttt{Constant}, \texttt{Flip}, \texttt{Uniform}, and
 \texttt{Geometric}. These data types are combined to form compound
-elements. 
-
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% MF: I have no clue what this example is supposed to say: 
-for example, \texttt{If~~(Flip(0.9, Constant(0.5), ..}.
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+elements. For example, the compound element, \texttt{If(Flip(0.9,
+Uniform(0, 10), Normal(1.0, 0.3))} is the uniform distribution from
+$0\mbox{--}10$ $90\%$ of the time, and the normal distribution with mean
+$1.0$ and a standard deviation of $0.3$ the remainder of the time.
 
 Figaro uses a probability monad to track state, with \texttt{Constant}
 representing the monadic unit, and \texttt{Chain(T, U)} the monadic
@@ -788,12 +744,9 @@ Takebe presented a few Haskell-specific implementation issues:
 \begin{description}
 
 \item[memory leaks due to lazy evaluation] The front-end server kept a
-list of active threads in a \texttt{TVar} for monitoring purposes.  
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% MF: what could this mean? ::
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-When threads were removed from the list, the function was not reduced to a
-value and thus created a large memory leak.
+list of active threads in a \texttt{TVar} for monitoring purposes. Operations
+to remove threads from this list were evaluated lazily, and could thus
+create a large memory leak.
 
 \item[race conditions] A race condition between dequeueing items and an
 asynchronous exception thrown by a timeout handler caused the loss of data.
@@ -939,12 +892,10 @@ change the way they conducted business to combine a skedge.me model with
 the host site. 
 
 After careful deliberation, the team decided to rewrite skedge.me in
-Haskell. Trinkle had worked with Haskell previously, though not to build a
-web site. The team began by constructing a monad, \texttt{RawDB}, to
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% MF: what are ACID guarantees? 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-maintain ACID guarantees during transactions. 
+Haskell. Trinkle had worked with Haskell previously, though not to
+build a web site. The team began by constructing a monad,
+\texttt{RawDB}, to maintain ACID (Atomicity, Consistency, Isolation,
+Durability) guarantees during transactions.
 
 The revised system consists of three layers. The \texttt{RawDB} layer
 tracks effects and can automatically retry operations on temporary failure.
