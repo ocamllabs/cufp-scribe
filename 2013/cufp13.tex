@@ -122,12 +122,12 @@ interoperate in this manner.
 \paragraph{Have an end-to-end story} A software engineer must be able to
 diagnose a system from one end to the other. This aspect is especially
 important when solving ``space and time problems.'' Sophisticated JIT
-run-times, such as Oracle's Hotspot are antipatterns, in this context. They
+run-times, such as Oracle's HotSpot, are antipatterns in this context. They
 make in nearly impossible to understand the run-time behavior of a system.
 
 \paragraph{Serialization; data and code portability} Serialization has
 taken a prominent role in the modern computing environment. The
-increasingly distributed nature of most systems necessitate good
+increasingly distributed nature of most systems necessitates good
 serialization.  Most of these problems have been solved, and thus new
 systems should use prior art. Modern systems need tools that can extract
 data from the computing environment; new languages must have fine-grained
@@ -152,7 +152,7 @@ hardware changes rapidly.
 that functional languages can \textit{make users feel stupid}. While
 dealing with the already-daunting task of understanding foreign ways of
 solving problems, newcomers must understand comprehensions, folds, and
-monads, which only further alienates them.  More generally, functional
+monads, which alienates them.  More generally, functional
 languages tend to erect high barriers to entry. 
 
 Conversely, if the functional programming community wishes to see its
@@ -166,7 +166,7 @@ Finally, much of a typical functional language gets in the way of the
 development of ``CRUD (create-read-update-delete) apps,'' which is the kind
 of application most of the world's developers are busy writing. Thomas's
 point is that functional programming languages ought to be smaller and more
-focused that they are now. ``What we need is a collection of little right
+focused than they are now. ``What we need is a collection of little right
 languages instead of a smaller collection of partly right and partly wrong
 kitchen-sink languages.''
 
@@ -193,14 +193,14 @@ ever-more sophisticated virtual machine.
 To address this gap between PHP and feasible optimizations, Hack is
 statically typed yet compatible with PHP. Indeed, Hack code can
 interoperate with legacy PHP code without imposing any run-time
-penalty. In other words, developers can adopt Hack on an incremental
+penalty. Thus, developers can adopt Hack on an incremental
 basis, similar to gradually typed language though without their
 safety~\cite{st:gradual06,thf:dls06}. Hack also comes with type
 inference, minimizing notational overhead, and further aiding
 adoption.
 
 Hack's type system is interesting in its own right. It handles a large
-number of idioms from the dynamically typed world. At the same time,
+number of idioms from the dynamically-typed world. At the same time,
 it provides sufficiently strong static guarantees to catch a
 significant number of errors during type checking.
 
@@ -275,7 +275,7 @@ bootstrapping, are package-oriented and fault-tolerant.
 
 \item OpenX's software infrastructure use many cross-language
 tools. Thrift~\cite{Slee:Thrift}, Protocol
-Buffers~\cite{Google:2014:Protobufs}, and Lwes all contribute to a
+Buffers~\cite{Google:2014:Protobufs}, and the Light Weight Event System\footnote{\url{http://www.lwes.org/}} all contribute to a
 language-agnostic environment. An in-house system called ``Framework''
 provides scaffolding or code layouts and provides support for building
 deployable packages from code. Framework also enforces versioning and
@@ -329,7 +329,7 @@ the optimal number of PL researchers on any given project is somewhere
 between two and seven:
 \begin{itemize}
 
-\item Designing a higher order language with information flow control
+\item Designing a higher-order language with information flow control
 is hard. 
 
 \item Starting with the systems programming language is better than with
@@ -355,15 +355,15 @@ because then the switch can be made without disruption.
 
 %% notes.anil.txt:663
 
-Jafar Hussain (Netflix) discussed the company's use of functional
+Jafar Hussain of Netflix discussed the company's use of functional
 programming techniques, in particular, reactive programming. Netflix
 enabled its move toward reactive programming when its development team
 modularized the company's software stack. The middle tier and UI used to
 be highly coupled, causing numerous problems, especially inefficient calls
 between components.
 
-Netflix developers roughly fell into two groups: ``Cloud'' people and
-``UI'' people. Due of its massive scale, the company decided that all
+Netflix developers roughly fell into two groups: ``Cloud people'' and
+``UI people.'' Due of its massive scale, the company decided that all
 developers had to ``think at scale.'' Hence any switch posed the challenge
 of how to get UI engineers to think at scale. Netflix answered the
 question by providing ``UI comforts,'' a reactive API. 
@@ -378,7 +378,7 @@ Rx.NET~\cite{Christensen:2013:Reactive}. Briefly, it is is a vector
 version of the {\tt Continuation} monad with the null-propagation
 semantics of the {\tt Maybe} monad and the error propagation semantics of
 the {\tt Either} monad. It is composed in a functional fashion, and has
-clean a cancellation semantics. \texttt{Observable} can be used in either
+clean cancellation semantics. \texttt{Observable} can be used in either
 synchronous or asynchronous settings.
 
 At Netflix, \texttt{Observable} is used as the singular data structure for
@@ -470,7 +470,7 @@ programmers to mix the good bits from both Scheme and Erlang at will.
 \item DSLs also enable rapid prototyping by non-expert programmers. 
 \end{itemize}
 Finally it is noteworthy that the software also passes the FDA's
-scrutiny.\footnote{The FDA is the regulating body for medical devices in
+scrutiny.\footnote{The US Food and Drug Administration (FDA) is the regulating body for medical devices in
 the United States.}
 
 %% -----------------------------------------------------------------------------
@@ -590,7 +590,7 @@ Summingbird's core operation is an ``associative plus'' operation, the
 Monoid. Its underlying data structure is practical for aggregation. The
 associativity of Monoids makes computations parallelizable in a
 straightforward way. According to Ritchie, many common data structures and
-aggregations thatare Monoids, including sets, lists, maps, hyper-log logs,
+aggregations that are Monoids, including sets, lists, maps, hyper-log logs,
 Bloom filters, moments, count-min sketch, and more. 
 
 It is common to deploy Summingbird in a dual batch/real-time
@@ -851,7 +851,7 @@ the obvious ``wiring'' from their code.  This project really helped sell
 the use of Scala and, more generally, FP to the rest of the company.
 
 Ermine is a Haskell-like language, developed to build a generic reporting
-and visualization framework. It is a JVM-based language and is going to be
+and visualization framework. It is a JVM-based language and will be
 used in multiple products.  Like the portfolio analysis engine, Ermine is a
 response to problems with a prior implementation---this one in Scala.
 Specifically, writing monadic code in Scala can be quite painful as it is
