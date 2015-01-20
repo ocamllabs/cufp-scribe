@@ -1,0 +1,1011 @@
+"Smalltalk" Dave Thomas: 21st Century Crusades of Knights of the Lambda
+Calculus -- Lessons from past Language Crusades
+
+Imperative programmer but loves FP
+Language "pimps" by infecting industrial users with languages that get
+the job done
+Worked on a lot of strange languages (coding in K)
+None of the languages he uses are above 26 on TOBI
+Guilty of Eclipse and IBM Java and Smalltalk VMs
+Delivered commercial code on mainframes to watches
+Lots of language crusades:
+- Symbolic vs numeric
+- 4GL vs Old Way (normal people can write software, too!)
+  - Vendor stack lock-in
+- '78, expert systems, AI crusades; Symbolics machines
+- Logic programming
+  - No free lunch; no auto-parallel
+- Machine learning and knowledge rep
+  - Hard to agree on concepts
+- Multicore crusades
+- ...
+
+Every road leads to functional crud
+- Vector functional programming
+- Scala DSLs
+- Haskell array fusion
+
+FP won!
+We want modest industrial success
+Massive industrial success will make terrible winners
+FP is great but what happens with a *lot* of functions?
+"Software engineering" or "IT"
+Difficult to reason, difficult to modularize
+Language interop and access to C types
+Should not build Java interop -- it should be allowed to die
+Actors are great! Should queues really be hidden? No deadlock reasoning?
+If you want to go fast, use rectangles! Arrays are good.
+Instead of a fancy optimizer, use proper array libraries!
+"Products not projects." Projects don't understand interfaces.
+
+First commercial Smalltalk user: Tektronic oscilloscopes.
+Of course, have to combine C++ and work with HW engineers...
+Needs a tool-chain that lets you tell the story from logic probe to
+Smalltalk objects.
+You may not know about ROM... it was a technology that prohibited
+upgrade.
+Which meant that programmers were good.
+Need serious tools for legacy.
+A whole lot of people will write a lot of code.
+You're gonna get an ugly FP baby... maybe not in Haskell because it's
+slow.
+But for the other languages, it's fast enough and it will be a mess.
+
+Packaging applications:
+Good tools and good environment but hard to take code out of that
+environment.
+Need tools to extract programs from env and get fine-grained control of
+state and module versioning.
+Need to make shareable binaries and deployable portable executables.
+
+Software evolution:
+It would be nice to have language stability...
+"We've won! Let's steal another language feature!"
+Would like version-to-version compat or at least transformation.
+The IBM y2k problem was mitigated early but all the customers were
+running 8-10 versions lagging.
+Need better migration paths.
+Need to avoid dialect hell.
+
+Don't leave data behind:
+In Smalltalk, a construct "become" for schema migration.
+Without migration, it's a ticking timebomb.
+
+Deployment and upgrade:
+Erlang is shining example and works great but has trade-offs.
+More complicated solutions but always need some way to upgrade systems
+in the field.
+This problem is often "dull and boring" compared to pet language.
+Speed and space still matters -- How long can you live on the JVM?
+Need HQ libs and efficient serialization
+If we use "esoteric contronl structures", JVM won't get you there...
+
+Performance today:
+If can't keep critical parts of app in cache, take 2 orders of mag perf
+hit.
+Will have a very different memory architecture with SSDs in future.
+Need low-level intrinsics and efficient immutability to get real perf.
+
+Friendly VMs in hardware:
+Why when we waste money on gates do we not have:
+Proper timers, write barriers, tags...
+Lots of small things that hardware misses
+
+Lots of OO inspired by FP
+$2billion later, JVM as fast as C++
+Can we find a way to get direct exec of FP?
+
+Google's Pinnacle uses software write barriers
+Need register model not a stack model
+Very painful to do stack -> register
+Need a new generation of VMs that support multiple languages to not be
+in terrible biased world.
+
+I believe in object types -- not variables.
+So we all believe in strong typing... *chuckles*
+
+Type systems in a broader way -- constraint systems -- pluggable type
+systems.
+Better behavioral types, approximate types, sloppy type systems. Need
+more control over each of the type properties.
+
+Better type discipline transitions, better unit tracking, better
+space-speed trade-offs to get more feedback about expensive ops.
+Good for thinking -- bad for perf.
+
+With new langs, how do we delete language components?
+For instance, every release of K is incompatible, it's great!
+Need good, stable libs with tests
+A lot of lib problems are fights between library and runtime
+
+Bad if FP goes like PL1 and Java and C++ by putting in too much
+Maybe a collection of small languages rather than a big, kitchen-sink
+lang
+
+Some functional programs keep getting smaller and harder to understand
+especially with langs like K...
+
+Some explorations:
+Embedding comments in expressions
+Ability to get hot code value inspection and tinker with live values
+Important to understand actual execution environments
+
+These are all solvable... what's the real problem?
+
+Comprehensions, folds, monads, wtf?
+"FP is really easy... you don't need to know anything about monads!"
+And then they talk about FP and monads a lot...
+Most FP programmers are embarrassed about their inadequacies... FP is
+hard.
+Somehow we need to provide affordances or education or assuage poor
+performance or lack of math understanding.
+This is very important. These are high barrier languages. J and K are
+hard. Haskell is hard. Don't feel bad. Everyone does. Takes 3+ months.
+
+Important to get more programmers. Need to not scare
+programmers. Objects just irritate. FP scares.
+
+Appealing to write a wrong Haskell program... FP Complete is a good
+on-ramp.
+
+Important to get the language complexity right. Most people can't handle
+beyond VCR or 4GL for apps. How will we deal with these people?
+
+People lack abstract understanding. Converted lots to Smalltalk.
+
+What's the application developer story? Do I need to get all these
+libraries and build my own environment? Seems like a lot...
+
+Should there be an FP langauge for CRUD apps? Do they need our
+full-power languages?
+
+Important that people learn common collections -- must be small and
+simple -- otherwise too many to choose from. Concurrent hash maps vs
+last year's hash maps... just want a dictionary?
+
+More literate FP? Still have doc/code sync battles.
+
+Need a book for pure FP that competes with SICP.
+
+Need CADA (?) for FP. Patterns in APL by Perlis. Something like Little
+Lisper or Little Schemer. Something that can be made subconcious. Drill
+and test.
+
+TDD with people who don't use keyboard shortcuts... painful.
+
+I want unicode! Not ascii! I want my symbols! Compact notation!
+Dense, powerful programs. E.g. iPad programming for J.
+
+Need to take very old work about How to Design a Program by
+Fellisen. Need to talk about immutability, how to orchestrate
+actors. What are the patterns? "Scala, F#, Clojure the Good Parts"
+
+Need to warn users about the crufty parts of languages. Warn them away
+from the swamps, caves, dragons.
+
+Better ways to design with types. The vector languages are "shape
+shifters" because they mostly have shapes not types. Very powerful art
+that is disappearing...
+
+Those that are less empowered... need help to understand how to "trust
+the types."
+
+Q: You seem to have missed a topic. Something that is missing from the
+past language wars. The top 20 save 2 have runtime/implementation that
+is open source. This seems like something that will really help
+experimentation. Hmm?
+
+A: I agree but I think it's not a major factor. Getting a language seems
+to have been easy. Even proprietary languages... Open source is a "mixed
+sword" produces impoverished language teams -- need a Sugar Daddy. It
+would be nice if people paid something to support implementors. Maybe
+pay-by-means so fringe languages have a real economic model. To build a
+production version of a serious PL, need serious gov money or commercial
+sponsor. I applaud those who make donations to OSS languages.
+
+Q: One nut FP doesn't seem to have cracked is mobile and embedded
+systems. These are growing in importance. What do you think?
+
+A: Mobile and embedded are late. Need to look at the runtime. The
+platforms are hostile to other runtimes. Have to embrace ObjC and
+Java... Would be much more excited about direct-to-metal FP for
+mobile. Arthur Whitney (?) has kOS which does this.
+
+Q: The scariest thing you said is that if you become a huge success like
+Smalltalk, you become C++ or Java. Take the best bits of C++ and only
+those... and then it grew. Is that the best we can hope for? Or is there
+something to be done?
+
+A: Encourage Type Safe and the clojure companies and Erlang cos to stay
+independent because they care. Like minds that take the language forward
+can help to keep languages sane. One of the disadvantages of open source
+is requiring to prostitute self to services rather than getting value
+directly from language. Having a lot of pressure for a small language
+and making hard to get goofy things into language... needs an
+independent voice. Make sure the "language owners" stay
+responsible. Need good stewards. Major vendors are death.
+
+Q: So the key technical problem then, is tools to migrate from language
+version?
+
+A: I think the key thing is to build an ecosystem that somehow gets the
+people who do the language work get paid. Even if you look at the JVM
+teams inside IBM and Oracle -- they are max 20 ppl supporting a huge
+codebase. This dilutes focus.
+
+-------------
+
+Julien Verlaguet, Facebook: Analyzing PHP Statically
+
+Works in HipHop team at FB; an interesting project in OCaml...
+
+Team tries to make PHP faster -- compiler team
+
+What is PHP good at?
+- PHP Features
+  - V. fast install
+  - Lots of libs
+  - Easy to learn
+  - Scales well (avoids concurrency problems)
+- Do we care?
+  - No. but..
+  - V. fast feedback loop
+
+Developing for web or mobile phone requires a different workflow
+No good way to test. Need to iterate v quickly.
+E.g. Facebook built and then iterated quickly to "make it feel right"
+
+PHP: The Challenges at Scale
+- Performance (runtime)
+  - At this scale, 1% regression in CPU matters a lot
+  - Hard to optimize (many dynamic features; runtime must re-discover
+invariants)
+- Development
+  - Rafactoring is difficult (dynamic is painful)
+  - Bugs are caught at runtime (some tests work...)
+  - Tooling is primitive (autocomplete...)
+
+Scaling PHP runtime: HipHop
+- Sandbox interpreter
+  - Slow
+- Compiler (in C++) backend for production
+  - Hard to get a mental model of what happens at runtime (due to model
+  divergence)
+  - Hard to reason about perf
+
+Scaling PHP Runtime: HHVM
+- JIT compiler (HHVM) for both envs
+- Now, new language for HHVM (HACK)
+
+HACK for HipHop (HH)
+- Statically typed language for HHVM
+- Fully compatible with PHP (interop without overhead, same rep at runtime)
+- Evolved from PHP (if you know PHP, you know HACK)
+  - Clear mental model w/o runtime surprises
+- Designed for incremental adoption
+  - Gradual typing
+  - Unrealistic at FB scale to switch from dynamic to static at once
+
+DEMO
+
+<?hh
+
+function foo() : void {
+$x = 'hello';
+return $x;
+}
+
+?>
+
+gives the expected type error when "$ hh"
+
+Inference algorithm keeps a witness for what it thinks the type of a
+variable is.
+
+HACK Type System
+- What must be annotated?
+  - Class members
+  - Function params
+  - Return type
+- What is inferred?
+  - All the rest
+- Annotating is incremental
+
+Hack Types
+- Nullable: ?int, ?MyClassName
+- Tuples: (int, bool, X)
+- Closures: (function(int): int)
+- Collections: Vector<int>,Map<string, int>
+- Generics, A<T>, foo<T>(T $x): T
+- Constraints: foo<T as A>(T $x): T
+- Type aliasing: [new]type t = ...
+- Extensible records: ...?
+
+DEMO
+- Mailbox example
+- send and fetch methods
+- <?hh means that we are checked
+- --color CLI option will show you what exprs are checked vs dynamic
+- then, annotate but: am i done?
+- add strict mode to check if anything hasn't been statically
+type-checked
+- null type is everywhere... must annotate nullable
+- Null checks change types to remove nullability
+- Can replace strings with more generic values... still works
+- Witness system is handy with generic types because it shows where
+inference fails
+- Some types get made static even if mutation changes type
+
+Very fast incremental type system
+- Too slow -- no one will use -- not a successful project
+- Fast iteration is crucial
+
+DEMO
+- Codebase type errors are fast
+
+Browser IDE
+- client-side autocomplete by ocaml -> js type checker cross-compile
+
+Internals: Hack at Scale
+- Knew needed IDE
+- Huge code base (millions of lines)
+- The solution, a server:
+  - Server type-checks all the files
+  - Keeps track of the deps
+  - Recomputes types when something changed (inotify)
+
+Constraints:
+- Need low latency for autocomplete
+- Version control (switching between branches is slow)
+- We must use a reasonable amount of RAM
+- Reasonable init time
+- Must be stable!!!
+
+HACK is written in OCaml!
+- OCaml was a good choice
+- Ideal for symbolic compute
+- Excellent perf
+- Can be compiled to JS
+- Interop well with C
+- Challenge: runtime doesn't support multicore...
+
+Architecture:
+- Master distributes work to workers which share a heap
+- Workers don't respond to master but comm over shmem
+
+OCaml at Scale:
+- IPC: pipes, sockets, etc
+- Caching layers to aboid deserialization cost
+- Carefully craft lock free data structs in C
+- GC: workers keep small heap for good latency
+- Shmem is compacted by master
+- OCaml makes you think hard about trade-offs: good!
+
+----------------
+
+23rd ML Workshop
+
+Rx-CML: Migrating MultiMLton to the Cloud
+KC Sivaramakrishnan
+
+Designing and implementing has two competing goals
+- Consistency and performance
+
+- Func lang + sync msg passing
+- communication = transfer + sync
+
+- explicit async complicates reasoning
+
+Goal:
+- formalize conditions under which send = async_send holds
+- cloud infrastructure + spec exec framework
+- notices divergence
+
+Context:
+- dist extension of MultiMLton : MLton for scalable archs
+- Contecurrent Ml
+  - Dynicamic lightweight threads
+  - Sync message passing
+  - first-class events
+
+Basic idea:
+- Discover which synchrony is necessary
+- Sync eval does not result in cyclic dependence
+
+Dist Group Chat
+- No central server + preserve causal dep
+- Async: explicitly manage v clocks
+- Sync directly use p2p messaging
+- Simple but inefficient because reqs global barrier
+- Our idea: write synchronously and then run/simulate and detect
+invariant violations
+
+------------
+
+MetaOCaml lives on, Oleg Kiselyov
+
+MetaOCaml is a superset of OCaml for writing code generators (and
+generators of generators etc)
+
+Conservative extension
+Pure generative: no examination of the generated code
+Generators and teh generated code are typed
+Guaranteeing:
+ - well-formed code
+ - well-typed code
+ - code with no unbound or unexpected variables
+
+MetaOCaml look and feel
+- bracket vs quasiquote
+- escape vs unquote
+- run vs eval
+- persist vs '( ',pi )
+
+Can manipulate open code with free variables
+In lisp, we have hygiene problems.
+MetaOCaml properly handles hygiene.
+
+The original MetaOCaml
+- a fork of OCaml like MetaML
+- designed and architected by Walid Taha
+- diverged too much
+
+BER N100
+- A clean slate re-implementation
+- Different algorithms and data structures
+- Different design decisions
+- Extensive comments
+- Smaller kernel and closer to Ocaml to easy maint
+
+kernel: 49K patch, 77k new trx.ml, 28 files patched etc
+
+Implementing staging I
+- Add staging forms to AST
+- Add staging forms to the typed AST
+- Add staging forms to IL
+- Account for staging forms in the code generator
+
+... might have just reimplemented the language
+
+II
+- Preprocess the staging away
+- Use code combinators
+- Easy to implement (no mods)
+- Typing is preserved!
+- Works surprisingly well (Scala's LMS)
+- problems: conditionals, loops, special forms: use thunks
+- pattern matching? ugly by hackable (scala virtualized)
+- type annotations are ugly but hackable
+- let-poly is fatal
+- poly code values are prevented by value restriction
+
+III
+- Translate staging away after type-checking
+- Future-stage bound variable becomes present-stage bound var ut at the
+type string loc
+- Wehy do we need gensym at runtime?
+- future-stage code typed-chcked poperly including poly
+
+What are the code values?
+- a code
+- machine code or IR: hard to optimize and compose
+- typed AST: difficult to compose (deal with type env and poly)
+- just AST (use this one)
+
+Substantial differences between BER and the old MetaOCaml
+- constructors restriction
+- scope extrusion check (hygiene even in presence of cross-staging)
+
+Constructor problem
+- Type declarations disappear
+- breaks typing in later stages
+- old MetaOCaml had very painful solution
+
+Solution I
+- Use common constructor types
+- Constructor restriction: all constructors and labels have to be
+defined in a common global location
+
+Soln II
+- Local modules can pass constructors
+- The code value is a closure over the constrctor env
+
+Cross-stage persistence
+
+CSP complexities
+- polymorphic lift
+- aliasing or copying
+- really copying?
+
+No polymorphic lift
+- Planned new rules for CSP:
+- Base types: copy
+- Global idents: always chare
+- ADT immutable records known-good types
+- Abstract, poly, functional and other types: prohibit
+- Feedback welcome
+
+No poly lift
+- Planned new rules of CSP:
+- How to lift function, code, fds?
+- is it needed?
+- bind to global idents
+- be explicit
+
+Plans
+- Developing staged calculi that account for
+- staging and modules
+- Can staging be used as a module system?
+- Staging and objects
+- Stagins and GADTs
+
+Prove that the restriction on CSP avoids the unsoundness problems with
+generalizations
+
+Kernel level dev
+- Move run out of the kernel: BE MetaOCaml (alt look into levels)
+- CSP
+- Native MetaOCaml
+
+Longer term
+- Releax the srestriction on data type decls
+
+User-level
+- Bring back (re-implement) off-shoring
+the translation from the generated code (a small subset of ocaml) to C,
+Fortran, LLVM, verilog, js, etc
+- more applications, more (Shonan) challenges
+
+Everyone can participate, everyone is welcome
+
+Conclusions
+- The expereicen of adding staging to a functional language
+- Type help
+- Piggy-back of the existing impl: faster startup, easier maint
+- Preprocessing almost work
+- Representation of code values is some sort of closure over the
+signature (user-defined types)
+- CSP are important in practice but hard to get right
+
+Suggestions for OCaml
+- How the OCaml HQ might help
+- New structured constant Const.csp_value? Temping to remove from
+MetaOCaml, tempting to move to OCaml
+- use cases: refs to big structs, syntactic extensions
+- Merge metalib/print_code.ml and tools/pprintast.ml
+Use optional arguments to make the printing extensible
+- Unify printing functions for various trees and make them
+pretteier. The very same fmt_longident_aux occurs 3 times in the OCaml
+code base.
+- Better and modular error handling
+- exception Errror of (format -> unit)
+
+-------------
+
+A Fix for Dynamic Scope by Rai Chugh
+
+Typing checking recursive programs in a dynamic scope setting
+
+Backstory
+- Goal: types for "dynamic" languages
+- Syntax and semantics for JS
+- Core lambda-calc + extensions
+- Approach : type check desugared programs
+- Simple imperative, recursive functions hard to reason about
+
+Factorial:
+- Translate to statically typed calculus?
+- Option 1: untyped lambda calculus (no recursion...)
+- Option 2: lambda + fix (good but doesn't have mutation)
+- Option 3: lambda + fix + ref (recursive call doesn't go through
+reference... no mutual recursion)
+- Option 4: lambda + ref (yes!)
+- But how to type check?
+
+Backpatching
+- need to define fact function reference first...
+- overwrite dummy fn value with actual recursive fn
+- but we want to avoid initialization (facilitate js translation)
+
+Proposal: open types for lambda + ref
+- Assuming fact points to integer -> integer then it actually does
+- Type system must check required assumptions at every deref
+- Motivated by lambda_ref that results from JS
+- proposal also applies to and is easier to show for the dynamically
+scoped lambda
+- recursive fn is bound at the time of call...
+
+Lexical vs Dynamic Scope
+- fix only needed for lexical
+- Env at defn is frozen in closure
+- Explicit fix use
+- Bare lambda in dyn scope, free variables are resolved by calling env
+
+Open types for lambda_dyn
+- types with arrows
+- sequence + env
+- exactly what you'd expect
+- Open function type describes env for func body
+- Current typing env is irrelevant -- only matters is apply-time
+- STLC + Fix: uses normal application and fix sets type at defn time
+- In open typing: normal inferences + rely/guarantee sets
+- Does guarantee include rely? (type check it)
+
+Example:
+- fact relies on being int -> int but it's guaranteed int -> int so yes
+
+Example:
+- tick/tock has cross-function reliance that's not guaranteed
+- if we define both, then we do have mututal recursion and reliances
+are guaranteed
+- Call site guarantee checks
+
+Recap
+- Open types capture "late packaging" of recursive dfns in
+dynamically-scoped languages
+- Metatheory has not yet been worked
+- Several applications in lexical settings
+
+For open types in this setting
+- type system must support strong update of ref cell types
+
+Open Types for Methods
+- statically typing methods that can be mixed into different objects
+
+Dynamic scope in lexical settings:
+- software update
+- dynamic code loading
+- global flags
+- Implicit Parameters of Lewis et al at POPL 2000
+- open types mechanism resembles their approach
+- we aim to support recursion and refs
+- Other related work
+- bierman et al in 2003 etc
+
+Open Types for Checking Recursion in:
+- dynamically scoped lambda
+- lexical with refs
+
+-----------------------
+
+Multi-entry Functions for MLton
+
+Intro
+- Assembly programs have CFG
+- Functions : related blocks with one preamble block and several
+return/epilogues
+- What can we gain by allowing multiple preambles in a function?
+- Case analysis frequently used for intra-procedural branches
+- Many functions begin with a case analysis
+- Inter-procedural case elimination requires
+  - Alternate labels to jump to
+  - Different arguments for different starting points
+
+Intro
+- Can convert tail rec fun into a loop
+- Can inline a nonrec function
+- Mutually tail rec funs don't benefit from either
+- Combine groups of tail-calling functions into one function
+
+Implementation
+- Explore multi-entry functions in the context of MLton
+- Turn SML into a simply-typed first-order IL
+- optimize in SSA based ILs
+- function represented as name, args, start label
+- a CFG of basic blocks
+- usual SSA conditions
+- over 27 distinct optimization passes plus support infrastructure
+- conceptually simple change
+
+Pipeline
+- At SSA, diverge into multi-entry parallel pipeline
+- Converge at machine representation which already knows only blocks
+(free codegen)
+
+Highlights of multi-entry impact on SSA IL
+- many intra-procedural passes: propagate entries unchanged
+- many intra-procedural and inter-procedural passes: perform the
+single-entry processing on each entry
+- some inter-procedural passes: process a dominator forest, rather than
+dominator tree
+- Machine IL and codegen unchanged!
+- Very pleasantly surprised
+
+New optimizations
+- DuplicateEntries (stresses the multi-entry handling)
+- CaseEntries: if you know at compile which branch to take
+- MergeRecTailCalls: mutual recursion fusion
+
+Results
+- Duplicate entries messes with cache and branch predict
+- Some multi-entry optimization passes give good speedup but nothing
+definitive (sometimes a penalty)
+
+Related Work
+- Fortan 77 (subs may be defined to have multiple entry points)
+- but many restrictions on the control transfer between entry points
+(appears to be more of a namespace feature)
+- Local CPS Conversion (Reppy)
+- Motivated by rec fun repre nested loops and turning inter-proc calls
+int intra-proc jumps
+- Call-pattern specialization (Peyton-Jones)
+- Motivated by functions that pattern-match on their arguments and call
+sites to such functions with statically known arguments
+- Relies on code duplication and uses a size threshold for
+specialization
+- Multi-return Function Call (Shivers and Fisher)
+
+Multi-entry points in MLton
+- Multi-entry functions are an intuitive extension of CFG of functions
+with new optimizations
+- Suprisingly low impl effort
+- Mixed exec time results; further optimization tuning required
+
+-----------------------
+
+Two Roads to JavaScript
+Report on Early Research
+
+Background
+- 2011: JS backends to SML (MLKit -> SMLtoJs)
+- 2013: Fredskov & Bendt wrote their BSc about a prototype JS backend
+for Moscow ML
+- THe Moscow ML JS backend is being rewritten
+
+SMLtoJs
+- Compiles all of SML to JS
+- Support most of the Basis Lib
+
+Mosml-js
+- Handles all of SML including Moscow ML extens
+- Doesn't really support the Basis Lib yet
+- Goes a long way with just a few optimizations
+  - pre-allocate constructed constants
+  - Tail-calls
+- Can be used the closure compiler from Google
+- Use 'native' JavaScript types
+
+Two approaches
+- Source-to-source
+- Use JS as low-level language
+
+Tail-calls
+- No TCE
+- No CPS win
+- No CPS -> loop win
+- Trampoline!
+
+ASM.js
+- Statically typed restricted subset of JS
+- Programming model based on integer and float arithmetic and a
+virtual heap using typed arrays
+- Allows efficient executation uses both validation and runtime checks
+- Code confined in a module
+
+Memory Model
+- Typed Arrays is an extension to JS for accessing binary data
+(originally from WebGL)
+
+Downsides
+- Little platform support
+- Have to write own memory management
+- Back in a two-world scenario
+- Slow for "foreign" function calls
+
+Work Not Done -- Yet
+- Finish Moscow ML ASM.js prototype, including a simple-minded GC
+- Work with the ASM.js team at Mozilla about support for Typed Objects
+(formerly BinaryData)
+- Port the MLKit regions runtime to ASM.js
+
+-------------------------
+
+CakeML
+A Verification Friendly Dialect of ML
+
+Scott Owens used to be a schemer
+Then started hanging out with theorem proving people
+
+Verification
+- Full functional correctness
+- Rich security properties
+- Interactive
+- 1000s of lines of code
+- Not necessarily mainstream
+OR
+- Bug finding
+- Simple security
+- Automatic
+- 10000000 os lines
+- C, Java, ASM
+BUT mostly only interested in 1st bit
+
+Context
+- CompCert (INRIA)
+- Verisoft XT
+- L4.verified (NICTA)
+- Verified software toolchain (Princeton)
+- Vast amounts of Hoare logics
+- and model checking techniques
+
+Goal: End-to-end
+- System level verification
+- Show a property holds for the whole system abstractly
+
+Ingredients
+- Verified compiler
+- Verified translation (better than 'extraction')
+
+First application
+- HOL Light theorem proving
+- Construct a HOL4 theorem that shows that HOL Light is sound
+- Translate HOL Light to CakeML and retain HOL soundness
+
+Outline
+- Language
+- Translator
+- Compiler
+- HOL Light example
+
+CakeML is a subset of SML
+- Design space with features vs guarantees
+
+Why ML
+- High-level and safe
+- Natural ITP target
+- Types and enforced abstraction
+- Interesting example (HOL Light)
+- Wide applicability (cbv, impure)
+- Types not too sophisticated
+
+Why not ML
+- Parsing and types (vs LISP)
+- Not mainstream enough?
+- SML vs OCaml?
+- but not compelling vs plusses
+
+Essential features
+- Recursive functions
+- and some other stuff??
+
+Important Features
++ HOL List example
+- Compiler verification effort
+- verifying programs
+
+Polymorphism
+- Functions and data types
+- Top level
+- Module top level
+- Not nested
+- Value restriction
+
+Exceptions
+- as SML
+
+Refs
+- as SML
+
+Modules
+- Top level (not nested)
+- No functors
+- Type abstraction
+
+IO
+- via a repl
+
+Unsupported
+- functors
+- records
+- syntactic sugars
+- not unsupport-able just more effort
+
+SML vs OCaml
+- SML: Deterministic
+- OCaml: = raises on funs
+- SML: = doesn't enter refs
+- OCaml: Constructors fully applied
+- SML: Arbitrary prec ints
+- SML: value restriction
+- SML: syntax
+- OCaml: capitalization restriction
+
+CakeML semantics
+- Not the Defn of SML
+- Lexical syntax (not quite regular re comments)
+- CFG syntax
+- elaboration but simple
+- ...
+
+Verified Programs
+- Verified ML programs
+- Use CakeML
+- and HOL Light
+
+HOL-to-ML
+- Get a certificate theorem
+- Use refinement invariants over type traversal
+
+Compiler Architecture
+- hand lexer -> peg parser -> elaborator -> monadic type inference ->
+compiler
+- then verified jit
+
+Lexer verification
+- Hand refined x86 to read characters
+- Executable spec for token
+- Executable spec for repl statement termination
+
+Parser verification
+- PEG parser
+- But with a CFG that shows sound and complete with proof
+- Executable spec to take parse/ast to resolve types and constructors
+
+Type system verification
+- sound but not complete
+- unification based monadic type inference
+
+Compiler verification
+- pattern match -> closure annotation -> bytecode
+- untyped AST -> untyped IL -> untyped IL -> Bytecode
+- induction on big-step semantics
+
+Bytecode
+- Stack and heap
+- bignums
+- tagged blocks
+- refs
+- pointers
+
+Instructions
+- call/return
+- Mutabl ref alloc, assign, deref
+- exc handler installation
+- ...
+
+Bytecode impl
+- unverfied C
+- Verified x86-64 via jit
+- bignum arith
+- stop and copy gc
+- machine code hoare logic of total correctness
+
+Divergence
+- clocked big step to unclocked big step
+- clocked big step to bytecode with tick to bytecode without tick
+
+Termination preservation
+- show unvariance under clock
+- without convergence, any clock will timeout (uses well-founded induction)
+- uses determinism essentially
+
+Bootstrapping
+- Translate and EVAL are ML programs that build proofs
+
+Verifying HOL Light
+- Flyspeck project (Kepler sphere packing proof)
+- Harrison did a lot of floating point verification in HOL Light
+signature K = sig
+ datatype term = Var of s | Abs of s * term | Comb of term * term;
+ type thm;
+ val ML : thm -> thm -> thm
+ ...
+end
+
+Enforced abstraction
+- Type-based reasoning for modules?
+- Extend logical relations of System F?
+- Non-computable properties
+  - Truth in HOL Light
+
+Future Work
+- Compiler optimizations
+- Concurrency
+- More CakeML verification techniques
+- More example programs
+- Strings, arrays
+
+Conclusion
+- Proof producing HOL to CakeML
+- Verified CakeML implementation
+- Verified HOL Light theorem prover
