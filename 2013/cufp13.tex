@@ -196,7 +196,7 @@ significant number of errors during type checking.
 
 Facebook's Hack comes with a web-based integrated development environment
 (IDE). In order to provide auto-completion and code-navigation features in
-the IDE, Hack's type checker is compiled to Javascript via
+the IDE, Hack's type checker is compiled to JavaScript via
 \texttt{js\_of\_ocaml}~\cite{DBLP:journals/spe/VouillonB14} and runs
 alongside the IDE in the web browser.
 
@@ -211,7 +211,7 @@ commands. This is particularly important for large changes, for example,
 when a developer switches git branches.
 
 A vast amount of Hack's code is in OCaml. The latter is ideal for symbolic
-computation, has excellent performance and can be compiled to Javascript.
+computation, has excellent performance and can be compiled to JavaScript.
 The main challenge with the choice of OCaml is the lack of native
 multicore support. To address this gap, the Facebook team engineered its
 own multiprocess architecture.
@@ -391,7 +391,7 @@ benefits of reactive programming. These exercises helped colleagues
 develop an intuition of how to use reactive constructs. During the
 process, the group's members were almost always available to help.
 
-Netflix has turned its Java and Javascript libraries for reactive
+Netflix has turned its Java and JavaScript libraries for reactive
 programming into open-source
 projects.\footnote{\url{https://github.com/Netflix}}
 
@@ -708,7 +708,7 @@ The IDE is itself built almost entirely in Haskell, using libraries and
 frameworks, available on Hackage.  The front end uses
 Yesod~\cite{Snoyman:2012:Developing} and
 Fay,\footnote{\url{https://github.com/faylang/fay/wiki}} a proper subset
-of Haskell that compiles to Javascript. The back end continuously
+of Haskell that compiles to JavaScript. The back end continuously
 precompiles the user's code so that the bytecode can be run
 instantaneously within the IDE.
 
