@@ -75,7 +75,7 @@ The 2013 version of CUFP present a record number of talks, a reflection of
 Dave Thomas delivered the 2013 keynote, entitled ``21s Century Crusades of
 Knights of the Lambda Calculus---Lessons from Past Language Crusades.''  As
 former CEO of OTI, the company responsible for the creation of the Eclipse
-IDE, talked about his experiences with the ``language wars'' of decades
+IDE, he talked about his experiences with the ``language wars'' of decades
 past, dealing mostly with the introduction of object-oriented programming
 into the mainstream as well as the advocacy of logic programming and expert
 systems. Thomas sprinkled his talk with anecdotes and history lessons,
@@ -104,7 +104,7 @@ use of prior work. Most companies own a large legacy code basis. New
 technologies cannot ignore this code base and operate in isolation.  
 
 For example, Tektronix\footnote{See \url{http://www.tek.com/}} was the
-first company to commercial deploy Smalltalk for its oscilloscopes. The
+first company to commercially deploy Smalltalk for its oscilloscopes. The
 project integrated technologies from several ``cultures,'' including
 hardware, firmware, systems software, and application software. It
 succeeded only because the Smalltalk implementation was {\em designed to\/}
@@ -128,7 +128,7 @@ requirement for a modern language.
 
 \paragraph{Performance} ``Computers like rectangles.''  Language designers
 must put care and thought into the handling of arrays and their
-implementation. Doing solves many problems and avoids the need for fancy
+implementation. Doing so solves many problems and avoids the need for fancy
 optimization. Modern architectures rely on caching for performance, thus
 control over data locality is paramount as critical parts of your
 application must be kept in cache. 
@@ -139,7 +139,7 @@ machines also need intrinsics to take advantage of modern hardware
 architectures.  Intrinsics help future-proof virtual machines because
 hardware changes rapidly.
 
-\paragraph{Adoption} Thomas's last point concerns perception. His claim is
+\paragraph{Adoption} Thomas's last point concerns perception. He claims
 that functional languages can \textit{make users feel stupid}. While
 dealing with the already-daunting task of understanding foreign ways of
 solving problems, newcomers must understand comprehensions, folds, and
@@ -314,9 +314,7 @@ an optimizing compiler. It, too, uses the SAFE EDSL assembler as a
 backend. Tempest is itself an EDSL in Haskell. This arrangement makes it
 straightforward to in-line SAFE assembler.
 
-Hawkins concluded with a handful of lessons, with the humorous aside that
-the optimal number of PL researchers on any given project is somewhere
-between two and seven:
+Hawkins concluded with a handful of lessons:
 \begin{itemize}
 
 \item Designing a higher-order language with information flow control
@@ -340,6 +338,9 @@ They are also more difficult to debug than programs in an external DSL.
 from abstract syntax to concrete syntax when a language gains modularity,
 because then the switch can be made without disruption.
 \end{itemize}
+
+(Finally, Hawkins jokingly declared that the optimal number of PL
+researchers on any given project is somewhere between two and seven.)
 
 \section{End to End Reactive Programming}
 
@@ -807,8 +808,9 @@ increases the confidence in the implementation's correctness. The team is
 now working on adopting modifications from the
 literature~\cite{Chandra:2007:Paxos} to improve the library's performance.
 
-As so often, Haskell's lazy evaluation poses problems, chiefly due to space
-leaks in low-level networking code. Distribution is a natural barrier to
+As has often been the case, Haskell's lazy evaluation poses problems.
+In this case, the lazy evaluation caused space leaks in low-level networking code. 
+Distribution is a natural barrier to
 laziness since messages must be serialized across process boundaries. In
 contrast, Haskell's strong typing is a great aid for re-factoring
 tasks. Also, since Cloud Haskell provides a platform for distribution, the
